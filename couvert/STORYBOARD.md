@@ -52,7 +52,7 @@ patterns: ../patterns/STORYBOARD-CRAFT.md, ../patterns/PATTERNS.md
 - scene: Vue du dessus, la bougie de la table 12 et son chevalet « RÉSERVÉ · SAM. 20:00 » ; la caméra recule et toute la salle s'allume, 14 tables réservées ; le cahier de réservations tamponné « COMPLET » glisse à côté du plan, puis la caméra repart vers la table 12
 - duration: 4.40s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-samedi.html
 - voiceover: "Samedi, vingt heures. Ta salle est pleine... sur le papier."
 - type: hook
@@ -90,7 +90,7 @@ Scene 2 (1.90 à 4.40 s) : P2, la salle pleine sur le papier
 - scene: Gros plan sur la table 12 : la bougie brûle, le pain attend, la main du serveur redresse la serviette, deux fois ; puis la caméra file vers la grande table de six, dont la bougie s'éteint
 - duration: 4.44s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/02-table-de-six.html
 - voiceover: "La table de six ne viendra pas."
 - type: pain_point
@@ -128,7 +128,7 @@ Scene 2 (2.55 à 4.44 s) : P4, la table de six ne viendra pas
 - scene: La table de quatre s'éteint à son tour : deux trous noirs dans la salle allumée ; la caméra descend en cuisine sur le bon de commande du matin, « 40 couverts »
 - duration: 4.41s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/03-quarante-couverts.html
 - voiceover: "Ni la table de quatre. Ce matin, tu as acheté pour quarante couverts."
 - type: pain_point
@@ -166,7 +166,7 @@ Scene 2 (1.71 à 4.41 s) : P6, le bon de commande, quarante couverts
 - scene: Au passe, l'horloge roule jusqu'à 22:00, six assiettes pleines attendent ; une assiette bascule dans la poubelle ; la caméra recule sur la salle et les bougies s'éteignent une à une, jusqu'à celle de la table 12
 - duration: 5.02s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/04-pour-personne.html
 - voiceover: "Et à vingt-deux heures, tu jettes ce que tu as cuisiné... pour personne."
 - type: pain_point
@@ -214,7 +214,7 @@ Scene 3 (3.30 à 5.02 s) : P9, pour personne, la salle s'éteint
 - scene: Le noir ; la question s'écrit au centre, mot à mot ; sur « tenue » la bougie de la table 12 se rallume, puis sa lumière envahit tout l'écran
 - duration: 4.21s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/05-table-tenue.html
 - voiceover: "Et si chaque table réservée était une table tenue ?"
 - type: pivot
@@ -242,7 +242,7 @@ Scene 1 (0.00 à 4.21 s) : P10, la question sur le noir
 - scene: Le plan de salle au propre, en plein jour, flou derrière le téléphone : l'appli Couvert reçoit les réservations, même à 2 h du matin ; la caméra recule vers le plan large
 - duration: 3.22s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/06-jour-et-nuit.html
 - voiceover: "Couvert prend tes réservations, jour et nuit."
 - type: solution
@@ -270,7 +270,7 @@ Scene 1 (0.00 à 3.22 s) : P11, Couvert prend les réservations
 - scene: Le plan large au propre : la veille à 18 h, les étiquettes « Confirmé » se posent table après table ; la caméra plonge sur la grande table de six et son SMS « OUI »
 - duration: 3.35s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/07-la-veille.html
 - voiceover: "Il confirme chaque table la veille, par SMS."
 - type: demo
@@ -308,7 +308,7 @@ Scene 2 (2.00 à 3.35 s) : P13, par SMS
 - scene: Le même téléphone reçoit une annulation pour la table de quatre ; la table passe « Libérée » ; la caméra recule, la liste d'attente s'ouvre à droite et Dubois file s'asseoir à la table 4
 - duration: 3.84s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/08-liste-d-attente.html
 - voiceover: "Une annulation ? La place repart aussitôt à la liste d'attente."
 - type: demo
@@ -346,7 +346,7 @@ Scene 2 (1.25 à 3.84 s) : P15, la place repart à la liste d'attente
 - scene: La cuisine au matin, le même tableau de liège qu'au début ; le bon de commande se remplit tout seul : 38 couverts, et la carte Couvert le confirme
 - duration: 3.88s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/09-le-matin.html
 - voiceover: "Et le matin, tu sais exactement pour combien tu cuisines."
 - type: payoff
@@ -384,7 +384,7 @@ Scene 2 (1.06 à 3.88 s) : P17, tu sais exactement
 - scene: Le plan large au propre se remplit : les convives s'assoient à chaque table, toutes les bougies sont allumées ; le wordmark Couvert se pose ; puis l'iris se referme sur la bougie de la table 12
 - duration: 3.71s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/10-pleine.html
 - voiceover: "Couvert. Ta salle, pleine pour de vrai."
 - type: payoff
@@ -422,7 +422,7 @@ Scene 2 (1.33 à 3.71 s) : P19, ta salle, pleine pour de vrai
 - scene: Back on the dark stage: the wordmark COUVERT, « Ta salle, pleine pour de vrai. » lands, a cursor arrives and clicks « ESSAYER UN MOIS GRATUIT » directly
 - duration: 4.52s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/11-fin.html
 - voiceover: "Essaie-le gratuitement, un mois."
 - type: cta
