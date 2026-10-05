@@ -1,0 +1,616 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Space Mono";
+      src: url("assets/fonts/SpaceMono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Big Shoulders";
+      src: url("assets/fonts/BigShoulders-800.woff2") format("woff2");
+      font-weight: 800;
+      font-style: normal;
+      font-display: block;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .p11-full {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+    }
+
+    /* ---------- ground: the dark stage, full opacity from t=0 ---------- */
+    #p11-ground {
+      background: #100c0a;
+    }
+
+    /* ---------- stage: everything inside one camera (forward drift, origin on the button) ---------- */
+    #p11-stage {
+      overflow: hidden;
+    }
+    #p11-cam {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: 960px 575px;
+    }
+
+    /* braise halo (P20 / P21) */
+    #p11-halo {
+      position: absolute;
+      left: 560px;
+      top: 120px;
+      width: 800px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(196, 83, 42, 0.3) 0%, rgba(196, 83, 42, 0.16) 45%, rgba(196, 83, 42, 0.04) 80%, rgba(196, 83, 42, 0) 100%);
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+
+    /* wordmark COUVERT, Big Shoulders 800, ink */
+    #p11-wordmark {
+      position: absolute;
+      left: 0;
+      top: 200px;
+      width: 1920px;
+      height: 160px;
+      text-align: center;
+      white-space: nowrap;
+      font-family: "Big Shoulders", sans-serif;
+      font-weight: 800;
+      font-size: 150px;
+      line-height: 160px;
+      letter-spacing: 0.08em;
+      padding-left: 0.08em;
+      text-transform: uppercase;
+      color: #f6efe6;
+    }
+    .p11-l {
+      display: inline-block;
+      transform-origin: 50% 60%;
+      opacity: 0;
+    }
+
+    /* promise */
+    #p11-promise {
+      position: absolute;
+      left: 0;
+      top: 390px;
+      width: 1920px;
+      text-align: center;
+      white-space: nowrap;
+      font-family: "Instrument Sans", sans-serif;
+      font-weight: 600;
+      font-size: 46px;
+      line-height: 56px;
+      letter-spacing: -0.01em;
+      color: #cfc1b3;
+    }
+    .p11-pw {
+      display: inline-block;
+      opacity: 0;
+    }
+
+    /* the button */
+    #p11-onde {
+      position: absolute;
+      left: 570px;
+      top: 483px;
+      width: 780px;
+      height: 184px;
+      box-sizing: border-box;
+      border-radius: 28px;
+      border: 4px solid #dc6b3d;
+      box-shadow: 0 0 22px rgba(196, 83, 42, 0.55), inset 0 0 18px rgba(196, 83, 42, 0.3);
+      transform-origin: 50% 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #p11-pulse {
+      position: absolute;
+      left: 610px;
+      top: 520px;
+      width: 700px;
+      height: 110px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      border: 3px solid #dc6b3d;
+      box-shadow: 0 0 20px rgba(196, 83, 42, 0.6);
+      transform-origin: 50% 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #p11-btnwrap {
+      position: absolute;
+      left: 610px;
+      top: 520px;
+      width: 700px;
+      height: 110px;
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+    #p11-btnglow {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 700px;
+      height: 110px;
+      border-radius: 14px;
+      box-shadow: 0 0 90px 14px rgba(196, 83, 42, 0.55);
+      opacity: 0;
+    }
+    #p11-btn {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 700px;
+      height: 110px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f5efe4;
+      box-shadow: 0 0 60px rgba(196, 83, 42, 0.35), 0 18px 40px rgba(0, 0, 0, 0.45);
+      transform-origin: 50% 50%;
+    }
+    #p11-pale {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 700px;
+      height: 110px;
+      background: rgba(240, 160, 98, 0.6);
+      opacity: 0;
+    }
+    #p11-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 700px;
+      height: 110px;
+      background: #c4532a;
+      clip-path: circle(0px at 380px 68px);
+    }
+    .p11-lab {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 700px;
+      height: 110px;
+      text-align: center;
+      white-space: nowrap;
+      font-family: "Big Shoulders", sans-serif;
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 110px;
+      letter-spacing: 0.06em;
+      padding-left: 0.06em;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      color: #9f3f1c;
+    }
+    #p11-fill .p11-lab {
+      color: #ffffff;
+    }
+
+    /* URL */
+    #p11-url {
+      position: absolute;
+      left: 0;
+      top: 694px;
+      width: 1920px;
+      text-align: center;
+      white-space: nowrap;
+      font-family: "Space Mono", monospace;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 30px;
+      letter-spacing: 0.1em;
+      padding-left: 0.1em;
+      box-sizing: border-box;
+      color: #958a7f;
+      opacity: 0;
+    }
+
+    /* cursor: the wrapper is placed by render(), the tip sits at its (0, 0) */
+    #p11-cur {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      overflow: visible;
+      pointer-events: none;
+    }
+    #p11-cur-in {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      overflow: visible;
+      transform-origin: 0 0;
+      opacity: 0;
+    }
+    #p11-cur-in svg {
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 48px;
+      height: 61px;
+      overflow: visible;
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55));
+    }
+
+    /* ---------- subtitle: bottom center, band y 890 to 980, never in the camera ---------- */
+    #p11-sub {
+      position: absolute;
+      left: 0;
+      top: 896px;
+      width: 1920px;
+      text-align: center;
+      white-space: nowrap;
+      font-family: "Instrument Sans", sans-serif;
+      font-weight: 600;
+      font-size: 62px;
+      line-height: 74px;
+      letter-spacing: -0.015em;
+      color: #f6efe6;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+    }
+    .p11-sw {
+      display: inline-block;
+      opacity: 0;
+    }
+    #p11-box {
+      position: relative;
+      display: inline-block;
+    }
+    #p11-boxbg {
+      position: absolute;
+      left: -0.14em;
+      right: -0.14em;
+      top: 0.06em;
+      bottom: 0.02em;
+      background: #c4532a;
+      border-radius: 3px;
+      transform-origin: 0% 50%;
+      opacity: 0;
+    }
+    #p11-w-gratuit {
+      position: relative;
+      color: #f5efe4;
+      text-shadow: none;
+    }
+
+    /* ---------- grain (5 %), moves in finite steps ---------- */
+    #p11-grain {
+      pointer-events: none;
+      overflow: hidden;
+    }
+    #p11-gr {
+      position: absolute;
+      left: -120px;
+      top: -120px;
+      width: 2160px;
+      height: 1320px;
+      opacity: 0.05;
+      mix-blend-mode: screen;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+      background-size: 240px 240px;
+    }
+
+    /* ---------- iris to black, closing on the button (radial, painted by render) ---------- */
+    #p11-iris {
+      pointer-events: none;
+      background: transparent;
+    }
+  </style>
+
+  <div id="root" data-composition-id="11-fin" data-width="1920" data-height="1080" data-duration="4.52">
+    <div id="p11-ground" class="clip p11-full" data-start="0" data-duration="4.52" data-track-index="0" data-layout-ignore></div>
+
+    <div id="p11-stage" class="clip p11-full" data-start="0" data-duration="4.52" data-track-index="1">
+      <div id="p11-cam">
+        <div id="p11-halo"></div>
+
+        <div id="p11-wordmark"><span class="p11-l">C</span><span class="p11-l">O</span><span class="p11-l">U</span><span class="p11-l">V</span><span class="p11-l">E</span><span class="p11-l">R</span><span class="p11-l">T</span></div>
+
+        <div id="p11-promise"><span class="p11-pw">Ta</span> <span class="p11-pw">salle,</span> <span class="p11-pw">pleine</span> <span class="p11-pw">pour</span> <span class="p11-pw">de</span> <span class="p11-pw">vrai.</span></div>
+
+        <div id="p11-onde"></div>
+        <div id="p11-pulse"></div>
+        <div id="p11-btnwrap">
+          <div id="p11-btnglow"></div>
+          <div id="p11-btn">
+            <div class="p11-lab">ESSAYER UN MOIS GRATUIT</div>
+            <div id="p11-pale"></div>
+            <div class="p11-lab" id="p11-lab-pale">ESSAYER UN MOIS GRATUIT</div>
+            <div id="p11-fill"><div class="p11-lab">ESSAYER UN MOIS GRATUIT</div></div>
+          </div>
+        </div>
+
+        <div id="p11-url">couvert-resto.fr</div>
+
+        <div id="p11-cur">
+          <div id="p11-cur-in">
+            <svg viewBox="0 0 24 32" aria-hidden="true"><path d="M2 2 L2 25 L7.6 19.8 L11.4 28.6 L15 27.1 L11.3 18.4 L18.8 18.4 Z" fill="#ffffff" stroke="#100c0a" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p11-subclip" class="clip p11-full" data-start="0" data-duration="4.52" data-track-index="2">
+      <div id="p11-sub"><span class="p11-sw" id="p11-w-essaie">Essaie-le</span> <span id="p11-box"><span id="p11-boxbg"></span><span class="p11-sw" id="p11-w-gratuit">gratuitement</span></span><span class="p11-sw" id="p11-w-comma">,</span> <span class="p11-sw" id="p11-w-un">un</span> <span class="p11-sw" id="p11-w-mois">mois.</span></div>
+    </div>
+
+    <div id="p11-grain" class="clip p11-full" data-start="0" data-duration="4.52" data-track-index="3" data-layout-ignore>
+      <div id="p11-gr"></div>
+    </div>
+
+    <div id="p11-iris" class="clip p11-full" data-start="0" data-duration="4.52" data-track-index="4" data-layout-ignore></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "11-fin";
+      var DUR = 4.52;
+      var byId = function (id) {
+        return document.getElementById(id);
+      };
+      var toArr = function (list) {
+        return Array.prototype.slice.call(list);
+      };
+      var p3o = gsap.parseEase("power3.out");
+      var p2o = gsap.parseEase("power2.out");
+      var cl = function (v) {
+        return v < 0 ? 0 : v > 1 ? 1 : v;
+      };
+      var seg = function (t, a, d) {
+        return cl((t - a) / d);
+      };
+
+      var cam = byId("p11-cam");
+      var cur = byId("p11-cur");
+      var gr = byId("p11-gr");
+      var iris = byId("p11-iris");
+      var lastIris = "";
+      var lastGrain = -1;
+
+      /* the click: tip on "MOIS" (bottom of the press at 1.77, on the word "mois") */
+      var CLICK = 1.77;
+      /* one curved move from the bottom right (quadratic Bezier, 0.45 s power3.out), above the subtitle band */
+      var C0 = [1985, 800];
+      var C1 = [1430, 735];
+      var C2 = [990, 588];
+      var MOVE_AT = 1.22;
+      var MOVE_DUR = 0.45;
+      /* iris center: the button center (also the camera origin, so it never moves) */
+      var IX = 960;
+      var IY = 575;
+
+      function irisR(t) {
+        if (t < 2.6) return 9999;
+        if (t < 4.0) return 1250 - 610 * ((t - 2.6) / 1.4);
+        var d = t - 4.0;
+        var r = 640 - 436 * d - 2190 * d * d;
+        return r > 0 ? r : 0;
+      }
+
+      function render(t) {
+        /* ---- camera: forward drift 1 -> 1.02 (Scene 1), 1.02 -> 1.05 (Scene 2) ---- */
+        var s = t <= 2.12 ? 1 + 0.02 * (t / 2.12) : 1.02 + 0.03 * ((t - 2.12) / 2.4);
+        cam.style.transform = "scale(" + s.toFixed(5) + ")";
+
+        /* ---- cursor: one curve, direct click, then slides 20 px and fades ---- */
+        var u = p3o(seg(t, MOVE_AT, MOVE_DUR));
+        var a0 = (1 - u) * (1 - u);
+        var a1 = 2 * (1 - u) * u;
+        var a2 = u * u;
+        var cx = a0 * C0[0] + a1 * C1[0] + a2 * C2[0];
+        var cy = a0 * C0[1] + a1 * C1[1] + a2 * C2[1];
+        var lv = p2o(seg(t, 2.4, 0.3));
+        cx += 14 * lv;
+        cy += 14 * lv;
+        cur.style.transform = "translate(" + cx.toFixed(2) + "px," + cy.toFixed(2) + "px)";
+
+        /* ---- grain: finite steps at 12 per second, offsets derived from the step index ---- */
+        var gi = Math.floor(t * 12);
+        if (gi !== lastGrain) {
+          var gx = ((gi * 97) % 200) - 100;
+          var gy = ((gi * 61 + 37) % 200) - 100;
+          gr.style.transform = "translate(" + gx + "px," + gy + "px)";
+          lastGrain = gi;
+        }
+
+        /* ---- iris to black on the button: soft circle closing from 2.60, fast close 4.00 to 4.45 ---- */
+        var R = irisR(t);
+        var bg;
+        if (R >= 1300) {
+          bg = "transparent";
+        } else if (R <= 0.5) {
+          bg = "#000000";
+        } else {
+          var soft = 180 * Math.min(1, R / 300);
+          bg =
+            "radial-gradient(circle at " + IX + "px " + IY + "px, rgba(0,0,0,0) " + R.toFixed(1) + "px, rgba(0,0,0,1) " +
+            (R + soft).toFixed(1) + "px)";
+        }
+        if (bg !== lastIris) {
+          iris.style.background = bg;
+          lastIris = bg;
+        }
+      }
+
+      /* ============ timeline ============ */
+      var tl = gsap.timeline({ paused: true });
+      var clock = { t: 0 };
+      render(0);
+      tl.fromTo(
+        clock,
+        { t: 0 },
+        {
+          t: DUR,
+          duration: DUR,
+          ease: "none",
+          onUpdate: function () {
+            render(clock.t);
+          }
+        },
+        0
+      );
+
+      /* ---------------- Scene 1 (0.00 to 2.12): P20, the button ---------------- */
+      // 0.00 the braise halo opens at the center (0 -> 1, 0.3 s expo.out)
+      var halo = byId("p11-halo");
+      tl.fromTo(halo, { opacity: 0, scale: 0.85 }, { opacity: 0.75, scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, 0);
+
+      // 0.10 COUVERT lands letter by letter (x1.4, blur -> sharp, 0.03 s apart)
+      toArr(byId("p11-wordmark").getElementsByClassName("p11-l")).forEach(function (el, i) {
+        tl.fromTo(
+          el,
+          { opacity: 0, scale: 1.4, filter: "blur(8px)" },
+          { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out", immediateRender: false },
+          0.1 + i * 0.03
+        );
+      });
+
+      // 0.45 the promise arrives word by word
+      toArr(byId("p11-promise").getElementsByClassName("p11-pw")).forEach(function (el, i) {
+        tl.fromTo(
+          el,
+          { opacity: 0, y: 10, filter: "blur(6px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.16, ease: "expo.out", immediateRender: false },
+          0.45 + i * 0.035
+        );
+      });
+
+      // 0.65 the button arrives x1.1 blur -> sharp (0.12 s), with a ring that opens
+      tl.fromTo(
+        byId("p11-btnwrap"),
+        { opacity: 0, scale: 1.1, filter: "blur(6px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out", immediateRender: false },
+        0.65
+      );
+      tl.fromTo(
+        byId("p11-pulse"),
+        { opacity: 0.9, scale: 1 },
+        { opacity: 0, scale: 1.16, duration: 0.45, ease: "power2.out", immediateRender: false },
+        0.7
+      );
+
+      // 0.90 the URL
+      tl.fromTo(
+        byId("p11-url"),
+        { opacity: 0, y: 6, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "expo.out", immediateRender: false },
+        0.9
+      );
+
+      // 1.22 the cursor enters from the bottom right (its path is in render)
+      var curIn = byId("p11-cur-in");
+      tl.fromTo(curIn, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none", immediateRender: false }, MOVE_AT);
+
+      // 1.77 direct click: cursor x0.85 (0.06 s), button sinks with it, then both come back
+      var btn = byId("p11-btn");
+      tl.fromTo(curIn, { scale: 1 }, { scale: 0.85, duration: 0.06, ease: "power2.in", immediateRender: false }, CLICK - 0.06);
+      tl.fromTo(curIn, { scale: 0.85 }, { scale: 1, duration: 0.1, ease: "power2.out", immediateRender: false }, CLICK);
+      tl.fromTo(btn, { scale: 1 }, { scale: 0.95, duration: 0.06, ease: "power1.in", immediateRender: false }, CLICK - 0.06);
+      tl.fromTo(btn, { scale: 0.95 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, CLICK);
+      // paper -> pale braise -> braise, filling from the click point (0.12 s)
+      tl.fromTo(byId("p11-pale"), { opacity: 0 }, { opacity: 1, duration: 0.04, ease: "none", immediateRender: false }, CLICK - 0.03);
+      tl.fromTo(
+        byId("p11-fill"),
+        { clipPath: "circle(0px at 380px 68px)" },
+        { clipPath: "circle(400px at 380px 68px)", duration: 0.12, ease: "expo.out", immediateRender: false },
+        CLICK + 0.01
+      );
+      tl.fromTo(byId("p11-btnglow"), { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, CLICK);
+      // the braise onde opens around the button (until 2.12)
+      tl.fromTo(
+        byId("p11-onde"),
+        { opacity: 1, scale: 0.92 },
+        { opacity: 0.5, scale: 1, duration: 0.35, ease: "expo.out", immediateRender: false },
+        CLICK
+      );
+      // the halo warms up after the click
+      tl.fromTo(halo, { opacity: 0.75 }, { opacity: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, CLICK + 0.02);
+
+      // subtitle: Essaie-le [gratuitement], un mois.  (grey 35 % then ink)
+      var wordIn = function (id, at) {
+        var el = byId(id);
+        tl.fromTo(
+          el,
+          { opacity: 0, y: 8, filter: "blur(6px)" },
+          { opacity: 0.35, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power3.out", immediateRender: false },
+          at
+        );
+        tl.fromTo(el, { opacity: 0.35 }, { opacity: 1, duration: 0.2, ease: "power1.out", immediateRender: false }, at + 0.14);
+      };
+      wordIn("p11-w-essaie", 0.31);
+      // the key-word box traces from the left (0.16 s power3.out), just before the word
+      tl.fromTo(
+        byId("p11-boxbg"),
+        { opacity: 1, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out", immediateRender: false },
+        0.6
+      );
+      wordIn("p11-w-gratuit", 0.63);
+      wordIn("p11-w-comma", 0.63);
+      wordIn("p11-w-un", 1.57);
+      wordIn("p11-w-mois", 1.74);
+      // the subtitle leaves from 2.00 to 2.12
+      tl.fromTo(
+        byId("p11-sub"),
+        { opacity: 1, filter: "blur(0px)" },
+        { opacity: 0, filter: "blur(4px)", duration: 0.12, ease: "power2.in", immediateRender: false },
+        2.0
+      );
+
+      /* ---------------- Scene 2 (2.12 to 4.52): P21, the living hold, then the iris ---------------- */
+      // 2.40 the cursor slides 20 px (render) and fades (0.3 s)
+      tl.fromTo(curIn, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.4);
+
+      // 2.60 to 4.00 the halo drifts and breathes in finite steps (2 cycles of 0.7 s)
+      tl.fromTo(halo, { x: 0 }, { x: 26, duration: DUR - 2.6, ease: "none", immediateRender: false }, 2.6);
+      for (var k = 0; k < 2; k++) {
+        var b0 = 2.6 + k * 0.7;
+        tl.fromTo(halo, { scale: 1 }, { scale: 1.07, duration: 0.35, ease: "sine.inOut", immediateRender: false }, b0);
+        tl.fromTo(halo, { scale: 1.07 }, { scale: 1, duration: 0.35, ease: "sine.inOut", immediateRender: false }, b0 + 0.35);
+        tl.fromTo(halo, { opacity: 1 }, { opacity: 0.86, duration: 0.35, ease: "sine.inOut", immediateRender: false }, b0);
+        tl.fromTo(halo, { opacity: 0.86 }, { opacity: 1, duration: 0.35, ease: "sine.inOut", immediateRender: false }, b0 + 0.35);
+      }
+      // the button glow breathes with the halo
+      var glow = byId("p11-btnglow");
+      for (var j = 0; j < 2; j++) {
+        var g0 = 2.6 + j * 0.7;
+        tl.fromTo(glow, { opacity: 1 }, { opacity: 0.75, duration: 0.35, ease: "sine.inOut", immediateRender: false }, g0);
+        tl.fromTo(glow, { opacity: 0.75 }, { opacity: 1, duration: 0.35, ease: "sine.inOut", immediateRender: false }, g0 + 0.35);
+      }
+      // 4.00 to 4.45 the iris closes to black on the button (render); black to 4.52
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

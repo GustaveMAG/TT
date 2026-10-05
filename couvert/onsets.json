@@ -1,0 +1,917 @@
+{
+ "audio": "couvert/assets/audio/voix-montage.wav",
+ "duration": 45.0,
+ "threshold_db": -40.0,
+ "min_silence": 0.12,
+ "stats": {
+  "p10_db": -120.0,
+  "p50_db": -36.8,
+  "p95_db": -15.4
+ },
+ "phrases": [
+  {
+   "start": 0.08,
+   "end": 1.31,
+   "silence_after": 0.68,
+   "cut_point": 1.65,
+   "text": "Samedi vingt heures",
+   "words": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "start": 1.99,
+   "end": 2.86,
+   "silence_after": 0.6,
+   "cut_point": 3.16,
+   "text": "Ta salle est pleine",
+   "words": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "start": 3.46,
+   "end": 4.1,
+   "silence_after": 2.98,
+   "cut_point": 5.59,
+   "text": "sur le papier",
+   "words": [
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "start": 7.08,
+   "end": 8.61,
+   "silence_after": 0.45,
+   "cut_point": 8.84,
+   "text": "La table de six ne viendra pas",
+   "words": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+   ]
+  },
+  {
+   "start": 9.06,
+   "end": 9.99,
+   "silence_after": 0.8,
+   "cut_point": 10.39,
+   "text": "Ni la table de quatre",
+   "words": [
+    17,
+    18,
+    19,
+    20,
+    21
+   ]
+  },
+  {
+   "start": 10.79,
+   "end": 12.92,
+   "silence_after": 0.63,
+   "cut_point": 13.23,
+   "text": "Ce matin tu as acheté pour quarante couverts",
+   "words": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+   ]
+  },
+  {
+   "start": 13.55,
+   "end": 14.47,
+   "silence_after": 0.3,
+   "cut_point": 14.62,
+   "text": "Et à vingt-deux heures",
+   "words": [
+    30,
+    31,
+    32,
+    33
+   ]
+  },
+  {
+   "start": 14.77,
+   "end": 16.16,
+   "silence_after": 0.61,
+   "cut_point": 16.46,
+   "text": "tu jettes ce que tu as cuisiné",
+   "words": [
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+   ]
+  },
+  {
+   "start": 16.77,
+   "end": 17.32,
+   "silence_after": 1.9,
+   "cut_point": 18.27,
+   "text": "pour personne",
+   "words": [
+    41,
+    42
+   ]
+  },
+  {
+   "start": 19.22,
+   "end": 21.81,
+   "silence_after": 1.34,
+   "cut_point": 22.48,
+   "text": "Et si chaque table réservée était une table tenue",
+   "words": [
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+   ]
+  },
+  {
+   "start": 23.15,
+   "end": 24.57,
+   "silence_after": 0.22,
+   "cut_point": 24.68,
+   "text": "Couvert prend tes réservations",
+   "words": [
+    52,
+    53,
+    54,
+    55
+   ]
+  },
+  {
+   "start": 24.79,
+   "end": 25.44,
+   "silence_after": 0.52,
+   "cut_point": 25.7,
+   "text": "jour et nuit",
+   "words": [
+    56,
+    57,
+    58
+   ]
+  },
+  {
+   "start": 25.96,
+   "end": 27.68,
+   "silence_after": 0.15,
+   "cut_point": 27.75,
+   "text": "Il confirme chaque table la veille",
+   "words": [
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+   ]
+  },
+  {
+   "start": 27.83,
+   "end": 27.95,
+   "silence_after": 0.18,
+   "cut_point": 28.04,
+   "text": "par",
+   "words": [
+    65
+   ]
+  },
+  {
+   "start": 28.13,
+   "end": 28.76,
+   "silence_after": 0.58,
+   "cut_point": 29.05,
+   "text": "SMS",
+   "words": [
+    66
+   ]
+  },
+  {
+   "start": 29.34,
+   "end": 30.04,
+   "silence_after": 0.4,
+   "cut_point": 30.24,
+   "text": "Une annulation",
+   "words": [
+    67,
+    68
+   ]
+  },
+  {
+   "start": 30.44,
+   "end": 32.57,
+   "silence_after": 0.63,
+   "cut_point": 32.89,
+   "text": "La place repart aussitôt à la liste d'attente",
+   "words": [
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76
+   ]
+  },
+  {
+   "start": 33.2,
+   "end": 33.79,
+   "silence_after": 0.29,
+   "cut_point": 33.94,
+   "text": "Et le matin",
+   "words": [
+    77,
+    78,
+    79
+   ]
+  },
+  {
+   "start": 34.08,
+   "end": 36.21,
+   "silence_after": 1.12,
+   "cut_point": 36.77,
+   "text": "tu sais exactement pour combien tu cuisines",
+   "words": [
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86
+   ]
+  },
+  {
+   "start": 37.33,
+   "end": 37.79,
+   "silence_after": 0.48,
+   "cut_point": 38.03,
+   "text": "Couvert",
+   "words": [
+    87
+   ]
+  },
+  {
+   "start": 38.27,
+   "end": 38.82,
+   "silence_after": 0.35,
+   "cut_point": 39.0,
+   "text": "Ta salle",
+   "words": [
+    88,
+    89
+   ]
+  },
+  {
+   "start": 39.17,
+   "end": 40.16,
+   "silence_after": 0.65,
+   "cut_point": 40.48,
+   "text": "pleine pour de vrai",
+   "words": [
+    90,
+    91,
+    92,
+    93
+   ]
+  },
+  {
+   "start": 40.81,
+   "end": 41.78,
+   "silence_after": 0.29,
+   "cut_point": 41.92,
+   "text": "Essaie-le gratuitement",
+   "words": [
+    94,
+    95
+   ]
+  },
+  {
+   "start": 42.07,
+   "end": 42.43,
+   "silence_after": 2.57,
+   "cut_point": null,
+   "text": "un mois",
+   "words": [
+    96,
+    97
+   ]
+  }
+ ],
+ "words": [
+  {
+   "w": "Samedi",
+   "s": 0.08,
+   "e": 0.82,
+   "whisper_s": 0.08
+  },
+  {
+   "w": "vingt",
+   "s": 0.82,
+   "e": 1.06,
+   "whisper_s": 0.82
+  },
+  {
+   "w": "heures",
+   "s": 1.06,
+   "e": 1.31,
+   "whisper_s": 1.06
+  },
+  {
+   "w": "Ta",
+   "s": 1.99,
+   "e": 2.21,
+   "whisper_s": 1.99
+  },
+  {
+   "w": "salle",
+   "s": 2.21,
+   "e": 2.42,
+   "whisper_s": 2.21
+  },
+  {
+   "w": "est",
+   "s": 2.42,
+   "e": 2.64,
+   "whisper_s": 2.42
+  },
+  {
+   "w": "pleine",
+   "s": 2.64,
+   "e": 2.86,
+   "whisper_s": 2.64
+  },
+  {
+   "w": "sur",
+   "s": 3.46,
+   "e": 3.62,
+   "whisper_s": 3.46
+  },
+  {
+   "w": "le",
+   "s": 3.62,
+   "e": 3.78,
+   "whisper_s": 3.62
+  },
+  {
+   "w": "papier",
+   "s": 3.78,
+   "e": 4.1,
+   "whisper_s": 3.78
+  },
+  {
+   "w": "La",
+   "s": 7.08,
+   "e": 7.27,
+   "whisper_s": 7.08
+  },
+  {
+   "w": "table",
+   "s": 7.27,
+   "e": 7.46,
+   "whisper_s": 7.27
+  },
+  {
+   "w": "de",
+   "s": 7.46,
+   "e": 7.65,
+   "whisper_s": 7.46
+  },
+  {
+   "w": "six",
+   "s": 7.65,
+   "e": 7.85,
+   "whisper_s": 7.65
+  },
+  {
+   "w": "ne",
+   "s": 7.85,
+   "e": 8.04,
+   "whisper_s": 7.85
+  },
+  {
+   "w": "viendra",
+   "s": 8.04,
+   "e": 8.42,
+   "whisper_s": 8.04
+  },
+  {
+   "w": "pas",
+   "s": 8.42,
+   "e": 8.61,
+   "whisper_s": 8.42
+  },
+  {
+   "w": "Ni",
+   "s": 9.06,
+   "e": 9.25,
+   "whisper_s": 9.06
+  },
+  {
+   "w": "la",
+   "s": 9.25,
+   "e": 9.43,
+   "whisper_s": 9.25
+  },
+  {
+   "w": "table",
+   "s": 9.43,
+   "e": 9.62,
+   "whisper_s": 9.43
+  },
+  {
+   "w": "de",
+   "s": 9.62,
+   "e": 9.8,
+   "whisper_s": 9.62
+  },
+  {
+   "w": "quatre",
+   "s": 9.8,
+   "e": 9.99,
+   "whisper_s": 9.8
+  },
+  {
+   "w": "Ce",
+   "s": 10.79,
+   "e": 10.95,
+   "whisper_s": 10.79
+  },
+  {
+   "w": "matin",
+   "s": 10.95,
+   "e": 11.28,
+   "whisper_s": 10.95
+  },
+  {
+   "w": "tu",
+   "s": 11.28,
+   "e": 11.45,
+   "whisper_s": 11.28
+  },
+  {
+   "w": "as",
+   "s": 11.45,
+   "e": 11.61,
+   "whisper_s": 11.45
+  },
+  {
+   "w": "acheté",
+   "s": 11.61,
+   "e": 12.1,
+   "whisper_s": 11.61
+  },
+  {
+   "w": "pour",
+   "s": 12.1,
+   "e": 12.26,
+   "whisper_s": 12.1
+  },
+  {
+   "w": "quarante",
+   "s": 12.26,
+   "e": 12.59,
+   "whisper_s": 12.26
+  },
+  {
+   "w": "couverts",
+   "s": 12.59,
+   "e": 12.92,
+   "whisper_s": 12.59
+  },
+  {
+   "w": "Et",
+   "s": 13.55,
+   "e": 13.73,
+   "whisper_s": 13.55
+  },
+  {
+   "w": "à",
+   "s": 13.73,
+   "e": 13.92,
+   "whisper_s": 13.73
+  },
+  {
+   "w": "vingt-deux",
+   "s": 13.92,
+   "e": 14.29,
+   "whisper_s": 13.92
+  },
+  {
+   "w": "heures",
+   "s": 14.29,
+   "e": 14.47,
+   "whisper_s": 14.29
+  },
+  {
+   "w": "tu",
+   "s": 14.77,
+   "e": 14.92,
+   "whisper_s": 14.77
+  },
+  {
+   "w": "jettes",
+   "s": 14.92,
+   "e": 15.08,
+   "whisper_s": 14.92
+  },
+  {
+   "w": "ce",
+   "s": 15.08,
+   "e": 15.23,
+   "whisper_s": 15.08
+  },
+  {
+   "w": "que",
+   "s": 15.23,
+   "e": 15.39,
+   "whisper_s": 15.23
+  },
+  {
+   "w": "tu",
+   "s": 15.39,
+   "e": 15.54,
+   "whisper_s": 15.39
+  },
+  {
+   "w": "as",
+   "s": 15.54,
+   "e": 15.7,
+   "whisper_s": 15.54
+  },
+  {
+   "w": "cuisiné",
+   "s": 15.7,
+   "e": 16.16,
+   "whisper_s": 15.7
+  },
+  {
+   "w": "pour",
+   "s": 16.77,
+   "e": 16.95,
+   "whisper_s": 16.77
+  },
+  {
+   "w": "personne",
+   "s": 16.95,
+   "e": 17.32,
+   "whisper_s": 16.95
+  },
+  {
+   "w": "Et",
+   "s": 19.22,
+   "e": 19.4,
+   "whisper_s": 19.22
+  },
+  {
+   "w": "si",
+   "s": 19.4,
+   "e": 19.59,
+   "whisper_s": 19.4
+  },
+  {
+   "w": "chaque",
+   "s": 19.59,
+   "e": 19.96,
+   "whisper_s": 19.59
+  },
+  {
+   "w": "table",
+   "s": 19.96,
+   "e": 20.14,
+   "whisper_s": 19.96
+  },
+  {
+   "w": "réservée",
+   "s": 20.14,
+   "e": 20.7,
+   "whisper_s": 20.14
+  },
+  {
+   "w": "était",
+   "s": 20.7,
+   "e": 21.07,
+   "whisper_s": 20.7
+  },
+  {
+   "w": "une",
+   "s": 21.07,
+   "e": 21.25,
+   "whisper_s": 21.07
+  },
+  {
+   "w": "table",
+   "s": 21.25,
+   "e": 21.44,
+   "whisper_s": 21.25
+  },
+  {
+   "w": "tenue",
+   "s": 21.44,
+   "e": 21.81,
+   "whisper_s": 21.44
+  },
+  {
+   "w": "Couvert",
+   "s": 23.15,
+   "e": 23.5,
+   "whisper_s": 23.15
+  },
+  {
+   "w": "prend",
+   "s": 23.5,
+   "e": 23.68,
+   "whisper_s": 23.5
+  },
+  {
+   "w": "tes",
+   "s": 23.68,
+   "e": 23.86,
+   "whisper_s": 23.68
+  },
+  {
+   "w": "réservations",
+   "s": 23.86,
+   "e": 24.57,
+   "whisper_s": 23.86
+  },
+  {
+   "w": "jour",
+   "s": 24.79,
+   "e": 25.01,
+   "whisper_s": 24.79
+  },
+  {
+   "w": "et",
+   "s": 25.01,
+   "e": 25.22,
+   "whisper_s": 25.01
+  },
+  {
+   "w": "nuit",
+   "s": 25.22,
+   "e": 25.44,
+   "whisper_s": 25.22
+  },
+  {
+   "w": "Il",
+   "s": 25.96,
+   "e": 26.18,
+   "whisper_s": 25.96
+  },
+  {
+   "w": "confirme",
+   "s": 26.18,
+   "e": 26.61,
+   "whisper_s": 26.18
+  },
+  {
+   "w": "chaque",
+   "s": 26.61,
+   "e": 27.04,
+   "whisper_s": 26.61
+  },
+  {
+   "w": "table",
+   "s": 27.04,
+   "e": 27.25,
+   "whisper_s": 27.04
+  },
+  {
+   "w": "la",
+   "s": 27.25,
+   "e": 27.46,
+   "whisper_s": 27.25
+  },
+  {
+   "w": "veille",
+   "s": 27.46,
+   "e": 27.68,
+   "whisper_s": 27.46
+  },
+  {
+   "w": "par",
+   "s": 27.83,
+   "e": 27.95,
+   "whisper_s": 27.83
+  },
+  {
+   "w": "SMS",
+   "s": 28.13,
+   "e": 28.76,
+   "whisper_s": 28.13
+  },
+  {
+   "w": "Une",
+   "s": 29.34,
+   "e": 29.48,
+   "whisper_s": 29.34
+  },
+  {
+   "w": "annulation",
+   "s": 29.48,
+   "e": 30.04,
+   "whisper_s": 29.48
+  },
+  {
+   "w": "La",
+   "s": 30.44,
+   "e": 30.62,
+   "whisper_s": 30.44
+  },
+  {
+   "w": "place",
+   "s": 30.62,
+   "e": 30.79,
+   "whisper_s": 30.62
+  },
+  {
+   "w": "repart",
+   "s": 30.79,
+   "e": 31.15,
+   "whisper_s": 30.79
+  },
+  {
+   "w": "aussitôt",
+   "s": 31.15,
+   "e": 31.68,
+   "whisper_s": 31.15
+  },
+  {
+   "w": "à",
+   "s": 31.68,
+   "e": 31.86,
+   "whisper_s": 31.68
+  },
+  {
+   "w": "la",
+   "s": 31.86,
+   "e": 32.04,
+   "whisper_s": 31.86
+  },
+  {
+   "w": "liste",
+   "s": 32.04,
+   "e": 32.21,
+   "whisper_s": 32.04
+  },
+  {
+   "w": "d'attente",
+   "s": 32.21,
+   "e": 32.57,
+   "whisper_s": 32.21
+  },
+  {
+   "w": "Et",
+   "s": 33.2,
+   "e": 33.35,
+   "whisper_s": 33.2
+  },
+  {
+   "w": "le",
+   "s": 33.35,
+   "e": 33.5,
+   "whisper_s": 33.35
+  },
+  {
+   "w": "matin",
+   "s": 33.5,
+   "e": 33.79,
+   "whisper_s": 33.5
+  },
+  {
+   "w": "tu",
+   "s": 34.08,
+   "e": 34.26,
+   "whisper_s": 34.08
+  },
+  {
+   "w": "sais",
+   "s": 34.26,
+   "e": 34.44,
+   "whisper_s": 34.26
+  },
+  {
+   "w": "exactement",
+   "s": 34.44,
+   "e": 35.15,
+   "whisper_s": 34.44
+  },
+  {
+   "w": "pour",
+   "s": 35.15,
+   "e": 35.32,
+   "whisper_s": 35.15
+  },
+  {
+   "w": "combien",
+   "s": 35.32,
+   "e": 35.68,
+   "whisper_s": 35.32
+  },
+  {
+   "w": "tu",
+   "s": 35.68,
+   "e": 35.86,
+   "whisper_s": 35.68
+  },
+  {
+   "w": "cuisines",
+   "s": 35.86,
+   "e": 36.21,
+   "whisper_s": 35.86
+  },
+  {
+   "w": "Couvert",
+   "s": 37.33,
+   "e": 37.79,
+   "whisper_s": 37.33
+  },
+  {
+   "w": "Ta",
+   "s": 38.27,
+   "e": 38.55,
+   "whisper_s": 38.27
+  },
+  {
+   "w": "salle",
+   "s": 38.55,
+   "e": 38.82,
+   "whisper_s": 38.55
+  },
+  {
+   "w": "pleine",
+   "s": 39.17,
+   "e": 39.42,
+   "whisper_s": 39.17
+  },
+  {
+   "w": "pour",
+   "s": 39.42,
+   "e": 39.67,
+   "whisper_s": 39.42
+  },
+  {
+   "w": "de",
+   "s": 39.67,
+   "e": 39.91,
+   "whisper_s": 39.67
+  },
+  {
+   "w": "vrai",
+   "s": 39.91,
+   "e": 40.16,
+   "whisper_s": 39.91
+  },
+  {
+   "w": "Essaie-le",
+   "s": 40.81,
+   "e": 41.13,
+   "whisper_s": 40.81
+  },
+  {
+   "w": "gratuitement",
+   "s": 41.13,
+   "e": 41.78,
+   "whisper_s": 41.13
+  },
+  {
+   "w": "un",
+   "s": 42.07,
+   "e": 42.25,
+   "whisper_s": 42.07
+  },
+  {
+   "w": "mois",
+   "s": 42.25,
+   "e": 42.43,
+   "whisper_s": 42.25
+  }
+ ]
+}

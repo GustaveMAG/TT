@@ -1,0 +1,101 @@
+@font-face { font-family: "Instrument Sans"; src: url("../assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Instrument Sans"; src: url("../assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Instrument Sans"; src: url("../assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "Instrument Sans"; src: url("../assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Space Mono"; src: url("../assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Space Mono"; src: url("../assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Big Shoulders"; src: url("../assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; }
+
+:root {
+  --canvas: #100c0a; --canvas-2: #17110e; --paper: #f5efe4; --paper-2: #ece3d4; --card: #fffdf8;
+  --ink: #f6efe6; --ink-soft: #cfc1b3; --ink-mute: #958a7f; --ink-dark: #1c1612; --ink-dark-soft: #5c5348;
+  --hair: #ddd2c2; --accent: #c4532a; --accent-light: #dc6b3d; --accent-deep: #9f3f1c; --accent-glow: #f0a062;
+  --flame: #ffd9a0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--canvas); }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Instrument Sans", sans-serif; }
+#stage.light { background: var(--paper); }
+#world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+.abs { position: absolute; }
+.grain { position: absolute; inset: 0; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+  background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+
+/* floors */
+.floor-dark { position: absolute; inset: 0; background:
+  repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+  repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+.floor-light { position: absolute; inset: 0; background:
+  repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+  repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), var(--paper); }
+.wall { position: absolute; border: 14px solid #2a211b; border-radius: 6px; }
+.light .wall { border: 6px solid var(--ink-dark); }
+.kitchen-dark { position: absolute; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+.light .kitchen-dark { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+
+/* tables */
+.table { position: absolute; transform: translate(-50%, -50%); }
+.halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+.chair { position: absolute; width: 58px; height: 46px; border-radius: 14px; background: #2e2520; transform: translate(-50%, -50%); }
+.light .chair { background: #d9cfbf; }
+.top { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #e9dfcf; border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+.square .top, .rect .top { border-radius: 10px; }
+.table.off .top { background: #3b332d; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+.light .table .top { background: var(--card); box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px var(--hair); }
+.plate { position: absolute; width: 50px; height: 50px; border-radius: 50%; background: #fbf7f0; transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 0 6px #efe6d8; }
+.table.off .plate { background: #4a413a; box-shadow: inset 0 0 0 6px #433a34; }
+.candle { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 25%, var(--flame) 45%, var(--accent-glow) 70%, transparent 72%);
+  box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+.table.off .candle { background: #6b625b; box-shadow: none; }
+.light .candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+.tent { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font: 700 15px "Space Mono", monospace;
+  letter-spacing: .12em; color: #2b221c; background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); }
+.table.off .tent { background: #5a514a; color: #2b2520; }
+.tnum { position: absolute; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: var(--ink-mute); transform: translate(-50%, -50%); }
+.light .tnum { color: var(--ink-dark-soft); }
+.guest { position: absolute; width: 46px; height: 46px; border-radius: 50%; transform: translate(-50%, -50%); background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); }
+.light .guest { background: #8a7564; }
+
+/* tags of the solution */
+.tag { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font: 600 22px "Instrument Sans";
+  color: #fff; background: var(--accent); padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); }
+.tag.free { background: var(--card); color: var(--accent-deep); box-shadow: inset 0 0 0 2px var(--accent); }
+.tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: var(--accent); font-weight: 700;
+  text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+
+/* subtitle */
+.sub { position: absolute; left: 0; right: 0; top: 896px; text-align: center; font: 600 62px/74px "Instrument Sans"; letter-spacing: -0.015em;
+  color: var(--ink); text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+.light .sub { color: var(--ink-dark); text-shadow: 0 2px 16px rgba(245,239,228,.9); }
+.box { position: relative; display: inline-block; color: var(--paper); text-shadow: none; z-index: 0; }
+.box::before { content: ""; position: absolute; left: -.14em; right: -.14em; top: .06em; bottom: .02em; background: var(--accent); border-radius: 3px; z-index: -1; }
+.grey { color: rgba(246,239,230,.35); }
+.light .grey { color: rgba(28,22,18,.3); }
+.trait { position: relative; display: inline-block; }
+.trait::after { content: ""; position: absolute; left: 2%; right: 4%; bottom: -6px; height: 7px; background: var(--accent-light);
+  border-radius: 6px 50% 50% 6px; transform: rotate(-1.2deg); clip-path: polygon(0 20%, 100% 55%, 100% 75%, 0 100%); }
+.trait.half::after { right: 45%; }
+.type { position: absolute; left: 0; right: 0; text-align: center; font: 600 84px/1.12 "Instrument Sans"; letter-spacing: -0.025em; color: var(--ink); }
+.micro { font: 400 18px "Space Mono", monospace; letter-spacing: .2em; text-transform: uppercase; }
+.mono { font-family: "Space Mono", monospace; }
+.blur2 { filter: blur(2px); } .blur6 { filter: blur(6px); } .blur12 { filter: blur(12px); } .blur24 { filter: blur(24px); }
+
+/* paper objects */
+.slip { position: absolute; width: 300px; padding: 26px 24px; background: #f4ecdd; color: #2b221c; border-radius: 4px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.5); font-family: "Space Mono", monospace; }
+.light .slip { box-shadow: 0 14px 30px rgba(60,40,20,.18); }
+.stamp { position: absolute; font: 800 54px "Big Shoulders"; letter-spacing: .06em; color: var(--accent); border: 6px solid var(--accent);
+  padding: 2px 18px; border-radius: 6px; transform: rotate(-9deg); opacity: .9; }
+
+/* phone */
+.phone { position: absolute; width: 420px; height: 860px; border-radius: 64px; background: #111; padding: 14px;
+  box-shadow: 0 50px 110px rgba(60,40,20,.35), 0 0 0 2px #2a2a2a; }
+.screen { width: 100%; height: 100%; border-radius: 52px; background: #fff; overflow: hidden; position: relative; font-family: "Instrument Sans"; }
+.island { position: absolute; left: 50%; top: 14px; width: 120px; height: 34px; border-radius: 20px; background: #000; transform: translateX(-50%); }
+.card { position: absolute; background: var(--card); border-radius: 14px; box-shadow: 0 30px 80px rgba(60,40,20,.14), 0 2px 6px rgba(60,40,20,.08), inset 0 0 0 1px var(--hair); }
+.wordmark { font: 800 64px "Big Shoulders"; letter-spacing: .08em; text-transform: uppercase; }
+.cursor { position: absolute; width: 44px; height: 56px; }

@@ -1,0 +1,372 @@
+<template>
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-family: "Instrument Sans", sans-serif;
+    }
+
+  /* ===================== SALLE : début du bloc CSS à copier ===================== */
+  .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+  .sl-cam.sl-light { background: #f5efe4; }
+  .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+  .sl-abs { position: absolute; }
+  .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+    repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+  .sl-light .sl-floor { background:
+    repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+  .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+  .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+  .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+  .sl-light .sl-wall { border: 6px solid #1c1612; }
+  .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+  .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+  .sl-light .sl-lamp { display: none; }
+  .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+  .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+  .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+  .sl-light .sl-board { background: #d6c3a3; }
+  .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+  .sl-light .sl-label { color: #5c5348; }
+  .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+  .sl-table { position: absolute; }
+  .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+  .sl-light .sl-halo { display: none; }
+  .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+  .sl-light .sl-chair { background: #d9cfbf; }
+  .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+  .sl-light .sl-guest { background: #8a7564; }
+  .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+  .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+  .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+  .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+  .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+  .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+  .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+  .sl-wick { background: #6b625b; }
+  .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+  .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+  .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+    background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+  .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+    padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+  .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+  .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+  .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+  .sl-light .sl-tnum { color: #5c5348; }
+  /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+    /* ---- couches de la séquence ---- */
+    #p02-room, #p02-hud, #p02-grainclip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #p02-hud, #p02-grainclip { pointer-events: none; }
+
+    /* ---- objets ajoutés au monde (unités monde : ils suivent la caméra) ---- */
+    /* serviette pliée de T12, posée sur la nappe entre l'assiette du haut et celle de droite ; née sous le flou du cran */
+    .p02-napwrap { position: absolute; left: 961px; top: 1117px; width: 42px; height: 42px; opacity: 0;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.32)); }
+    .p02-nap { position: absolute; left: 0; top: 0; width: 42px; height: 42px; clip-path: polygon(0 0, 100% 0, 50% 100%);
+      background: linear-gradient(90deg, #fffaf2 0 48.5%, #e8dfd1 49.5% 50.5%, #f6efe3 51.5% 100%); }
+    /* la manche noire du serveur et sa main : groupe ancré au centre de la serviette, incliné de 22° (entrée haut droite) */
+    .p02-arm { position: absolute; left: 982px; top: 1138px; width: 0; height: 0; opacity: 0; }
+    .p02-armrot { position: absolute; left: 0; top: 0; width: 0; height: 0; transform: rotate(22deg); }
+    .p02-hand { position: absolute; left: -10px; top: -50px; width: 44px; height: 38px; border-radius: 50% 50% 45% 45%;
+      background: #d9a77f; filter: blur(0.6px); }
+    .p02-sleeve { position: absolute; left: -13px; top: -380px; width: 50px; height: 346px; border-radius: 14px;
+      background: linear-gradient(90deg, #1b1b1e, #2a2a2f 55%, #1d1d20); border-bottom: 11px solid #f2efe9; box-sizing: border-box;
+      box-shadow: 0 8px 18px rgba(0,0,0,.45); filter: blur(2px); }
+    /* fumées : enveloppe tournée en CSS (jamais animée), filet animé à l'intérieur */
+    .p02-smk { position: absolute; }
+    .p02-smki { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; opacity: 0; transform-origin: 50% 100%; }
+    .p02-smk12 { left: 925px; top: 1104px; width: 34px; height: 76px; transform: rotate(8deg); }
+    .p02-smk12 .p02-smki { border-left: 3px solid rgba(232,222,206,.38); filter: blur(1.4px); }
+    .p02-smk7 { left: 1520px; top: 598px; width: 90px; height: 190px; transform: rotate(12deg); }
+    .p02-smk7 .p02-smki { border-left: 6px solid rgba(200,190,180,.5); filter: blur(4px); }
+    .p02-smk7b { left: 1548px; top: 660px; width: 56px; height: 124px; transform: rotate(-10deg); }
+    .p02-smk7b .p02-smki { border-left: 4px solid rgba(200,190,180,.32); filter: blur(4px); }
+    /* chevalet de T7 : calques braise et éteint, superposés au chevalet du kit (fondus en opacité) */
+    .p02-tlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; padding: 6px 10px; border-radius: 4px; opacity: 0; white-space: nowrap; }
+    .p02-tember { background: #c4532a; color: #f5efe4; }
+    .p02-toff { background: #5a514a; color: #2b2520; }
+
+    /* ---- heure en haut à droite (P03) : les chiffres roulent ---- */
+    #p02-clock { position: absolute; right: 80px; top: 70px; font: 700 30px/40px "Space Mono", monospace; letter-spacing: .1em;
+      color: #cfc1b3; white-space: nowrap; opacity: 0; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .p02-dg { display: inline-block; height: 40px; overflow: hidden; vertical-align: top; }
+    .p02-strip { display: block; }
+    .p02-strip b { display: block; height: 40px; font-weight: 700; }
+
+    /* ---- sous-titre : la phrase de la voix, en bas au centre (bande y 890 à 980) ---- */
+    #p02-sub { position: absolute; left: 0; top: 896px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 62px/74px "Instrument Sans", sans-serif; letter-spacing: -0.015em; color: #f6efe6; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+    .p02-w { display: inline-block; opacity: 0; color: rgba(246,239,230,.35); }
+    .p02-box { position: relative; display: inline-block; }
+    #p02-boxbg { position: absolute; left: -0.14em; right: -0.14em; top: 0.06em; bottom: 0.02em; background: #c4532a; border-radius: 3px;
+      opacity: 0; transform-origin: 0 50%; }
+    .p02-box .p02-w { position: relative; color: rgba(245,239,228,.35); text-shadow: none; }
+
+    /* ---- grain 5 % ---- */
+    #p02-grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: .05; mix-blend-mode: overlay;
+      background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+  </style>
+
+  <div id="root" data-composition-id="02-table-de-six" data-width="1920" data-height="1080" data-duration="4.44">
+    <div id="p02-room" class="clip" data-start="0" data-duration="4.44" data-track-index="0" data-layout-allow-overflow></div>
+
+    <div id="p02-hud" class="clip" data-start="0" data-duration="4.44" data-track-index="1">
+      <div id="p02-clock"><span class="p02-dg">20:</span><span class="p02-dg"><span id="p02-tens" class="p02-strip"><b>4</b><b>5</b></span></span><span class="p02-dg"><span id="p02-ones" class="p02-strip"><b>7</b><b>2</b><b>8</b></span></span></div>
+      <div id="p02-sub"><span class="p02-w">La</span> <span class="p02-w">table</span> <span class="p02-w">de</span> <span class="p02-box"><i id="p02-boxbg"></i><span class="p02-w">six</span></span> <span class="p02-w">ne</span> <span class="p02-w">viendra</span> <span class="p02-w">pas.</span></div>
+    </div>
+
+    <div id="p02-grainclip" class="clip" data-start="0" data-duration="4.44" data-track-index="2" data-layout-ignore>
+      <div id="p02-grain"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "02-table-de-six";
+
+/* ===================== SALLE : début du kit JS à copier ===================== */
+var SALLE = (function () {
+  var T = [
+    { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+    { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+    { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+    { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+    { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+  ];
+  var GEO = {
+    r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+    r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+    s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+    rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+      plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+  };
+  function el(parent, cls, css, html) {
+    var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  }
+  // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+  // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+  // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+  function build(container, opts) {
+    opts = opts || {};
+    var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+    var world = el(cam, "sl-world");
+    el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+    var pass = el(world, "sl-pass");
+    for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+    var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+    el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+    var tables = {};
+    T.forEach(function (t) {
+      var g = GEO[t.k];
+      var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+      var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+      o.halo = el(d, "sl-halo");
+      g.chairs.forEach(function (c) {
+        var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+        el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+        o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+      });
+      o.top = el(d, "sl-top");
+      g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+      o.topoff = el(d, "sl-topoff");
+      o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+      o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+      o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+      o.free = el(d, "sl-tag sl-free", "", "Libérée");
+      el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+      tables[t.id] = o;
+    });
+    return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+  }
+  // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+  function cam(world, c) {
+    world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+    world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+  }
+  // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+  function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+  // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+  function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+  return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+})();
+/* ===================== SALLE : fin du kit JS à copier ===================== */
+
+      var byId = function (id) { return document.getElementById(id); };
+      function mk(parent, cls) { var d = document.createElement("div"); d.className = cls; parent.appendChild(d); return d; }
+
+      /* ===== la salle : construite par le kit, toutes les tables allumées, chevalets visibles ===== */
+      var W = SALLE.build(byId("p02-room"), { light: false });
+      var world = W.world, tb = W.tables;
+      world.setAttribute("data-layout-allow-overflow", "");
+      for (var k in tb) tb[k].tent.style.opacity = 1;
+      tb[12].tent.textContent = "RÉSERVÉ · SAM. 20:00";
+      tb[7].tent.innerHTML = 'MARTIN ×6<span class="p02-tlay p02-tember">MARTIN ×6</span><span class="p02-tlay p02-toff">MARTIN ×6</span>';
+      tb[7].tent.style.transformOrigin = "50% 100%";
+      var t7 = tb[7], t12 = tb[12];
+      var t7num = t7.el.querySelector(".sl-tnum");
+      var tEmber = t7.tent.querySelector(".p02-tember"), tOff = t7.tent.querySelector(".p02-toff");
+
+      /* objets de la séquence, ajoutés au monde (au-dessus des tables) */
+      var napWrap = mk(world, "p02-napwrap"); mk(napWrap, "p02-nap");
+      var smk12 = mk(mk(world, "p02-smk p02-smk12"), "p02-smki");
+      var smk7 = mk(mk(world, "p02-smk p02-smk7"), "p02-smki");
+      var smk7b = mk(mk(world, "p02-smk p02-smk7b"), "p02-smki");
+      var arm = mk(world, "p02-arm");
+      var armRot = mk(arm, "p02-armrot");
+      var hand = mk(armRot, "p02-hand");
+      var sleeve = mk(armRot, "p02-sleeve");
+
+      /* ===== caméra : UN proxy, appliqué par SALLE.cam dans le seul onUpdate ===== */
+      var cam = { cx: 940, cy: 1180, s: 1.8, blur: 8, dx: 0 };
+      function render() { SALLE.cam(world, cam); }
+      var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
+      var NF = { immediateRender: false };
+      function ft(target, from, to, at) { tl.fromTo(target, from, Object.assign({}, NF, to), at); }
+
+      /* handoff_in : cam(940, 1180, 1.8) flou 8, en plein cran avant ; fin du cran expo.out sur 3.1 à 0.30 */
+      tl.fromTo(cam, { s: 1.8, blur: 8 }, { s: 3.1, blur: 0, duration: 0.3, ease: "expo.out" }, 0);
+      /* dérive avant 3.1 → 3.2 et latérale −10 u/s, de 0.30 à 2.55 */
+      ft(cam, { s: 3.1, cx: 940 }, { s: 3.2, cx: 917.5, duration: 2.25, ease: "none" }, 0.3);
+      /* 2.55 à 2.85 : filé vers T7 (expo.inOut), flou 0 → 10 → 0 calé sur le pic de vitesse */
+      ft(cam, { cx: 917.5, cy: 1180, s: 3.2 }, { cx: 1560, cy: 800, s: 1.6, duration: 0.3, ease: "expo.inOut" }, 2.55);
+      ft(cam, { blur: 0 }, { blur: 10, duration: 0.15, ease: "expo.in" }, 2.55);
+      ft(cam, { blur: 10 }, { blur: 0, duration: 0.15, ease: "expo.out" }, 2.7);
+      /* dérive arrière 1.6 → 1.55 de 2.85 à 4.20 */
+      ft(cam, { s: 1.6 }, { s: 1.55, duration: 1.35, ease: "none" }, 2.85);
+      /* 4.20 à 4.44 : filé vers la droite (accélération, +1800 u/s à la couture), flou 0 → 8 */
+      var whipIn = function (p) { return Math.pow(p, 1.8); };
+      ft(cam, { cx: 1560, cy: 800, s: 1.55 }, { cx: 1800, cy: 720, s: 1.2, duration: 0.24, ease: whipIn }, 4.2);
+      ft(cam, { blur: 0 }, { blur: 8, duration: 0.21, ease: "power2.in" }, 4.2);
+
+      /* profondeur de champ : les tables voisines de T7 se floutent (≈ 4 px écran) pendant le filé, se rendent nettes au départ */
+      for (var id in tb) {
+        if (+id === 7) continue;
+        ft(tb[id].el, { filter: "blur(0px)" }, { filter: "blur(2.5px)", duration: 0.3, ease: "power2.inOut" }, 2.55);
+        ft(tb[id].el, { filter: "blur(2.5px)" }, { filter: "blur(0px)", duration: 0.22, ease: "power2.in" }, 4.2);
+      }
+
+      /* flamme qui vacille : suite déterministe, finie, qui revient à 1 */
+      function flicker(el, t0, t1, amp, seed) {
+        var n = Math.floor((t1 - t0) / 0.1 + 1e-6), prev = 1;
+        for (var i = 0; i < n; i++) {
+          var v = i === n - 1 ? 1 : 1 + amp * (0.6 * Math.sin((i + seed) * 2.1) + 0.4 * Math.sin((i + seed) * 4.7));
+          ft(el, { scale: prev }, { scale: v, duration: 0.1, ease: "sine.inOut" }, t0 + i * 0.1);
+          prev = v;
+        }
+      }
+      function haloBreath(el, t0, t1, seed) {
+        var n = Math.floor((t1 - t0) / 0.2 + 1e-6), prev = 1;
+        for (var i = 0; i < n; i++) {
+          var v = i === n - 1 ? 1 : 0.9 + 0.1 * (0.5 + 0.5 * Math.sin((i + seed) * 1.7));
+          ft(el, { opacity: prev }, { opacity: v, duration: 0.2, ease: "sine.inOut" }, t0 + i * 0.2);
+          prev = v;
+        }
+      }
+
+      /* ===== Scene 1 (0.00 à 2.55) : le gag de la serviette ===== */
+      /* la serviette naît sous le flou du cran (après les 2 images de la couture) */
+      ft(napWrap, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.07);
+      /* 0.30 : « 20:47 » s'imprime, flou → net en 0.1 s */
+      var clock = byId("p02-clock");
+      ft(clock, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.1, ease: "power3.out" }, 0.3);
+      /* 0.50 : la flamme de T12 vacille (jusqu'au filé) */
+      flicker(t12.candle, 0.5, 2.9, 0.07, 0);
+      haloBreath(t12.halo, 0.5, 2.9, 0);
+
+      /* la main : arrive (0.2 s expo.out, flou de bougé), tourne la serviette d'un quart de tour (0.1 s), repart (0.15 s power2.in) */
+      var OFF = { x: 0.3746 * 300, y: -0.9272 * 300 };
+      ft(arm, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none" }, 0.7);
+      function waiter(t0, rotFrom, rotTo, armTwist) {
+        ft(arm, { x: OFF.x, y: OFF.y, rotation: 0 }, { x: 0, y: 0, rotation: 0, duration: 0.2, ease: "expo.out" }, t0);
+        ft(sleeve, { filter: "blur(5px)" }, { filter: "blur(2px)", duration: 0.2, ease: "expo.out" }, t0);
+        ft(hand, { filter: "blur(2.4px)" }, { filter: "blur(0.6px)", duration: 0.2, ease: "expo.out" }, t0);
+        ft(napWrap, { rotation: rotFrom }, { rotation: rotTo, duration: 0.1, ease: "power3.out" }, t0 + 0.2);
+        ft(arm, { rotation: 0 }, { rotation: armTwist, duration: 0.1, ease: "power3.out" }, t0 + 0.2);
+        ft(arm, { x: 0, y: 0, rotation: armTwist }, { x: OFF.x, y: OFF.y, rotation: 0, duration: 0.15, ease: "power2.in" }, t0 + 0.3);
+        ft(sleeve, { filter: "blur(2px)" }, { filter: "blur(5px)", duration: 0.15, ease: "power2.in" }, t0 + 0.3);
+        ft(hand, { filter: "blur(0.6px)" }, { filter: "blur(2.4px)", duration: 0.15, ease: "power2.in" }, t0 + 0.3);
+      }
+      waiter(0.7, 0, 90, 14);
+      /* 1.20 : « 20:47 » → « 20:52 », les chiffres roulent */
+      var tens = byId("p02-tens"), ones = byId("p02-ones");
+      ft(tens, { y: 0 }, { y: -40, duration: 0.25, ease: "power3.out" }, 1.2);
+      ft(ones, { y: 0 }, { y: -40, duration: 0.25, ease: "power3.out" }, 1.2);
+      /* 1.50 : tenue, la flamme et un filet de fumée de la bougie */
+      ft(smk12, { opacity: 0, y: 6, scaleY: 0.5 }, { opacity: 1, y: -8, scaleY: 1, duration: 0.45, ease: "power2.out" }, 1.5);
+      ft(smk12, { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power1.in" }, 1.95);
+      /* 1.80 : la main revient, identique, et remet la serviette dans l'autre sens (le gag) ; 2.10 elle repart */
+      waiter(1.8, 90, 0, -14);
+      /* la manche, hors champ, est retirée avant que le filé ne passe au-dessus d'elle */
+      ft(arm, { opacity: 1 }, { opacity: 0, duration: 0.01, ease: "none" }, 2.3);
+      /* 2.25 : « 20:58 » */
+      ft(ones, { y: -40 }, { y: -80, duration: 0.25, ease: "power3.out" }, 2.25);
+
+      /* ===== Scene 2 (2.55 à 4.44) : la table de six ne viendra pas ===== */
+      /* l'heure s'efface dans le filé ; les chevalets qui tomberaient dans la bande du sous-titre (T12) et le numéro T7 aussi */
+      ft(clock, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.55);
+      ft(t12.tent, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.6);
+      ft(t7num, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.6);
+      /* T7 : sa flamme vit pendant l'attente */
+      flicker(t7.candle, 2.85, 3.6, 0.06, 3);
+      haloBreath(t7.halo, 2.85, 3.65, 2);
+      /* 3.25 sur « six » : le chevalet passe en braise */
+      ft(tEmber, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 3.25);
+      /* 3.64 sur « viendra » : la flamme se couche */
+      ft(t7.candle, { scaleX: 1, scaleY: 1, x: 0 }, { scaleX: 1.5, scaleY: 0.5, x: 5, duration: 0.1, ease: "power2.out" }, 3.64);
+      /* 3.80 : la bougie s'éteint (cœur → gris), halo 1 → 0 en 0.25 s, la nappe s'assombrit, le chevalet passe éteint */
+      ft(t7.candle, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.out" }, 3.8);
+      ft(t7.halo, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.6, duration: 0.25, ease: "power2.out" }, 3.8);
+      ft(t7.topoff, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 3.8);
+      ft(tOff, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 3.8);
+      ft(tEmber, { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.out" }, 3.8);
+      /* 3.90 : un filet de fumée monte (0.6 s) ; il en reste un dernier filet à la couture */
+      ft(smk7, { y: 14, scaleY: 0.35 }, { y: -18, scaleY: 1, duration: 0.6, ease: "power2.out" }, 3.9);
+      ft(smk7, { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "power2.out" }, 3.9);
+      ft(smk7, { opacity: 1 }, { opacity: 0.6, duration: 0.32, ease: "none" }, 4.12);
+      ft(smk7b, { y: 10, scaleY: 0.4 }, { y: -12, scaleY: 1, duration: 0.5, ease: "power2.out" }, 4.0);
+      ft(smk7b, { opacity: 0 }, { opacity: 0.8, duration: 0.2, ease: "power2.out" }, 4.0);
+      /* 4.02 sur « pas » : le chevalet « MARTIN ×6 » tombe à plat */
+      ft(t7.tent, { scaleY: 1 }, { scaleY: 0.2, duration: 0.08, ease: "power2.in" }, 4.02);
+
+      /* ---- sous-titre mot à mot : gris 35 %, y 8 → 0, flou 6 → 0 en 0.14 s, puis couleur pleine en 0.2 s ---- */
+      var words = Array.prototype.slice.call(byId("p02-sub").getElementsByClassName("p02-w"));
+      var CUES = [2.68, 2.87, 3.06, 3.25, 3.45, 3.64, 4.02];
+      var LEAD = 0.03;
+      words.forEach(function (el, i) {
+        var t = CUES[i] - LEAD, inBox = i === 3;
+        ft(el, { opacity: 0, y: 8, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, t);
+        ft(el, { color: inBox ? "rgba(245,239,228,0.35)" : "rgba(246,239,230,0.35)" },
+          { color: inBox ? "#f5efe4" : "#f6efe6", duration: inBox ? 0.1 : 0.2, ease: "power1.inOut" }, t + (inBox ? 0.02 : 0.1));
+      });
+      /* boîte braise sous « six », tracée depuis la gauche, juste avant le mot */
+      ft(byId("p02-boxbg"), { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out" }, 3.2);
+      /* sortie du sous-titre, finie avant les 2 dernières images */
+      ft(byId("p02-sub"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.1, ease: "power2.in" }, 4.29);
+
+      render();
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

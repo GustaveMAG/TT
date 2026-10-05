@@ -1,0 +1,495 @@
+{
+ "duration": 45.0,
+ "words": [
+  {
+   "w": "Samedi",
+   "start": 0.08,
+   "end": 0.82
+  },
+  {
+   "w": "vingt",
+   "start": 0.82,
+   "end": 1.06
+  },
+  {
+   "w": "heures",
+   "start": 1.06,
+   "end": 1.31
+  },
+  {
+   "w": "Ta",
+   "start": 1.99,
+   "end": 2.21
+  },
+  {
+   "w": "salle",
+   "start": 2.21,
+   "end": 2.42
+  },
+  {
+   "w": "est",
+   "start": 2.42,
+   "end": 2.64
+  },
+  {
+   "w": "pleine",
+   "start": 2.64,
+   "end": 2.86
+  },
+  {
+   "w": "sur",
+   "start": 3.46,
+   "end": 3.62
+  },
+  {
+   "w": "le",
+   "start": 3.62,
+   "end": 3.78
+  },
+  {
+   "w": "papier",
+   "start": 3.78,
+   "end": 4.1
+  },
+  {
+   "w": "La",
+   "start": 7.08,
+   "end": 7.27
+  },
+  {
+   "w": "table",
+   "start": 7.27,
+   "end": 7.46
+  },
+  {
+   "w": "de",
+   "start": 7.46,
+   "end": 7.65
+  },
+  {
+   "w": "six",
+   "start": 7.65,
+   "end": 7.85
+  },
+  {
+   "w": "ne",
+   "start": 7.85,
+   "end": 8.04
+  },
+  {
+   "w": "viendra",
+   "start": 8.04,
+   "end": 8.42
+  },
+  {
+   "w": "pas",
+   "start": 8.42,
+   "end": 8.61
+  },
+  {
+   "w": "Ni",
+   "start": 9.06,
+   "end": 9.25
+  },
+  {
+   "w": "la",
+   "start": 9.25,
+   "end": 9.43
+  },
+  {
+   "w": "table",
+   "start": 9.43,
+   "end": 9.62
+  },
+  {
+   "w": "de",
+   "start": 9.62,
+   "end": 9.8
+  },
+  {
+   "w": "quatre",
+   "start": 9.8,
+   "end": 9.99
+  },
+  {
+   "w": "Ce",
+   "start": 10.79,
+   "end": 10.95
+  },
+  {
+   "w": "matin",
+   "start": 10.95,
+   "end": 11.28
+  },
+  {
+   "w": "tu",
+   "start": 11.28,
+   "end": 11.45
+  },
+  {
+   "w": "as",
+   "start": 11.45,
+   "end": 11.61
+  },
+  {
+   "w": "acheté",
+   "start": 11.61,
+   "end": 12.1
+  },
+  {
+   "w": "pour",
+   "start": 12.1,
+   "end": 12.26
+  },
+  {
+   "w": "quarante",
+   "start": 12.26,
+   "end": 12.59
+  },
+  {
+   "w": "couverts",
+   "start": 12.59,
+   "end": 12.92
+  },
+  {
+   "w": "Et",
+   "start": 13.55,
+   "end": 13.73
+  },
+  {
+   "w": "à",
+   "start": 13.73,
+   "end": 13.92
+  },
+  {
+   "w": "vingt-deux",
+   "start": 13.92,
+   "end": 14.29
+  },
+  {
+   "w": "heures",
+   "start": 14.29,
+   "end": 14.47
+  },
+  {
+   "w": "tu",
+   "start": 14.77,
+   "end": 14.92
+  },
+  {
+   "w": "jettes",
+   "start": 14.92,
+   "end": 15.08
+  },
+  {
+   "w": "ce",
+   "start": 15.08,
+   "end": 15.23
+  },
+  {
+   "w": "que",
+   "start": 15.23,
+   "end": 15.39
+  },
+  {
+   "w": "tu",
+   "start": 15.39,
+   "end": 15.54
+  },
+  {
+   "w": "as",
+   "start": 15.54,
+   "end": 15.7
+  },
+  {
+   "w": "cuisiné",
+   "start": 15.7,
+   "end": 16.16
+  },
+  {
+   "w": "pour",
+   "start": 16.77,
+   "end": 16.95
+  },
+  {
+   "w": "personne",
+   "start": 16.95,
+   "end": 17.32
+  },
+  {
+   "w": "Et",
+   "start": 19.22,
+   "end": 19.4
+  },
+  {
+   "w": "si",
+   "start": 19.4,
+   "end": 19.59
+  },
+  {
+   "w": "chaque",
+   "start": 19.59,
+   "end": 19.96
+  },
+  {
+   "w": "table",
+   "start": 19.96,
+   "end": 20.14
+  },
+  {
+   "w": "réservée",
+   "start": 20.14,
+   "end": 20.7
+  },
+  {
+   "w": "était",
+   "start": 20.7,
+   "end": 21.07
+  },
+  {
+   "w": "une",
+   "start": 21.07,
+   "end": 21.25
+  },
+  {
+   "w": "table",
+   "start": 21.25,
+   "end": 21.44
+  },
+  {
+   "w": "tenue",
+   "start": 21.44,
+   "end": 21.81
+  },
+  {
+   "w": "Couvert",
+   "start": 23.15,
+   "end": 23.5
+  },
+  {
+   "w": "prend",
+   "start": 23.5,
+   "end": 23.68
+  },
+  {
+   "w": "tes",
+   "start": 23.68,
+   "end": 23.86
+  },
+  {
+   "w": "réservations",
+   "start": 23.86,
+   "end": 24.57
+  },
+  {
+   "w": "jour",
+   "start": 24.79,
+   "end": 25.01
+  },
+  {
+   "w": "et",
+   "start": 25.01,
+   "end": 25.22
+  },
+  {
+   "w": "nuit",
+   "start": 25.22,
+   "end": 25.44
+  },
+  {
+   "w": "Il",
+   "start": 25.96,
+   "end": 26.18
+  },
+  {
+   "w": "confirme",
+   "start": 26.18,
+   "end": 26.61
+  },
+  {
+   "w": "chaque",
+   "start": 26.61,
+   "end": 27.04
+  },
+  {
+   "w": "table",
+   "start": 27.04,
+   "end": 27.25
+  },
+  {
+   "w": "la",
+   "start": 27.25,
+   "end": 27.46
+  },
+  {
+   "w": "veille",
+   "start": 27.46,
+   "end": 27.68
+  },
+  {
+   "w": "par",
+   "start": 27.83,
+   "end": 27.95
+  },
+  {
+   "w": "SMS",
+   "start": 28.13,
+   "end": 28.76
+  },
+  {
+   "w": "Une",
+   "start": 29.34,
+   "end": 29.48
+  },
+  {
+   "w": "annulation",
+   "start": 29.48,
+   "end": 30.04
+  },
+  {
+   "w": "La",
+   "start": 30.44,
+   "end": 30.62
+  },
+  {
+   "w": "place",
+   "start": 30.62,
+   "end": 30.79
+  },
+  {
+   "w": "repart",
+   "start": 30.79,
+   "end": 31.15
+  },
+  {
+   "w": "aussitôt",
+   "start": 31.15,
+   "end": 31.68
+  },
+  {
+   "w": "à",
+   "start": 31.68,
+   "end": 31.86
+  },
+  {
+   "w": "la",
+   "start": 31.86,
+   "end": 32.04
+  },
+  {
+   "w": "liste",
+   "start": 32.04,
+   "end": 32.21
+  },
+  {
+   "w": "d'attente",
+   "start": 32.21,
+   "end": 32.57
+  },
+  {
+   "w": "Et",
+   "start": 33.2,
+   "end": 33.35
+  },
+  {
+   "w": "le",
+   "start": 33.35,
+   "end": 33.5
+  },
+  {
+   "w": "matin",
+   "start": 33.5,
+   "end": 33.79
+  },
+  {
+   "w": "tu",
+   "start": 34.08,
+   "end": 34.26
+  },
+  {
+   "w": "sais",
+   "start": 34.26,
+   "end": 34.44
+  },
+  {
+   "w": "exactement",
+   "start": 34.44,
+   "end": 35.15
+  },
+  {
+   "w": "pour",
+   "start": 35.15,
+   "end": 35.32
+  },
+  {
+   "w": "combien",
+   "start": 35.32,
+   "end": 35.68
+  },
+  {
+   "w": "tu",
+   "start": 35.68,
+   "end": 35.86
+  },
+  {
+   "w": "cuisines",
+   "start": 35.86,
+   "end": 36.21
+  },
+  {
+   "w": "Couvert",
+   "start": 37.33,
+   "end": 37.79
+  },
+  {
+   "w": "Ta",
+   "start": 38.27,
+   "end": 38.55
+  },
+  {
+   "w": "salle",
+   "start": 38.55,
+   "end": 38.82
+  },
+  {
+   "w": "pleine",
+   "start": 39.17,
+   "end": 39.42
+  },
+  {
+   "w": "pour",
+   "start": 39.42,
+   "end": 39.67
+  },
+  {
+   "w": "de",
+   "start": 39.67,
+   "end": 39.91
+  },
+  {
+   "w": "vrai",
+   "start": 39.91,
+   "end": 40.16
+  },
+  {
+   "w": "Essaie-le",
+   "start": 40.81,
+   "end": 41.13
+  },
+  {
+   "w": "gratuitement",
+   "start": 41.13,
+   "end": 41.78
+  },
+  {
+   "w": "un",
+   "start": 42.07,
+   "end": 42.25
+  },
+  {
+   "w": "mois",
+   "start": 42.25,
+   "end": 42.43
+  }
+ ]
+}

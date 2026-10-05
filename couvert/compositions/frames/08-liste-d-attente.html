@@ -1,0 +1,398 @@
+<template>
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ===================== SALLE : début du bloc CSS à copier ===================== */
+  .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+  .sl-cam.sl-light { background: #f5efe4; }
+  .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+  .sl-abs { position: absolute; }
+  .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+    repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+  .sl-light .sl-floor { background:
+    repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+  .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+  .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+  .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+  .sl-light .sl-wall { border: 6px solid #1c1612; }
+  .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+  .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+  .sl-light .sl-lamp { display: none; }
+  .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+  .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+  .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+  .sl-light .sl-board { background: #d6c3a3; }
+  .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+  .sl-light .sl-label { color: #5c5348; }
+  .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+  .sl-table { position: absolute; }
+  .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+  .sl-light .sl-halo { display: none; }
+  .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+  .sl-light .sl-chair { background: #d9cfbf; }
+  .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+  .sl-light .sl-guest { background: #8a7564; }
+  .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+  .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+  .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+  .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+  .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+  .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+  .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+  .sl-wick { background: #6b625b; }
+  .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+  .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+  .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+    background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+  .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+    padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+  .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+  .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+  .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+  .sl-light .sl-tnum { color: #5c5348; }
+  /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+    /* ---- couches ---- */
+    #p08-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #f5efe4; }
+    #p08-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Instrument Sans", sans-serif; }
+    #p08-subs { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #p08-grainclip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; }
+    #p08-grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: .03; mix-blend-mode: overlay;
+      background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+
+    /* ---- le téléphone (même appareil que la séquence 7) : 420 x 860 à l'échelle 0,9, haut à y 30 ---- */
+    #p08-phone { position: absolute; left: 1150px; top: 30px; width: 420px; height: 860px; }
+    #p08-phonebody { position: absolute; left: 0; top: 0; width: 420px; height: 860px; border-radius: 64px; background: #111; padding: 14px; box-sizing: border-box;
+      transform: scale(.9); transform-origin: 50% 0; box-shadow: 0 50px 110px rgba(60,40,20,.35), 0 0 0 2px #2a2a2a; }
+    #p08-screen { width: 100%; height: 100%; border-radius: 52px; background: #fff; overflow: hidden; position: relative; font-family: "Instrument Sans", sans-serif; }
+    #p08-island { position: absolute; left: 50%; top: 14px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: #000; z-index: 2; }
+    #p08-head { position: absolute; left: 0; right: 0; top: 70px; text-align: center; font: 600 22px "Instrument Sans", sans-serif; color: #111; z-index: 2; }
+    .p08-thread { position: absolute; left: 0; top: 0; width: 392px; height: 832px; }
+    #p08-thnew { opacity: 0; }
+    .p08-in { position: absolute; left: 22px; max-width: 320px; background: #e9e9eb; color: #111; font: 500 25px/1.3 "Instrument Sans", sans-serif; padding: 14px 20px; border-radius: 26px; box-sizing: content-box; transform-origin: 0 100%; }
+    .p08-out { position: absolute; right: 22px; background: #0b84fe; color: #fff; font: 500 25px/1.3 "Instrument Sans", sans-serif; padding: 14px 20px; border-radius: 26px; box-sizing: content-box; transform-origin: 100% 100%; }
+    .p08-dist { position: absolute; right: 26px; font: 500 17px "Instrument Sans", sans-serif; color: #8e8e93; }
+    #p08-bin, #p08-bout { opacity: 0; }
+
+    /* ---- la carte « LISTE D'ATTENTE », à droite du plan large (marges égales) ---- */
+    #p08-cline { position: absolute; left: 1450px; top: 424px; width: 418px; height: 2px; background: #1c1612; transform-origin: 0 50%; opacity: 0; }
+    #p08-card { position: absolute; left: 1450px; top: 200px; width: 418px; height: 450px; background: #fffdf8; border-radius: 14px;
+      box-shadow: 0 30px 80px rgba(60,40,20,.14), 0 2px 6px rgba(60,40,20,.08), inset 0 0 0 1px #ddd2c2; opacity: 0; }
+    #p08-ctitle { position: absolute; left: 32px; top: 36px; font: 400 18px "Space Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #5c5348; white-space: nowrap; opacity: 0; }
+    .p08-row { position: absolute; left: 26px; width: 366px; height: 90px; border-radius: 14px; background: #f6f1e8; box-sizing: border-box; padding: 0 22px;
+      display: flex; align-items: center; white-space: nowrap; opacity: 0; }
+    .p08-nm { font: 600 28px "Instrument Sans", sans-serif; color: #1c1612; }
+    .p08-pp { font: 500 22px "Instrument Sans", sans-serif; color: #5c5348; margin-left: 8px; }
+
+    /* ---- la ligne Dubois qui file vers T4 (et devient son étiquette) ---- */
+    #p08-fly { position: absolute; left: 1476px; top: 300px; width: 366px; height: 90px; opacity: 0; }
+    #p08-flyrow { position: absolute; left: 0; top: 0; width: 366px; height: 90px; border-radius: 14px; background: #f6f1e8; box-sizing: border-box; padding: 0 22px;
+      display: flex; align-items: center; white-space: nowrap; transform-origin: 50% 50%; box-shadow: 0 0 0 rgba(196,83,42,0); }
+    #p08-arrow { position: absolute; right: 22px; top: 0; height: 90px; display: flex; align-items: center; font: 600 28px "Instrument Sans", sans-serif; color: #fff; opacity: 0; }
+    #p08-flytag { position: absolute; left: 50%; top: 50%; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+      padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); transform-origin: 50% 50%; opacity: 0; }
+
+    /* ---- sous-titre : bas centre, bande y 890 à 980, mot à mot ---- */
+    .p08-sub { position: absolute; left: 0; width: 1920px; top: 896px; text-align: center; white-space: nowrap;
+      font: 600 62px/74px "Instrument Sans", sans-serif; letter-spacing: -0.015em; color: #1c1612; text-shadow: 0 2px 16px rgba(245,239,228,.9); }
+    .p08-w { display: inline-block; opacity: 0; color: rgba(28,22,18,.35); }
+    .p08-box { position: relative; display: inline-block; margin: 0 0.14em; }
+    .p08-boxbg { position: absolute; left: -0.14em; right: -0.14em; top: 0.06em; bottom: 0.02em; background: #c4532a; border-radius: 3px; transform-origin: 0 50%; opacity: 0; }
+    .p08-box .p08-w { position: relative; color: rgba(245,239,228,.35); text-shadow: none; }
+  </style>
+
+  <div id="root" data-composition-id="08-liste-d-attente" data-width="1920" data-height="1080" data-duration="3.84">
+    <div id="p08-ground" class="clip" data-start="0" data-duration="3.84" data-track-index="0" data-layout-allow-overflow></div>
+
+    <div id="p08-stage" class="clip" data-start="0" data-duration="3.84" data-track-index="1">
+      <div id="p08-phone">
+        <div id="p08-phonebody">
+          <div id="p08-screen">
+            <div id="p08-island"></div>
+            <div id="p08-head">Couvert</div>
+            <div id="p08-thold" class="p08-thread">
+              <div class="p08-in" style="top:160px">Bonjour Martin, votre table pour 6 demain à 20 h. Répondez OUI pour confirmer.</div>
+              <div class="p08-out" style="top:360px;max-width:200px">OUI</div>
+              <div class="p08-dist" style="top:432px">Distribué</div>
+            </div>
+            <div id="p08-thnew" class="p08-thread">
+              <div id="p08-bin" class="p08-in" style="top:160px">Bonjour, votre table pour 4 demain à 20 h 30. Répondez OUI pour confirmer.</div>
+              <div id="p08-bout" class="p08-out" style="top:360px;max-width:300px">Désolés, on ne pourra pas venir.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="p08-cline"></div>
+      <div id="p08-card">
+        <div id="p08-ctitle">Liste d'attente</div>
+        <div id="p08-r0" class="p08-row" style="top:100px"><span class="p08-nm">Dubois</span><span class="p08-pp">· 4 pers.</span></div>
+        <div id="p08-r1" class="p08-row" style="top:210px"><span class="p08-nm">Morel</span><span class="p08-pp">· 6 pers.</span></div>
+        <div id="p08-r2" class="p08-row" style="top:320px"><span class="p08-nm">Leroy</span><span class="p08-pp">· 2 pers.</span></div>
+      </div>
+
+      <div id="p08-fly">
+        <div id="p08-flyrow"><span id="p08-flynm" class="p08-nm">Dubois</span><span id="p08-flypp" class="p08-pp">· 4 pers.</span><span id="p08-arrow">→ T4</span></div>
+        <div id="p08-flytag"><span class="sl-tick">✓</span>Confirmé</div>
+      </div>
+    </div>
+
+    <div id="p08-subs" class="clip" data-start="0" data-duration="3.84" data-track-index="2">
+      <div id="p08-s1" class="p08-sub"><span class="p08-w">Une</span> <span class="p08-box"><i id="p08-box1" class="p08-boxbg"></i><span class="p08-w">annulation</span></span> <span class="p08-w">?</span></div>
+      <div id="p08-s2" class="p08-sub"><span class="p08-w">La</span> <span class="p08-w">place</span> <span class="p08-w">repart</span> <span class="p08-w">aussitôt</span> <span class="p08-w">à</span> <span class="p08-w">la</span> <span class="p08-box"><i id="p08-box2" class="p08-boxbg"></i><span class="p08-w">liste</span> <span class="p08-w">d'attente</span></span><span class="p08-w">.</span></div>
+    </div>
+
+    <div id="p08-grainclip" class="clip" data-start="0" data-duration="3.84" data-track-index="3" data-layout-ignore>
+      <div id="p08-grain"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "08-liste-d-attente";
+        var DUR = 3.84;
+
+/* ===================== SALLE : début du kit JS à copier ===================== */
+var SALLE = (function () {
+  var T = [
+    { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+    { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+    { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+    { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+    { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+  ];
+  var GEO = {
+    r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+    r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+    s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+    rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+      plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+  };
+  function el(parent, cls, css, html) {
+    var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  }
+  // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+  // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+  // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+  function build(container, opts) {
+    opts = opts || {};
+    var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+    var world = el(cam, "sl-world");
+    el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+    var pass = el(world, "sl-pass");
+    for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+    var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+    el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+    var tables = {};
+    T.forEach(function (t) {
+      var g = GEO[t.k];
+      var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+      var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+      o.halo = el(d, "sl-halo");
+      g.chairs.forEach(function (c) {
+        var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+        el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+        o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+      });
+      o.top = el(d, "sl-top");
+      g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+      o.topoff = el(d, "sl-topoff");
+      o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+      o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+      o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+      o.free = el(d, "sl-tag sl-free", "", "Libérée");
+      el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+      tables[t.id] = o;
+    });
+    return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+  }
+  // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+  function cam(world, c) {
+    world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+    world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+  }
+  // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+  function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+  // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+  function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+  return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+})();
+/* ===================== SALLE : fin du kit JS à copier ===================== */
+
+        var byId = function (id) { return document.getElementById(id); };
+        var toArr = function (list) { return Array.prototype.slice.call(list); };
+
+        /* ---- le monde : plan clair ; à t=0, dix tables portent « Confirmé » (toutes sauf T9, T11, T13, T14) ---- */
+        var W = SALLE.build(byId("p08-ground"), { light: true });
+        var TB = W.tables;
+        var WAIT = { 9: 1, 11: 1, 13: 1, 14: 1 };
+        for (var id in TB) { if (!WAIT[id]) TB[id].tag.style.opacity = 1; }
+
+        /* centre de l'étiquette de T4 dans le monde (x = centre de la table ; y mesuré une fois) */
+        var t4 = TB[4];
+        var TAGX = 2320;
+        var TAGY = (480 - 90) + t4.tag.offsetTop + (t4.tag.offsetHeight || 41) / 2;
+
+        /* ---- caméra : UN objet, appliqué dans UN onUpdate ---- */
+        var C = { cx: 2000, cy: 640, s: 1.25, blur: 8, dx: 0 };
+        /* plan large : cam(1640, 1080, 0.5), décalé à gauche : le mur gauche (x 290) à l'écran x 58, la carte à droite
+           (x 1450 à 1868) : marges ~52 px de chaque côté pendant la dérive */
+        var WIDE = { cx: 1640, cy: 1080, s: 0.5, dx: -227 };
+        var END = { cx: 1100, cy: 1500, s: 1.0, dx: 0, blur: 10 };
+
+        /* ---- la ligne Dubois en vol : progression p, survol lift, rotation, échelle de la ligne sc, échelle de l'étiquette ts ---- */
+        var F = { p: 0, lift: 1, rot: 0, sc: 1, ts: 2.3 };
+        var fly = byId("p08-fly"), flyRow = byId("p08-flyrow"), flyTag = byId("p08-flytag");
+        var S0X = 1476 + 183, S0Y = 300 + 45; /* centre de la ligne Dubois dans la carte */
+
+        function render() {
+          SALLE.cam(W.world, C);
+          var tg = SALLE.toScreen(C, TAGX, TAGY);
+          var tx = (tg[0] - S0X) * F.p;
+          var ty = (tg[1] - 26 * F.lift - S0Y) * F.p;
+          fly.style.transform = "translate(" + tx.toFixed(2) + "px," + ty.toFixed(2) + "px) rotate(" + F.rot.toFixed(3) + "deg)";
+          flyRow.style.transform = "scale(" + F.sc.toFixed(4) + ")";
+          flyTag.style.transform = "translate(-50%,-50%) scale(" + (C.s * F.ts).toFixed(4) + ")";
+        }
+
+        var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
+
+        /* outil : bascule instantanée (aucun rendu avant son heure) */
+        function at(el, from, to, t) {
+          to.duration = 0.001; to.ease = "none"; to.immediateRender = false;
+          tl.fromTo(el, from, to, t);
+        }
+
+        /* =========================== CAMÉRA =========================== */
+        /* 0.00 à 0.25 : fin du filé sur T4, plan flou 8 → 6 px */
+        tl.fromTo(C, { cx: 2000, cy: 640, s: 1.25, blur: 8 }, { cx: 2320, cy: 560, s: 1.3, blur: 6, duration: 0.25, ease: "power3.out" }, 0);
+        /* 0.25 à 1.05 : dérive avant 1,3 → 1,35 */
+        tl.fromTo(C, { s: 1.3 }, { s: 1.35, duration: 0.8, ease: "none", immediateRender: false }, 0.25);
+        /* 1.05 à 1.25 : départ du recul */
+        tl.fromTo(C, { cx: 2320, cy: 560, s: 1.35, dx: 0 }, { cx: 2250, cy: 600, s: 1.15, dx: -20, duration: 0.2, ease: "power2.in", immediateRender: false }, 1.05);
+        /* 1.25 à 1.70 : recul (expo.out) sur le plan large décalé à gauche ; le plan redevient net */
+        tl.fromTo(C, { cx: 2250, cy: 600, s: 1.15, dx: -20, blur: 6 },
+          { cx: WIDE.cx, cy: WIDE.cy, s: WIDE.s, dx: WIDE.dx, blur: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, 1.25);
+        /* 1.70 à 3.60 : dérive latérale +12 u/s */
+        tl.fromTo(C, { cx: WIDE.cx }, { cx: WIDE.cx + 12 * 1.9, duration: 1.9, ease: "none", immediateRender: false }, 1.7);
+        /* 3.60 à 3.84 : travelling vers le bas-gauche (la cuisine), power2.in, flou 0 → 10 px */
+        tl.fromTo(C, { cx: WIDE.cx + 12 * 1.9, cy: WIDE.cy, s: WIDE.s, dx: WIDE.dx, blur: 0 },
+          { cx: END.cx, cy: END.cy, s: END.s, dx: END.dx, blur: END.blur, duration: 0.24, ease: "power2.in", immediateRender: false }, 3.6);
+
+        /* =========================== SCENE 1 : le téléphone, une annulation =========================== */
+        var phone = byId("p08-phone");
+        /* le téléphone finit sa glissade vers la droite avec la caméra, puis respire à peine */
+        tl.fromTo(phone, { x: 0 }, { x: 30, duration: 0.25, ease: "power3.out" }, 0);
+        tl.fromTo(phone, { y: 0 }, { y: -6, duration: 0.75, ease: "none", immediateRender: false }, 0.25);
+        /* le fil de T4 glisse à la place de celui de Martin (0,1 s) */
+        tl.fromTo("#p08-thold", { x: 0, opacity: 1 }, { x: -392, opacity: 0.4, duration: 0.1, ease: "power2.inOut", immediateRender: false }, 0.12);
+        tl.fromTo("#p08-thnew", { x: 392, opacity: 1 }, { x: 0, opacity: 1, duration: 0.1, ease: "power2.inOut", immediateRender: false }, 0.12);
+        /* 0.29 la bulle entrante ; 0.43 la réponse « Désolés, on ne pourra pas venir. » */
+        tl.fromTo("#p08-bin", { opacity: 0, scale: 0.9, y: 12 }, { opacity: 1, scale: 1, y: 0, duration: 0.18, ease: "power3.out", immediateRender: false }, 0.28);
+        tl.fromTo("#p08-bout", { opacity: 0, scale: 0.9, y: 12 }, { opacity: 1, scale: 1, y: 0, duration: 0.18, ease: "power3.out", immediateRender: false }, 0.42);
+        /* 0.70 derrière, l'étiquette de T4 passe à « Libérée » (contour braise, 0,12 s) */
+        tl.fromTo(t4.tag, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.out", immediateRender: false }, 0.7);
+        tl.fromTo(t4.free, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.12, ease: "expo.out", immediateRender: false }, 0.7);
+        /* 1.00 le téléphone part vers le haut (0,2 s power2.in) */
+        tl.fromTo(phone, { y: -6, filter: "blur(0px)" }, { y: -1000, filter: "blur(10px)", duration: 0.2, ease: "power2.in", immediateRender: false }, 1.0);
+
+        /* =========================== SCENE 2 : la liste d'attente =========================== */
+        /* 1.40 la carte s'ouvre : un trait de 2 px qui s'ouvre en panneau (0,22 s) */
+        tl.fromTo("#p08-cline", { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, 1.4);
+        tl.fromTo("#p08-card", { opacity: 1, scaleY: 2 / 450 }, { opacity: 1, scaleY: 1, duration: 0.13, ease: "expo.out", immediateRender: false }, 1.49);
+        tl.fromTo("#p08-cline", { opacity: 1 }, { opacity: 0, duration: 0.06, ease: "power1.in", immediateRender: false }, 1.5);
+        /* ses trois lignes */
+        tl.fromTo("#p08-ctitle", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.14, ease: "power3.out", immediateRender: false }, 1.54);
+        ["#p08-r0", "#p08-r1", "#p08-r2"].forEach(function (sel, i) {
+          tl.fromTo(sel, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.14, ease: "power3.out", immediateRender: false }, 1.57 + i * 0.04);
+        });
+
+        /* 1.74 sur « repart » : la ligne Dubois se détache (×1,1, braise) — la ligne volante prend sa place au pixel */
+        at("#p08-r0", { opacity: 1 }, { opacity: 0 }, 1.74);
+        at(fly, { opacity: 0 }, { opacity: 1 }, 1.74);
+        tl.fromTo(F, { sc: 1 }, { sc: 1.1, duration: 0.16, ease: "power3.out", immediateRender: false }, 1.74);
+        tl.fromTo(flyRow, { backgroundColor: "#f6f1e8", boxShadow: "0 0px 0px rgba(196,83,42,0)" },
+          { backgroundColor: "#c4532a", boxShadow: "0 20px 40px rgba(196,83,42,0.35)", duration: 0.16, ease: "power3.out", immediateRender: false }, 1.74);
+        tl.fromTo("#p08-flynm", { color: "#1c1612" }, { color: "#ffffff", duration: 0.16, ease: "power3.out", immediateRender: false }, 1.74);
+        tl.fromTo("#p08-flypp", { color: "#5c5348" }, { color: "rgba(255,255,255,0.85)", duration: 0.16, ease: "power3.out", immediateRender: false }, 1.74);
+        tl.fromTo("#p08-arrow", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.16, ease: "power3.out", immediateRender: false }, 1.8);
+
+        /* 2.10 sur « aussitôt » : elle file vers T4 (0,3 s expo.out, flou de bougé 6 px, rotation −6° → 0) */
+        tl.fromTo(F, { rot: 0 }, { rot: -6, duration: 0.04, ease: "power2.in", immediateRender: false }, 2.06);
+        tl.fromTo(F, { p: 0, sc: 1.1, rot: -6 }, { p: 1, sc: 0.5, rot: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, 2.1);
+        tl.fromTo(fly, { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false }, 2.1);
+
+        /* 2.45 elle se pose sur T4 et devient son étiquette « Confirmé » (même nœud, rétrécit en 0,05 s) */
+        tl.fromTo(F, { lift: 1, sc: 0.5, ts: 2.3 }, { lift: 0, sc: 0.2, ts: 1, duration: 0.05, ease: "power2.out", immediateRender: false }, 2.45);
+        tl.fromTo(flyRow, { opacity: 1 }, { opacity: 0, duration: 0.05, ease: "none", immediateRender: false }, 2.45);
+        tl.fromTo(flyTag, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none", immediateRender: false }, 2.45);
+        tl.fromTo(t4.free, { opacity: 1 }, { opacity: 0, duration: 0.05, ease: "none", immediateRender: false }, 2.45);
+        /* l'étiquette du monde prend le relais, au même pixel (elle suit la dérive de la caméra) */
+        at(t4.tag, { opacity: 0 }, { opacity: 1 }, 2.52);
+        at(fly, { opacity: 1 }, { opacity: 0 }, 2.52);
+
+        /* 2.60 Morel et Leroy remontent d'un cran (FLIP 0,2 s) */
+        tl.fromTo(["#p08-r1", "#p08-r2"], { y: 0 }, { y: -110, duration: 0.2, ease: "power3.out", immediateRender: false }, 2.6);
+
+        /* 3.00 T9, T11, T13, T14 reçoivent leur étiquette (0,1 s d'écart) : les 14 tables */
+        [9, 11, 13, 14].forEach(function (n, i) {
+          tl.fromTo(TB[n].tag, { opacity: 0, scale: 1.6, y: -30, filter: "blur(6px)" },
+            { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.12, ease: "expo.out", immediateRender: false }, 3.0 + i * 0.1);
+        });
+
+        /* 3.55 la carte sort par la droite */
+        tl.fromTo("#p08-card", { x: 0 }, { x: 520, duration: 0.2, ease: "power2.in", immediateRender: false }, 3.55);
+
+        /* =========================== SOUS-TITRES (mot à mot) =========================== */
+        var INK = "#1c1612", INK_G = "rgba(28,22,18,0.35)", PAPER = "#f5efe4", PAPER_G = "rgba(245,239,228,0.35)";
+        function word(el, t, inBox) {
+          tl.fromTo(el, { opacity: 0, y: 8, filter: "blur(6px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out", immediateRender: false }, t);
+          tl.fromTo(el, { color: inBox ? PAPER_G : INK_G }, { color: inBox ? PAPER : INK, duration: 0.2, ease: "power1.inOut", immediateRender: false }, t + 0.1);
+        }
+        function box(el, t) {
+          tl.fromTo(el, { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out", immediateRender: false }, t);
+        }
+        function leave(el, t) {
+          tl.fromTo(el, { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -10, filter: "blur(4px)", duration: 0.12, ease: "power2.in", immediateRender: false }, t);
+        }
+        var E = 1 / 30; /* un mot paraît une image avant son repère, jamais après */
+
+        /* « Une [annulation] ? » : Une 0.29, boîte 0.41, annulation 0.43 */
+        var w1 = toArr(byId("p08-s1").getElementsByClassName("p08-w"));
+        word(w1[0], 0.29 - E);
+        box(byId("p08-box1"), 0.43 - 2 * E);
+        word(w1[1], 0.43 - E, true);
+        word(w1[2], 0.43 - E);
+        leave(byId("p08-s1"), 1.1);
+
+        /* « La place repart aussitôt à la [liste d'attente]. » */
+        var w2 = toArr(byId("p08-s2").getElementsByClassName("p08-w"));
+        var CUE2 = [1.39, 1.57, 1.74, 2.10, 2.63, 2.81, 2.99, 3.16, 3.16];
+        for (var i = 0; i < w2.length; i++) word(w2[i], CUE2[i] - E, i === 6 || i === 7);
+        box(byId("p08-box2"), 2.99 - 2 * E);
+        leave(byId("p08-s2"), 3.68);
+
+        render();
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FID] = tl;
+      })();
+    </script>
+  </div>
+</template>

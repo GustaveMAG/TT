@@ -1,0 +1,204 @@
+<template>
+    <style>
+      @font-face {
+        font-family: "Instrument Sans";
+        src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+        font-display: block;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---- fond : le noir (canvas de frame.md), plein cadre, sur un clip dédié ---- */
+      #p05-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #100c0a; }
+
+      /* ---- scène : la question (moment typographique) et la bougie de T12 ---- */
+      #p05-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+      /* frame.md typography.type : Instrument Sans 600, 84 px, interligne 1.12, -0.025em, ink ; centrée, deux lignes,
+         haut de la ligne 1 à y 330 (P10) : centres de ligne vers y 377 et 471 */
+      #p05-q { position: absolute; left: 0; top: 330px; width: 1920px; text-align: center; white-space: nowrap;
+        font: 600 84px/1.12 "Instrument Sans", sans-serif; letter-spacing: -0.025em; color: #f6efe6; }
+      .p05-w { display: inline-block; opacity: 0; }
+      .p05-l { display: inline-block; }
+
+      /* trait de pic (frame.md peak-stroke) : pinceau effilé accent-light, attaque ronde, sortie fine, légère montée */
+      .p05-trait { position: relative; display: inline-block; }
+      #p05-stroke { position: absolute; left: 2%; width: 96%; bottom: -8px; height: 12px; overflow: visible;
+        opacity: 0; clip-path: inset(0% 100% 0% 0%); }
+
+      /* ---- la bougie de T12 en (960, 670) : un point d'ancrage sans taille, les calques centrés par marges ---- */
+      #p05-light { position: absolute; left: 960px; top: 670px; width: 0; height: 0; }
+      /* halo du sol (frame.md ground-dark : accent-glow 42 % → accent 16 % → transparent), 520 u à l'échelle 0,5 = 260 px ;
+         dessiné à 640 px et réduit par render() (échelle 0,406), pour rester net quand il s'ouvre avec le point */
+      #p05-halo { position: absolute; left: -320px; top: -320px; width: 640px; height: 640px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); opacity: 0; }
+      /* la flamme, ø 60 px (P10) ; à t = 0 elle n'est plus qu'une lueur à 20 % (handoff_in) */
+      #p05-candle { position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; border-radius: 50%;
+        background: radial-gradient(circle, #fff 0 18%, #ffd9a0 35%, rgba(240,160,98,.6) 55%, transparent 72%);
+        box-shadow: 0 0 60px 30px rgba(240,160,98,.35); opacity: 0.2; }
+      /* le point blanc chaud : disque visible ø 300 px à pleine taille (bord à 71 % du rayon de 210 px) ;
+         il naît à l'échelle 0,2 (ø 60) */
+      #p05-hot { position: absolute; left: -210px; top: -210px; width: 420px; height: 420px; border-radius: 50%;
+        background: radial-gradient(circle, #ffffff 0 26%, rgba(255,251,243,.97) 36%, rgba(255,226,182,.78) 47%, rgba(240,160,98,.3) 60%, rgba(240,160,98,.08) 67%, transparent 71%);
+        opacity: 0; }
+
+      /* ---- grain 5 % (styleframes couvert.css .grain), qui bouge par pas de 2 images ---- */
+      #p05-grainclip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; }
+      #p05-grain { position: absolute; left: -40px; top: -40px; width: 2000px; height: 1160px; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+        background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+    </style>
+  <div id="root" data-composition-id="05-table-tenue" data-width="1920" data-height="1080" data-duration="4.21">
+
+    <div id="p05-groundclip" class="clip" data-start="0" data-duration="4.21" data-track-index="0" data-layout-ignore>
+      <div id="p05-ground"></div>
+    </div>
+
+    <div id="p05-stage" class="clip" data-start="0" data-duration="4.21" data-track-index="1">
+      <div id="p05-q"><span class="p05-w" data-cue="0.95">Et</span> <span class="p05-w" data-cue="1.13">si</span> <span class="p05-w" data-cue="1.32">chaque</span> <span class="p05-w" data-cue="1.69">table</span> <span class="p05-w" data-cue="1.87">réservée</span><br><span class="p05-w" data-cue="2.43">était</span> <span class="p05-w" data-cue="2.80">une</span> <span class="p05-w" data-cue="2.98">table</span> <span class="p05-trait"><span class="p05-w" data-cue="3.17">tenue</span><svg id="p05-stroke" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M5,4.5 C70,3.8 140,3.1 199,3.2 L199,4.6 C140,5.6 70,8.5 5,10.5 A3,3 0 0 1 5,4.5 Z" fill="#dc6b3d"/></svg></span>&nbsp;<span class="p05-w" data-cue="3.17" data-solo="1">?</span></div>
+
+      <div id="p05-light">
+        <div id="p05-halo"></div>
+        <div id="p05-candle"></div>
+        <div id="p05-hot"></div>
+      </div>
+    </div>
+
+    <div id="p05-grainclip" class="clip" data-start="0" data-duration="4.21" data-track-index="2" data-layout-ignore>
+      <div id="p05-grain"></div>
+    </div>
+
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "05-table-tenue";
+        var T = 4.21;
+        var F = 1 / 30;
+
+        var byId = function (id) { return document.getElementById(id); };
+        var toArr = function (list) { return Array.prototype.slice.call(list); };
+
+        var q = byId("p05-q");
+        var stroke = byId("p05-stroke");
+        var candle = byId("p05-candle");
+        var halo = byId("p05-halo");
+        var hot = byId("p05-hot");
+        var grain = byId("p05-grain");
+        var words = toArr(q.getElementsByClassName("p05-w"));
+
+        /* découpe de chaque mot en lettres (déterministe, au montage) */
+        var wordLetters = words.map(function (w) {
+          if (w.getAttribute("data-solo")) return [];
+          var txt = w.textContent;
+          w.textContent = "";
+          var out = [];
+          for (var i = 0; i < txt.length; i++) {
+            var s = document.createElement("span");
+            s.className = "p05-l";
+            s.textContent = txt.charAt(i);
+            w.appendChild(s);
+            out.push(s);
+          }
+          return out;
+        });
+
+        /* état de la lumière et du grain, écrit dans le DOM par render() seul.
+           o : opacité de la lueur / flamme ; b : respiration de la braise (0 → 1) ; y : fin de la dérive caméra (px) ;
+           s : échelle du pop ; ho, hs : opacité et échelle du halo ; f : vacillement (0 → 1) ; g : croissance (0 → 1) ;
+           gp : pas du grain */
+        var st = { o: 0.2, b: 0, y: 0, s: 1, ho: 0, hs: 0.5, f: 0, g: 0, gp: 0 };
+
+        /* décalages du grain, un par pas de 2 images (table fixe, pas de hasard) */
+        var GJ = [[0, 0], [-13, 7], [9, -11], [-6, -15], [15, 4], [-17, -3], [5, 13], [12, -8], [-9, 10], [3, -17],
+          [-15, 12], [17, -12], [-3, 6], [8, 16], [-11, -9], [14, 11], [-7, 2], [2, -6], [-16, 15], [11, -2]];
+
+        function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+        function render() {
+          var f = st.f, g = st.g;
+          var env = Math.sin(Math.PI * f);
+          var flick = env * (0.07 * Math.sin(2 * Math.PI * 3.5 * f) + 0.03 * Math.sin(2 * Math.PI * 7.3 * f + 1.1));
+          var flickO = 1 - env * 0.18 * Math.abs(Math.sin(2 * Math.PI * 2.6 * f + 0.4));
+          var breathe = 0.015 * Math.sin(2 * Math.PI * st.b);
+
+          /* la flamme : lueur (handoff_in), rallumage, vacillement, croissance ø 60 → 300 */
+          /* pendant la croissance, la flamme grandit (×2) et passe la main au point blanc chaud */
+          var cs = st.s * (1 + flick) * (1 + g);
+          candle.style.opacity = clamp01((st.o + breathe) * flickO * (1 - clamp01(g / 0.6))).toFixed(4);
+          candle.style.transform = "translate(0px," + st.y.toFixed(3) + "px) scale(" + cs.toFixed(4) + ")";
+
+          /* le halo : ×0,5 → 1 au rallumage, suit le vacillement, s'ouvre avec le point */
+          halo.style.opacity = clamp01(st.ho * (0.92 + 0.08 * flickO)).toFixed(4);
+          halo.style.transform = "scale(" + (0.40625 * st.hs * (1 + 0.6 * flick) * (1 + 1.4 * g)).toFixed(4) + ")";
+
+          /* le point blanc chaud : naît à ø 60 px (0,2) et atteint ø 300 px (1) */
+          hot.style.opacity = clamp01(g / 0.3).toFixed(4);
+          hot.style.transform = "scale(" + (0.2 + 0.8 * g).toFixed(4) + ")";
+
+          /* le grain bouge */
+          var k = GJ[Math.floor(st.gp) % GJ.length];
+          grain.style.transform = "translate(" + k[0] + "px," + k[1] + "px)";
+        }
+
+        var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
+
+        /* ---- grain : un pas toutes les 2 images sur toute la durée ---- */
+        tl.fromTo(st, { gp: 0 }, { gp: Math.floor(T * 15), duration: T, ease: "none" }, 0);
+
+        /* ---- couche vivante : la phrase dérive de 6 px vers le haut sur toute la durée ---- */
+        tl.fromTo(q, { y: 0 }, { y: -6, duration: T, ease: "none" }, 0);
+
+        /* ===== 0.00 à 0.95 : silence ; la lueur de T12 baisse de 20 à 8 % ; la dérive caméra héritée s'arrête ===== */
+        tl.fromTo(st, { o: 0.2 }, { o: 0.08, duration: 0.95, ease: "power1.out" }, 0);
+        /* +10 u/s à l'échelle 0,5 = -5 px/s à l'écran au départ (handoff_in), amorti en 0,6 s : la caméra ne bouge plus */
+        tl.fromTo(st, { y: 0 }, { y: -1.5, duration: 0.6, ease: "power2.out" }, 0);
+        /* la braise respire à peine pendant que la phrase s'écrit */
+        tl.fromTo(st, { b: 0 }, { b: 1, duration: 2.18, ease: "none", immediateRender: false }, 0.95);
+
+        /* ===== 0.95 à 3.17 : chaque mot arrive sur son repère, ses lettres convergent (0,3 s expo.out, flou 8 → 0).
+           Les décalages ne dépendent que du rang de la lettre : « table » arrive identique les deux fois. ===== */
+        words.forEach(function (w, wi) {
+          var t = parseFloat(w.getAttribute("data-cue")) - F;
+          tl.fromTo(w, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out", immediateRender: false }, t);
+          tl.fromTo(w, { filter: "blur(8px)" }, { filter: "blur(0px)", duration: 0.3, ease: "expo.out", immediateRender: false }, t);
+          var ls = wordLetters[wi];
+          var n = ls.length;
+          ls.forEach(function (l, i) {
+            var dx = (i - (n - 1) / 2) * 22;
+            tl.fromTo(l, { x: dx }, { x: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, t);
+          });
+        });
+
+        /* ===== 3.17 : sur « tenue », la bougie se rallume sous la phrase (pop, halo ×0,5 → 1 en 0,2 s) et le trait se dessine ===== */
+        var TR = 3.17 - F;
+        tl.set(st, { y: 0 }, TR);
+        tl.fromTo(st, { o: 0.08 }, { o: 1, duration: 0.06, ease: "power2.out", immediateRender: false }, TR);
+        tl.fromTo(st, { s: 0.6 }, { s: 1, duration: 0.2, ease: "expo.out", immediateRender: false }, TR);
+        tl.fromTo(st, { ho: 0 }, { ho: 1, duration: 0.2, ease: "power2.out", immediateRender: false }, TR);
+        tl.fromTo(st, { hs: 0.5 }, { hs: 1, duration: 0.2, ease: "expo.out", immediateRender: false }, TR);
+        tl.fromTo(stroke, { opacity: 0 }, { opacity: 1, duration: 0.04, ease: "none", immediateRender: false }, TR);
+        tl.fromTo(stroke, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.38, ease: "power2.out", immediateRender: false }, TR);
+
+        /* ===== 3.40 : la flamme vacille ===== */
+        tl.fromTo(st, { f: 0 }, { f: 1, duration: 0.23, ease: "none", immediateRender: false }, 3.4);
+
+        /* ===== 3.63 : la flamme grandit en point blanc chaud (ø 60 → 300 px, 0,36 s power2.in) ; la phrase s'efface (0,2 s).
+           Le point tient jusqu'à 4.21 (le flash part de lui à 3.99). ===== */
+        tl.fromTo(st, { g: 0 }, { g: 1, duration: 0.36, ease: "power2.in", immediateRender: false }, 3.63);
+        tl.fromTo(q, { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power1.in", immediateRender: false }, 3.63);
+
+        render();
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FID] = tl;
+      })();
+    </script>
+</template>

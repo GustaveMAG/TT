@@ -1,0 +1,335 @@
+<template>
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ===================== SALLE : début du bloc CSS à copier ===================== */
+  .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+  .sl-cam.sl-light { background: #f5efe4; }
+  .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+  .sl-abs { position: absolute; }
+  .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+    repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+  .sl-light .sl-floor { background:
+    repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+  .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+  .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+  .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+  .sl-light .sl-wall { border: 6px solid #1c1612; }
+  .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+  .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+  .sl-light .sl-lamp { display: none; }
+  .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+  .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+  .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+  .sl-light .sl-board { background: #d6c3a3; }
+  .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+  .sl-light .sl-label { color: #5c5348; }
+  .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+  .sl-table { position: absolute; }
+  .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+  .sl-light .sl-halo { display: none; }
+  .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+  .sl-light .sl-chair { background: #d9cfbf; }
+  .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+  .sl-light .sl-guest { background: #8a7564; }
+  .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+  .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+  .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+  .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+  .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+  .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+  .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+  .sl-wick { background: #6b625b; }
+  .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+  .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+  .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+    background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+  .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+    padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+  .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+  .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+  .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+  .sl-light .sl-tnum { color: #5c5348; }
+  /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+    /* ---- couches ---- */
+    #p06-salle { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #p06-over { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #p06-subclip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; }
+    #p06-grainclip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; }
+    #p06-grain { position: absolute; left: 0; top: 0; width: 2160px; height: 1080px; opacity: .03; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+      background-size: 240px 240px; }
+
+    /* ---- le téléphone (frame.md : 420 × 860 à l'échelle 0,9, haut à y 30) ; marges égales : pilule 420 → 792, téléphone 1122 → 1500 ---- */
+    #p06-phonewrap { position: absolute; left: 1122px; top: 30px; width: 378px; height: 774px; transform-origin: 50% 50%; opacity: 0; }
+    .p06-phone { position: absolute; left: 0; top: 0; width: 420px; height: 860px; border-radius: 64px; background: #111; padding: 14px; box-sizing: border-box;
+      transform: scale(.9); transform-origin: 0 0; box-shadow: 0 50px 110px rgba(60,40,20,.35), 0 0 0 2px #2a2a2a; }
+    .p06-screen { position: relative; width: 100%; height: 100%; border-radius: 52px; background: #fff; overflow: hidden; font-family: "Instrument Sans", sans-serif; }
+    .p06-island { position: absolute; left: 136px; top: 14px; width: 120px; height: 34px; border-radius: 20px; background: #000; }
+    .p06-wordmark { position: absolute; left: 30px; top: 74px; font: 800 40px/1.2 "Big Shoulders", sans-serif; letter-spacing: .08em; color: #1c1612; white-space: nowrap; }
+    .p06-lt { display: inline-block; opacity: 0; }
+    #p06-micro { position: absolute; left: 32px; top: 132px; font: 400 15px/1.3 "Space Mono", monospace; letter-spacing: .2em; color: #5c5348; white-space: nowrap; opacity: 0; }
+    .p06-row { position: absolute; left: 22px; right: 22px; height: 84px; border-radius: 16px; background: #f6f1e8; display: flex; align-items: center; gap: 16px;
+      padding: 0 18px; box-sizing: border-box; opacity: 0; transform-origin: 50% 50%; }
+    .p06-row.p06-hot { box-shadow: 0 0 0 3px #c4532a; }
+    .p06-rtime { font: 700 22px "Space Mono", monospace; color: #1c1612; }
+    .p06-rname { flex: 1; font: 600 24px/1.2 "Instrument Sans", sans-serif; color: #1c1612; }
+    .p06-rname div { font: 500 18px/1.2 "Instrument Sans", sans-serif; color: #5c5348; }
+    .p06-tick { width: 34px; height: 34px; border-radius: 50%; background: #c4532a; opacity: 0; flex: none; }
+    .p06-tick svg { display: block; width: 34px; height: 34px; }
+
+    /* ---- la pilule « 14:32 » → « 02:14 · NOUVELLE RÉSA » (gauche, y 330) ---- */
+    #p06-pill { position: absolute; left: 420px; top: 330px; width: 372px; height: 92px; opacity: 0; transform-origin: 50% 50%; }
+    .p06-pbg { position: absolute; left: 0; top: 0; width: 372px; height: 92px; border-radius: 999px; }
+    .p06-pbg-l { background: #fffdf8; box-shadow: 0 18px 40px rgba(60,40,20,.14), inset 0 0 0 2px #ddd2c2; }
+    #p06-pbgd { background: #1c1612; box-shadow: 0 18px 40px rgba(28,22,18,.28); opacity: 0; }
+    .p06-pin { position: absolute; left: 0; top: 0; width: 372px; height: 92px; display: flex; align-items: center; justify-content: center; gap: 14px; white-space: nowrap; }
+    #p06-time { display: inline-block; font: 700 44px/1 "Space Mono", monospace; font-variant-numeric: tabular-nums; color: #1c1612; transform-origin: 50% 50%; transform: scale(.86); }
+    #p06-plabel { font: 400 16px/1 "Space Mono", monospace; letter-spacing: .2em; color: #5c5348; padding-top: 10px; }
+
+    /* ---- sous-titre (frame.md subtitle + word-by-word + key-word-box), bande y 890 à 980 ---- */
+    .p06-sub { position: absolute; left: 0; top: 896px; width: 1920px; text-align: center; font: 600 62px/74px "Instrument Sans", sans-serif; letter-spacing: -0.015em;
+      color: #1c1612; white-space: nowrap; text-shadow: 0 2px 16px rgba(245,239,228,.9); }
+    .p06-w { display: inline-block; opacity: 0; color: rgba(28,22,18,.35); }
+    .p06-w.p06-in { color: rgba(245,239,228,.35); }
+    .p06-bx { position: relative; display: inline-block; }
+    #p06-box { position: absolute; left: -0.14em; right: -0.14em; top: 0.06em; bottom: 0.02em; border-radius: 3px; background: #c4532a; transform-origin: 0 50%; transform: scaleX(0); opacity: 0; }
+    .p06-bxtx { position: relative; text-shadow: none; }
+  </style>
+
+  <div id="root" data-composition-id="06-jour-et-nuit" data-width="1920" data-height="1080" data-duration="3.22">
+    <!-- piste 0 : le plan clair (kit SALLE), caméra pilotée par un seul proxy -->
+    <div id="p06-salle" class="clip" data-start="0" data-duration="3.22" data-track-index="0" data-layout-ignore data-layout-allow-overflow></div>
+
+    <!-- piste 1 : la pilule à gauche, le téléphone Couvert à droite -->
+    <div id="p06-over" class="clip" data-start="0" data-duration="3.22" data-track-index="1">
+      <div id="p06-pill">
+        <div class="p06-pbg p06-pbg-l"></div>
+        <div id="p06-pbgd" class="p06-pbg"></div>
+        <div class="p06-pin"><span id="p06-time">14:32</span><span id="p06-plabel">NOUVELLE RÉSA</span></div>
+      </div>
+
+      <div id="p06-phonewrap">
+        <div class="p06-phone">
+          <div class="p06-screen">
+            <div class="p06-island"></div>
+            <div class="p06-wordmark"><span class="p06-lt">C</span><span class="p06-lt">O</span><span class="p06-lt">U</span><span class="p06-lt">V</span><span class="p06-lt">E</span><span class="p06-lt">R</span><span class="p06-lt">T</span></div>
+            <div id="p06-micro">RÉSERVATIONS · SAM. 14 OCT.</div>
+            <div id="p06-r1" class="p06-row" style="top:190px"><div class="p06-rtime">20:00</div><div class="p06-rname">Martin<div>6 pers.</div></div><div id="p06-k1" class="p06-tick"><svg viewBox="0 0 34 34"><path d="M10.5 17.5 L15 22 L23.5 12.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div id="p06-r2" class="p06-row" style="top:290px"><div class="p06-rtime">20:30</div><div class="p06-rname">Bernard<div>4 pers.</div></div><div id="p06-k2" class="p06-tick"><svg viewBox="0 0 34 34"><path d="M10.5 17.5 L15 22 L23.5 12.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div id="p06-r3" class="p06-row p06-hot" style="top:390px"><div class="p06-rtime">21:00</div><div class="p06-rname">Duval<div>4 pers.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- piste 2 : la phrase de la voix -->
+    <div id="p06-subclip" class="clip" data-start="0" data-duration="3.22" data-track-index="2">
+      <div id="p06-sub" class="p06-sub"><span id="p06-w0" class="p06-w">Couvert</span> <span id="p06-w1" class="p06-w">prend</span> <span id="p06-w2" class="p06-w">tes</span> <span id="p06-w3" class="p06-w">réservations,</span> <span class="p06-bx"><i id="p06-box"></i><span class="p06-bxtx"><span id="p06-w4" class="p06-w p06-in">jour</span> <span id="p06-w5" class="p06-w p06-in">et</span> <span id="p06-w6" class="p06-w p06-in">nuit</span></span></span><span id="p06-w7" class="p06-w">.</span></div>
+    </div>
+
+    <!-- piste 3 : grain 3 % -->
+    <div id="p06-grainclip" class="clip" data-start="0" data-duration="3.22" data-track-index="3" data-layout-ignore>
+      <div id="p06-grain"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "06-jour-et-nuit";
+      var T = 3.22;
+
+/* ===================== SALLE : début du kit JS à copier ===================== */
+var SALLE = (function () {
+  var T = [
+    { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+    { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+    { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+    { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+    { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+  ];
+  var GEO = {
+    r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+    r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+    s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+    rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+      plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+  };
+  function el(parent, cls, css, html) {
+    var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  }
+  // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+  // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+  // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+  function build(container, opts) {
+    opts = opts || {};
+    var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+    var world = el(cam, "sl-world");
+    el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+    var pass = el(world, "sl-pass");
+    for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+    var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+    el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+    var tables = {};
+    T.forEach(function (t) {
+      var g = GEO[t.k];
+      var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+      var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+      o.halo = el(d, "sl-halo");
+      g.chairs.forEach(function (c) {
+        var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+        el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+        o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+      });
+      o.top = el(d, "sl-top");
+      g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+      o.topoff = el(d, "sl-topoff");
+      o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+      o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+      o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+      o.free = el(d, "sl-tag sl-free", "", "Libérée");
+      el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+      tables[t.id] = o;
+    });
+    return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+  }
+  // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+  function cam(world, c) {
+    world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+    world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+  }
+  // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+  function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+  // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+  function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+  return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+})();
+/* ===================== SALLE : fin du kit JS à copier ===================== */
+
+      var byId = function (id) { return document.getElementById(id); };
+      var toArr = function (list) { return Array.prototype.slice.call(list); };
+
+      /* ---- le monde : plan clair, bougies allumées (petite lueur), ni chevalet ni étiquette ---- */
+      var W = SALLE.build(byId("p06-salle"), { light: true });
+      var world = W.world;
+
+      var phone = byId("p06-phonewrap");
+      var letters = toArr(phone.getElementsByClassName("p06-lt"));
+      var micro = byId("p06-micro");
+      var r1 = byId("p06-r1"), r2 = byId("p06-r2"), r3 = byId("p06-r3");
+      var k1 = byId("p06-k1"), k2 = byId("p06-k2");
+      var pill = byId("p06-pill"), pbgd = byId("p06-pbgd"), ptime = byId("p06-time"), plabel = byId("p06-plabel");
+      var sub = byId("p06-sub"), box = byId("p06-box"), grain = byId("p06-grain");
+      var w = [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return byId("p06-w" + i); });
+
+      var INK = "#1c1612", INK_GRAY = "rgba(28,22,18,0.35)";
+      var PAPER = "#f5efe4", PAPER_GRAY = "rgba(245,239,228,0.35)";
+
+      /* ---- caméra : UN proxy {cx, cy, s, blur, dx}, appliqué par SALLE.cam dans le seul onUpdate ;
+         l'horloge de la pilule (minutes) est un proxy lu au même endroit ---- */
+      var cam = { cx: 1300, cy: 1100, s: 0.62, blur: 12, dx: 0 };
+      var clock = { m: 14 * 60 + 32 };
+      var shown = "";
+
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      function render() {
+        SALLE.cam(world, cam);
+        var m = Math.round(clock.m);
+        var txt = pad(Math.floor(m / 60) % 24) + ":" + pad(m % 60);
+        if (txt !== shown) { ptime.textContent = txt; shown = txt; }
+      }
+
+      var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
+
+      /* ===== PISTE CAMÉRA ===== */
+      /* 0.05 à 0.65 : sous le flash qui retombe, le fond passe de 12 à 6 px (le téléphone devient le seul plan net) */
+      tl.fromTo(cam, { blur: 12 }, { blur: 6, duration: 0.6, ease: "power2.out", immediateRender: false }, 0.05);
+      /* 0.30 à 2.95 : dérive latérale 15 u/s (le monde glisse vers la gauche, vers le plan large) */
+      tl.fromTo(cam, { cx: 1300 }, { cx: 1300 + 15 * 2.65, duration: 2.65, ease: "none", immediateRender: false }, 0.3);
+      /* 2.95 à 3.22 : recul vers le plan large, en accélération ; dernière image en plein mouvement */
+      tl.fromTo(cam, { cx: 1300 + 15 * 2.65, cy: 1100, s: 0.62 }, { cx: 1470, cy: 1090, s: 0.58, duration: 0.27, ease: "power2.in", immediateRender: false }, 2.95);
+
+      /* grain qui glisse d'un motif sur la séquence */
+      tl.fromTo(grain, { x: 0 }, { x: -240, duration: T, ease: "none" }, 0);
+
+      /* ===== 0.20 : le téléphone arrive de la droite, ×1,15, flou 8 → net (0,14 s expo.out) ===== */
+      tl.fromTo(phone, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "power1.out", immediateRender: false }, 0.2);
+      tl.fromTo(phone, { x: 260, scale: 1.15, filter: "blur(8px)" }, { x: 0, scale: 1, filter: "blur(0px)", duration: 0.14, ease: "expo.out", immediateRender: false }, 0.2);
+      /* tenue vivante : le téléphone glisse très lentement à gauche jusqu'au recul (−14 px) */
+      tl.fromTo(phone, { y: 0 }, { y: -8, duration: 2.6, ease: "none", immediateRender: false }, 0.34);
+
+      /* ===== 0.65 : sur « Couvert », le wordmark de l'appli s'imprime lettre à lettre ===== */
+      letters.forEach(function (lt, i) {
+        tl.fromTo(lt, { opacity: 0, y: 10, filter: "blur(4px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.12, ease: "power3.out", immediateRender: false }, 0.65 + i * 0.03);
+      });
+      tl.fromTo(micro, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.2, ease: "power3.out", immediateRender: false }, 0.8);
+
+      /* ===== lignes de réservation : ×1,1 → 1 en 0,1 s, la coche suit ===== */
+      function row(el, t, s0, s1) {
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "power1.out", immediateRender: false }, t);
+        tl.fromTo(el, { scale: s0 }, { scale: s1, duration: 0.1, ease: "power3.out", immediateRender: false }, t);
+      }
+      function tick(el, t) {
+        tl.fromTo(el, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.12, ease: "expo.out", immediateRender: false }, t);
+      }
+      row(r1, 1.0, 1.1, 1);  tick(k1, 1.08);   /* 1.02 « prend » : Martin */
+      row(r2, 1.36, 1.1, 1); tick(k2, 1.44);   /* 1.38 « réservations » : Bernard */
+      row(r3, 2.72, 1.14, 1.04);               /* 2.74 « nuit » : Duval, encadré de braise */
+
+      /* ===== 2.00 : la pilule « 14:32 » arrive à gauche ===== */
+      tl.fromTo(pill, { opacity: 0, x: -50, filter: "blur(8px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out", immediateRender: false }, 2.0);
+      /* 2.31, sur « jour » : l'heure roule jusqu'à 02:14 (0,4 s) en grandissant (comptage + échelle), la pilule passe au noir */
+      tl.fromTo(clock, { m: 14 * 60 + 32 }, { m: 26 * 60 + 14, duration: 0.4, ease: "power2.out", immediateRender: false }, 2.31);
+      tl.fromTo(ptime, { scale: 0.86 }, { scale: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, 2.31);
+      tl.fromTo(pbgd, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.inOut", immediateRender: false }, 2.41);
+      tl.fromTo(ptime, { color: INK }, { color: "#f6efe6", duration: 0.3, ease: "power2.inOut", immediateRender: false }, 2.41);
+      tl.fromTo(plabel, { color: "#5c5348" }, { color: "#cfc1b3", duration: 0.3, ease: "power2.inOut", immediateRender: false }, 2.41);
+
+      /* ===== 2.95 : départ du recul ; la pilule s'efface à gauche, le téléphone sort à droite (hors cadre avant la couture) ===== */
+      tl.fromTo(pill, { opacity: 1, x: 0, filter: "blur(0px)" }, { opacity: 0, x: -140, filter: "blur(8px)", duration: 0.15, ease: "power2.in", immediateRender: false }, 2.95);
+      tl.fromTo(phone, { x: 0, filter: "blur(0px)" }, { x: 889, filter: "blur(12px)", duration: 0.21, ease: "power2.in", immediateRender: false }, 2.95);
+
+      /* ===== sous-titre mot par mot : gris (35 %), y 8, flou 6 → 0 en 0,14 s, puis pleine couleur en 0,2 s ===== */
+      function word(el, t, gray, full, colorDelay, colorDur) {
+        tl.fromTo(el, { opacity: 0, y: 8, filter: "blur(6px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out", immediateRender: false }, t);
+        tl.fromTo(el, { color: gray }, { color: full, duration: colorDur || 0.2, ease: "power1.inOut", immediateRender: false }, t + (colorDelay || 0.1));
+      }
+      word(w[0], 0.65, INK_GRAY, INK);   /* Couvert 0.67 */
+      word(w[1], 1.0, INK_GRAY, INK);    /* prend 1.02 */
+      word(w[2], 1.18, INK_GRAY, INK);   /* tes 1.20 */
+      word(w[3], 1.36, INK_GRAY, INK);   /* réservations 1.38 */
+      /* [boîte : jour et nuit] : la boîte braise se trace de la gauche en 0,16 s (2.29), les mots y arrivent en papier */
+      tl.fromTo(box, { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out", immediateRender: false }, 2.27);
+      word(w[4], 2.29, PAPER_GRAY, PAPER, 0.02, 0.1); /* jour 2.31 */
+      word(w[5], 2.51, PAPER_GRAY, PAPER, 0.02, 0.1); /* et 2.53 */
+      word(w[6], 2.72, PAPER_GRAY, PAPER, 0.02, 0.1); /* nuit 2.74 */
+      word(w[7], 2.72, INK_GRAY, INK);                /* le point final, avec « nuit » */
+      /* sortie du sous-titre, finie avant les deux dernières images */
+      tl.fromTo(sub, { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.1, ease: "power2.in", immediateRender: false }, 3.06);
+
+      render();
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

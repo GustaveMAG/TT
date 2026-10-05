@@ -1,0 +1,348 @@
+<template>
+  <div id="root" data-composition-id="07-la-veille" data-width="1920" data-height="1080" data-duration="3.35">
+    <style>
+      @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; }
+
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; -webkit-font-smoothing: antialiased;
+        font-family: "Instrument Sans", sans-serif; color: #1c1612; }
+
+      /* ===================== SALLE : début du bloc CSS à copier ===================== */
+      .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+      .sl-cam.sl-light { background: #f5efe4; }
+      .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+      .sl-abs { position: absolute; }
+      .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+        repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+      .sl-light .sl-floor { background:
+        repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+      .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+      .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+      .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+      .sl-light .sl-wall { border: 6px solid #1c1612; }
+      .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+      .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+      .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+      .sl-light .sl-lamp { display: none; }
+      .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+      .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+      .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+      .sl-light .sl-board { background: #d6c3a3; }
+      .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+      .sl-light .sl-label { color: #5c5348; }
+      .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+        background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+      .sl-table { position: absolute; }
+      .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+      .sl-light .sl-halo { display: none; }
+      .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+      .sl-light .sl-chair { background: #d9cfbf; }
+      .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+      .sl-light .sl-guest { background: #8a7564; }
+      .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+      .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+      .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+      .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+      .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+      .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+      .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+      .sl-wick { background: #6b625b; }
+      .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+      .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+      .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+        background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+      .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+        padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+      .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+      .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+      .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+      .sl-light .sl-tnum { color: #5c5348; }
+      /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+      /* ---- sol clair plein cadre (clip piste 0) ---- */
+      #f07-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #f5efe4; }
+      #f07-room { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      #f07-over { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; }
+
+      /* ---- micro du haut : « VEN. 13 · 18:00 · LA VEILLE » ---- */
+      #f07-micro { position: absolute; left: 0; right: 0; top: 22px; text-align: center; white-space: nowrap;
+        font: 400 18px "Space Mono", monospace; letter-spacing: .2em; color: #5c5348; }
+      .f07-ch { opacity: 0; }
+
+      /* ---- sous-titre : bas centre, bande y 890 à 980 ---- */
+      .f07-sub { position: absolute; left: 0; right: 0; top: 896px; text-align: center; white-space: nowrap;
+        font: 600 62px/74px "Instrument Sans", sans-serif; letter-spacing: -0.015em; color: #1c1612;
+        text-shadow: 0 2px 16px rgba(245,239,228,.9); }
+      .f07-w { display: inline-block; opacity: 0; color: rgba(28,22,18,.3); }
+      .f07-box { position: relative; display: inline-block; z-index: 0; text-shadow: none; }
+      .f07-boxbg { position: absolute; left: -.14em; right: -.14em; top: .06em; bottom: .02em; background: #c4532a; border-radius: 3px;
+        z-index: -1; transform-origin: 0 50%; opacity: 0; }
+      .f07-box .f07-w { color: rgba(245,239,228,.35); text-shadow: none; }
+
+      /* ---- l'iPhone : 420 x 860 à l'échelle 0,9, haut à y 30 ---- */
+      #f07-phone, #f07-phone * { box-sizing: border-box; }
+      #f07-phone { position: absolute; left: 750px; top: 30px; width: 420px; height: 860px; border-radius: 64px; background: #111; padding: 14px;
+        box-shadow: 0 50px 110px rgba(60,40,20,.35), 0 0 0 2px #2a2a2a; opacity: 0; }
+      .f07-screen { width: 100%; height: 100%; border-radius: 52px; background: #fff; overflow: hidden; position: relative; font-family: "Instrument Sans", sans-serif; }
+      .f07-island { position: absolute; left: 50%; top: 14px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: #000; }
+      .f07-title { position: absolute; left: 0; right: 0; top: 70px; text-align: center; font: 600 22px "Instrument Sans", sans-serif; color: #111; }
+      .f07-bub { position: absolute; font: 500 25px/1.3 "Instrument Sans", sans-serif; padding: 14px 20px; border-radius: 26px; opacity: 0; }
+      #f07-in { left: 22px; top: 160px; max-width: 320px; background: #e9e9eb; color: #111; transform-origin: 0 100%; }
+      #f07-out { right: 22px; top: 360px; max-width: 200px; background: #0b84fe; color: #fff; transform-origin: 100% 100%; }
+      #f07-dist { position: absolute; right: 26px; top: 432px; font: 500 17px "Instrument Sans", sans-serif; color: #8e8e93; opacity: 0; }
+
+      /* ---- grain 3 % ---- */
+      #f07-grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: .03; mix-blend-mode: overlay;
+        background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+    </style>
+
+    <div id="f07-groundclip" class="clip" data-start="0" data-duration="3.35" data-track-index="0" data-layout-ignore>
+      <div id="f07-ground"></div>
+    </div>
+
+    <div id="f07-roomclip" class="clip" data-start="0" data-duration="3.35" data-track-index="1">
+      <div id="f07-room"></div>
+    </div>
+
+    <div id="f07-overclip" class="clip" data-start="0" data-duration="3.35" data-track-index="2">
+      <div id="f07-over">
+        <div id="f07-micro"></div>
+
+        <div id="f07-phone">
+          <div class="f07-screen">
+            <div class="f07-island"></div>
+            <div class="f07-title">Couvert</div>
+            <div id="f07-in" class="f07-bub">Bonjour Martin, votre table pour 6 demain à 20 h. Répondez OUI pour confirmer.</div>
+            <div id="f07-out" class="f07-bub">OUI</div>
+            <div id="f07-dist">Distribué</div>
+          </div>
+        </div>
+
+        <div id="f07-sub1" class="f07-sub"><span class="f07-w">Il</span> <span class="f07-w">confirme</span> <span class="f07-w">chaque</span> <span class="f07-w">table</span> <span id="f07-box1" class="f07-box"><i id="f07-boxbg1" class="f07-boxbg"></i><span class="f07-w">la</span> <span class="f07-w">veille</span></span><span class="f07-w">,</span></div>
+
+        <div id="f07-sub2" class="f07-sub"><span class="f07-w">par</span> <span id="f07-box2" class="f07-box"><i id="f07-boxbg2" class="f07-boxbg"></i><span class="f07-w">SMS</span></span><span class="f07-w">.</span></div>
+      </div>
+    </div>
+
+    <div id="f07-grainclip" class="clip" data-start="0" data-duration="3.35" data-track-index="3" data-layout-ignore>
+      <div id="f07-grain"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "07-la-veille";
+        var T = 3.35;
+
+        /* ===================== SALLE : début du kit JS à copier ===================== */
+        var SALLE = (function () {
+          var T = [
+            { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+            { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+            { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+            { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+            { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+          ];
+          var GEO = {
+            r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+            r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+            s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+            rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+              plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+          };
+          function el(parent, cls, css, html) {
+            var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+            parent.appendChild(d); return d;
+          }
+          // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+          // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+          // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+          function build(container, opts) {
+            opts = opts || {};
+            var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+            var world = el(cam, "sl-world");
+            el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+            var pass = el(world, "sl-pass");
+            for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+            var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+            el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+            var tables = {};
+            T.forEach(function (t) {
+              var g = GEO[t.k];
+              var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+              var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+              o.halo = el(d, "sl-halo");
+              g.chairs.forEach(function (c) {
+                var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+                el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+                o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+              });
+              o.top = el(d, "sl-top");
+              g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+              o.topoff = el(d, "sl-topoff");
+              o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+              o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+              o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+              o.free = el(d, "sl-tag sl-free", "", "Libérée");
+              el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+              tables[t.id] = o;
+            });
+            return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+          }
+          // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+          function cam(world, c) {
+            world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+            world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+          }
+          // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+          function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+          // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+          function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+          return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+        })();
+        /* ===================== SALLE : fin du kit JS à copier ===================== */
+
+        var byId = function (id) { return document.getElementById(id); };
+        var toArr = function (list) { return Array.prototype.slice.call(list); };
+
+        /* ---- le monde : la salle au propre, plein jour ---- */
+        var R = SALLE.build(byId("f07-room"), { light: true });
+        R.world.setAttribute("data-layout-allow-overflow", "");
+
+        /* ---- la caméra : UN proxy {cx, cy, s, blur, dx}, appliqué par SALLE.cam dans le seul onUpdate ---- */
+        var cam = { cx: 1470, cy: 1090, s: 0.58, blur: 6, dx: 0 };
+        function render() { SALLE.cam(R.world, cam); }
+
+        /* ---- le micro, découpé en caractères pour s'imprimer ---- */
+        var micro = byId("f07-micro");
+        var MICRO = "VEN. 13 · 18:00 · LA VEILLE";
+        for (var c = 0; c < MICRO.length; c++) {
+          var sp = document.createElement("span");
+          sp.className = "f07-ch";
+          sp.textContent = MICRO.charAt(c);
+          micro.appendChild(sp);
+        }
+        var chars = toArr(micro.getElementsByClassName("f07-ch"));
+
+        var phone = byId("f07-phone");
+        var bubIn = byId("f07-in"), bubOut = byId("f07-out"), dist = byId("f07-dist");
+        var sub1 = byId("f07-sub1"), sub2 = byId("f07-sub2");
+        var w1 = toArr(sub1.getElementsByClassName("f07-w"));
+        var w2 = toArr(sub2.getElementsByClassName("f07-w"));
+        var box1 = byId("f07-boxbg1"), box2 = byId("f07-boxbg2");
+
+        var INK = "#1c1612", INK_GRAY = "rgba(28, 22, 18, 0.3)";
+        var PAPER = "#f5efe4", PAPER_GRAY = "rgba(245, 239, 228, 0.35)";
+
+        var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
+
+        /* ===================== caméra ===================== */
+        /* 0.00 à 0.30 : fin du recul (expo.out) sur le plan large cam(1640, 1080, 0.55), flou 6 → 0 */
+        tl.fromTo(cam, { cx: 1470, cy: 1090, s: 0.58, blur: 6 },
+          { cx: 1640, cy: 1080, s: 0.55, blur: 0, duration: 0.3, ease: "expo.out" }, 0);
+        /* 0.30 à 1.76 : dérive avant 0,55 → 0,58 */
+        tl.fromTo(cam, { s: 0.55 }, { s: 0.58, duration: 1.46, ease: "none", immediateRender: false }, 0.3);
+        /* 1.76 : la caméra commence à pousser vers T7 ; le cran culmine vers 1.90 et pose T7 au centre à 2.05 (expo.inOut) */
+        tl.fromTo(cam, { cx: 1640, cy: 1080, s: 0.58 },
+          { cx: 1560, cy: 780, s: 1.2, duration: 0.29, ease: "expo.inOut", immediateRender: false }, 1.76);
+        /* flou du cran : 0 → 6 px au pic de vitesse, puis 8 px : le plan devient le fond flou du téléphone */
+        tl.fromTo(cam, { blur: 0 }, { blur: 6, duration: 0.12, ease: "power2.in", immediateRender: false }, 1.8);
+        tl.fromTo(cam, { blur: 6 }, { blur: 8, duration: 0.13, ease: "power1.out", immediateRender: false }, 1.92);
+        /* 2.05 à 3.10 : dérive avant 1,2 → 1,25 */
+        tl.fromTo(cam, { s: 1.2 }, { s: 1.25, duration: 1.05, ease: "none", immediateRender: false }, 2.05);
+        /* 3.10 à 3.35 : filé vers la droite, de T7 vers T4 (power2.in) ; la dernière image est en plein filé, flou 8 px */
+        tl.fromTo(cam, { cx: 1560, cy: 780 }, { cx: 2000, cy: 640, duration: 0.25, ease: "power2.in", immediateRender: false }, 3.1);
+
+        /* ===================== Scene 1 : la veille ===================== */
+        /* 0.20 : le micro s'imprime, caractère par caractère */
+        chars.forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none", immediateRender: false }, 0.2 + i * 0.012);
+        });
+        /* il sort pendant le cran (le téléphone occupera le haut du cadre) */
+        tl.fromTo(micro, { opacity: 1, y: 0 }, { opacity: 0, y: -8, duration: 0.12, ease: "power2.in", immediateRender: false }, 1.8);
+
+        /* 0.30 à 1.60 : les étiquettes « Confirmé » se posent de gauche à droite, 0,13 s d'écart, ×1,6 flou 6 → net en 0,12 s */
+        var ORDER = [1, 6, 10, 2, 12, 3, 7, 4, 8, 5];
+        ORDER.forEach(function (id, i) {
+          var tag = R.tables[id].tag;
+          var t0 = 0.3 + i * 0.13;
+          tl.fromTo(tag, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none", immediateRender: false }, t0);
+          tl.fromTo(tag, { scale: 1.6, y: -40, filter: "blur(6px)" },
+            { scale: 1, y: 0, filter: "blur(0px)", duration: 0.12, ease: "expo.out", immediateRender: false }, t0);
+        });
+
+        /* ---- un mot arrive : gris, y +8, flou 6 → 0 en 0,14 s, puis couleur pleine en 0,2 s ---- */
+        function word(el, cue, gray, full, colorDelay, colorDur) {
+          var t = Math.max(0, cue - 0.025);
+          tl.fromTo(el, { opacity: 0, y: 8, filter: "blur(6px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out", immediateRender: false }, t);
+          tl.fromTo(el, { color: gray }, { color: full, duration: colorDur || 0.2, ease: "power1.inOut", immediateRender: false }, t + (colorDelay || 0.1));
+        }
+        function boxTrace(el, t) {
+          tl.fromTo(el, { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out", immediateRender: false }, t);
+        }
+
+        /* « Il confirme chaque table [la veille], » */
+        word(w1[0], 0.26, INK_GRAY, INK);
+        word(w1[1], 0.48, INK_GRAY, INK);
+        word(w1[2], 0.91, INK_GRAY, INK);
+        word(w1[3], 1.34, INK_GRAY, INK);
+        boxTrace(box1, 1.52);
+        word(w1[4], 1.55, PAPER_GRAY, PAPER, 0.02, 0.1);
+        word(w1[5], 1.76, PAPER_GRAY, PAPER, 0.02, 0.1);
+        word(w1[6], 1.76, INK_GRAY, INK);
+        /* la phrase cède la place à sa suite (« par SMS. ») */
+        tl.fromTo(sub1, { opacity: 1, y: 0, filter: "blur(0px)" },
+          { opacity: 0, y: -12, filter: "blur(6px)", duration: 0.12, ease: "power2.in", immediateRender: false }, 1.97);
+
+        /* ===================== Scene 2 : par SMS ===================== */
+        /* 2.00 : le téléphone monte du bas, ×1,1 flou → net en 0,14 s, devant T7 (échelle 0,9, haut à y 30) */
+        gsap.set(phone, { transformOrigin: "50% 0%", scale: 0.99, y: 160, filter: "blur(10px)" });
+        tl.fromTo(phone, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none", immediateRender: false }, 2.0);
+        tl.fromTo(phone, { y: 160, scale: 0.99, filter: "blur(10px)" },
+          { y: 0, scale: 0.9, filter: "blur(0px)", duration: 0.14, ease: "expo.out", immediateRender: false }, 2.0);
+
+        /* « par [SMS]. » */
+        word(w2[0], 2.13, INK_GRAY, INK);
+        boxTrace(box2, 2.4);
+        word(w2[1], 2.43, PAPER_GRAY, PAPER, 0.02, 0.1);
+        word(w2[2], 2.43, INK_GRAY, INK);
+
+        /* 2.13 : la bulle entrante de Couvert arrive (0,1 s) */
+        tl.fromTo(bubIn, { opacity: 0, scale: 0.86, y: 14 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.1, ease: "power3.out", immediateRender: false }, 2.13);
+        /* 2.43 : sur « SMS », la bulle bleue « OUI » part */
+        tl.fromTo(bubOut, { opacity: 0, scale: 0.8, y: 70 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.16, ease: "power3.out", immediateRender: false }, 2.43);
+        /* 2.60 : « Distribué » */
+        tl.fromTo(dist, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: false }, 2.6);
+
+        /* 2.70 : l'étiquette de T7, derrière le téléphone, pulse une fois (×1,1 → 1) */
+        var tag7 = R.tables[7].tag;
+        tl.fromTo(tag7, { scale: 1 }, { scale: 1.1, duration: 0.1, ease: "power2.out", immediateRender: false }, 2.7);
+        tl.fromTo(tag7, { scale: 1.1 }, { scale: 1, duration: 0.16, ease: "power2.inOut", immediateRender: false }, 2.8);
+
+        /* 3.10 à 3.35 : le téléphone suit le filé vers la droite, jusqu'à x 1150 */
+        tl.fromTo(phone, { x: 0 }, { x: 400, duration: 0.25, ease: "power2.in", immediateRender: false }, 3.1);
+
+        /* 3.15 à 3.29 : le sous-titre sort */
+        tl.fromTo(sub2, { opacity: 1, y: 0, filter: "blur(0px)" },
+          { opacity: 0, y: -12, filter: "blur(6px)", duration: 0.14, ease: "power2.in", immediateRender: false }, 3.15);
+
+        render();
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FID] = tl;
+      })();
+    </script>
+  </div>
+</template>

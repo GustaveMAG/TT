@@ -1,0 +1,359 @@
+<template>
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Instrument Sans", sans-serif; color: #f6efe6; -webkit-font-smoothing: antialiased; }
+
+  /* ===================== SALLE : début du bloc CSS à copier ===================== */
+  .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+  .sl-cam.sl-light { background: #f5efe4; }
+  .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+  .sl-abs { position: absolute; }
+  .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+    repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+  .sl-light .sl-floor { background:
+    repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+  .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+  .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+  .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+  .sl-light .sl-wall { border: 6px solid #1c1612; }
+  .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+  .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+  .sl-light .sl-lamp { display: none; }
+  .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+  .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+  .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+  .sl-light .sl-board { background: #d6c3a3; }
+  .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+  .sl-light .sl-label { color: #5c5348; }
+  .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+  .sl-table { position: absolute; }
+  .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+  .sl-light .sl-halo { display: none; }
+  .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+  .sl-light .sl-chair { background: #d9cfbf; }
+  .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+  .sl-light .sl-guest { background: #8a7564; }
+  .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+  .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+  .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+  .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+  .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+  .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+  .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+  .sl-wick { background: #6b625b; }
+  .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+  .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+  .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+    background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+  .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+    padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+  .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+  .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+  .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+  .sl-light .sl-tnum { color: #5c5348; }
+  /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+    /* ---- frame 01 : état d'ouverture de la salle (toutes les bougies éteintes, nappes au ton 0,6) ---- */
+    #p01-salle { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #p01-salle .sl-candle { opacity: 0; }
+    #p01-salle .sl-halo { opacity: 0; }
+    #p01-salle .sl-topoff { opacity: .45; }
+    .p01-hh { position: relative; display: inline-block; }
+    .p01-hha { position: absolute; left: 0; top: 0; color: #c4532a; opacity: 0; }
+
+    .p01-layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+
+    /* l'allumette (avant-plan, écran) */
+    #p01-match { position: absolute; left: 979px; top: 665px; width: 22px; height: 640px; opacity: 0; }
+    .p01-stick { position: absolute; left: 4px; top: 30px; width: 14px; height: 610px; border-radius: 3px;
+      background: linear-gradient(90deg, #cdb795, #e3d2b4 45%, #b9a27e); box-shadow: 0 10px 24px rgba(0,0,0,.5); }
+    .p01-head { position: absolute; left: -6px; top: 0; width: 34px; height: 48px; border-radius: 50% 50% 45% 45%;
+      background: radial-gradient(circle at 40% 35%, #c4532a, #9f3f1c 60%, #6e2b13); }
+    .p01-mflame { position: absolute; left: -8px; top: -70px; width: 38px; height: 74px; border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%;
+      background: radial-gradient(ellipse at 50% 68%, #fff 0 18%, #ffd9a0 40%, rgba(240,160,98,.75) 62%, rgba(240,160,98,0) 74%);
+      box-shadow: 0 0 46px 18px rgba(255,200,130,.35); }
+
+    /* le verre flou de l'avant-plan, coupé par le bord gauche */
+    #p01-glassp { transform-origin: 960px 540px; }
+    #p01-glass { position: absolute; left: -120px; top: 620px; width: 520px; height: 520px; border-radius: 50%; filter: blur(24px);
+      box-shadow: inset 0 0 0 26px rgba(255,240,220,.18); background: radial-gradient(circle, rgba(255,220,180,.06), transparent 60%); }
+
+    /* le cahier de réservations */
+    #p01-cahier { position: absolute; left: 1180px; top: 150px; width: 560px; height: 640px; opacity: 0; }
+    #p01-cahin { position: absolute; left: 0; top: 0; width: 560px; height: 640px; border-radius: 14px; background: #f4ecdd;
+      box-shadow: 0 40px 90px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.4); }
+    .p01-micro { position: absolute; left: 40px; top: 40px; font: 400 18px "Space Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #5c5348; white-space: nowrap; }
+    .p01-row { position: absolute; left: 40px; right: 40px; height: 42px; border-bottom: 1px solid #d8ccb8; font: 600 24px/34px "Instrument Sans", sans-serif; color: #2b221c; white-space: nowrap; }
+    #p01-stamp { position: absolute; left: 150px; top: 300px; font: 800 54px/1.1 "Big Shoulders", sans-serif; letter-spacing: .06em; color: #c4532a;
+      border: 6px solid #c4532a; padding: 2px 18px; border-radius: 6px; white-space: nowrap; opacity: 0; }
+
+    /* sous-titre : la phrase de la voix, bas centre (bande y 890 à 980), mot par mot */
+    .p01-sub { position: absolute; left: 0; top: 896px; width: 1920px; text-align: center; font: 600 62px/74px "Instrument Sans", sans-serif;
+      letter-spacing: -0.015em; color: #f6efe6; white-space: nowrap; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+    .p01-w { display: inline-block; opacity: 0; }
+    .p01-box { position: relative; display: inline-block; z-index: 0; }
+    .p01-boxbg { position: absolute; left: -0.14em; right: -0.14em; top: 0.06em; bottom: 0.02em; border-radius: 3px; background: #c4532a;
+      z-index: -1; opacity: 0; transform-origin: 0 50%; }
+    .p01-wk { color: #f5efe4; text-shadow: none; }
+    .p01-tr { position: relative; display: inline-block; }
+    #p01-trw { position: absolute; left: 1%; right: 3%; bottom: -12px; height: 16px; overflow: hidden; opacity: 0; }
+    #p01-trs { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+    #p01-trs svg { display: block; width: 100%; height: 100%; }
+
+    /* grain du film, 5 % */
+    .p01-grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: .05; mix-blend-mode: screen;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+      background-size: 240px 240px; }
+  </style>
+
+  <div id="root" data-composition-id="01-samedi" data-width="1920" data-height="1080" data-duration="4.4">
+
+    <!-- la salle (reference/salle.html, SALLE.build) : sol, murs, cuisine, 14 tables ; la caméra est un seul proxy -->
+    <div id="p01-salle" class="clip" data-start="0" data-duration="4.4" data-track-index="0" data-layout-allow-overflow></div>
+
+    <!-- avant-plan : l'allumette, puis le verre flou (parallaxe 2:1) -->
+    <div id="p01-fx" class="clip p01-layer" data-start="0" data-duration="4.4" data-track-index="1" data-layout-allow-overflow>
+      <div id="p01-match"><div class="p01-stick"></div><div class="p01-head"></div><div class="p01-mflame"></div></div>
+      <div id="p01-glassp" class="p01-layer" data-layout-allow-overflow><div id="p01-glass"></div></div>
+    </div>
+
+    <!-- le cahier de réservations, tamponné COMPLET -->
+    <div id="p01-paper" class="clip p01-layer" data-start="0" data-duration="4.4" data-track-index="2" data-layout-allow-overflow>
+      <div id="p01-cahier">
+        <div id="p01-cahin">
+          <div class="p01-micro">Cahier · samedi 14</div>
+          <div class="p01-row" style="top:100px">Leroy 2</div>
+          <div class="p01-row" style="top:152px">Petit 4</div>
+          <div class="p01-row" style="top:204px">Simon 2</div>
+          <div class="p01-row" style="top:256px">Bernard 4</div>
+          <div class="p01-row" style="top:308px">Roux 2</div>
+          <div class="p01-row" style="top:360px">Faure 4</div>
+          <div class="p01-row" style="top:412px">Martin 6</div>
+          <div class="p01-row" style="top:464px">Blanc 2</div>
+          <div class="p01-row" style="top:516px">Girard 4</div>
+          <div id="p01-stamp">COMPLET</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- la phrase de la voix, bas centre, mot par mot (temps locaux) -->
+    <div id="p01-subs" class="clip p01-layer" data-start="0" data-duration="4.4" data-track-index="3" data-layout-allow-overflow>
+      <div id="p01-s1" class="p01-sub"><span class="p01-w" data-cue="0.08">Samedi,</span> <span class="p01-box"><i id="p01-bx1" class="p01-boxbg"></i><span class="p01-w p01-wk" data-cue="0.82">vingt</span> <span class="p01-w p01-wk" data-cue="1.06">heures</span></span><span class="p01-w" data-cue="1.06">.</span></div>
+      <div id="p01-s2" class="p01-sub"><span class="p01-w" data-cue="1.99">Ta</span> <span class="p01-w" data-cue="2.21">salle</span> <span class="p01-w" data-cue="2.42">est</span> <span class="p01-box"><i id="p01-bx2" class="p01-boxbg"></i><span class="p01-w p01-wk" data-cue="2.64">pleine</span></span><span class="p01-w" data-cue="2.64">...</span> <span class="p01-tr"><span class="p01-w" data-cue="3.46">sur</span> <span class="p01-w" data-cue="3.62">le</span> <span class="p01-w" data-cue="3.78">papier</span><span id="p01-trw"><span id="p01-trs"><svg viewBox="0 0 400 16" preserveAspectRatio="none"><path d="M5 11.5 C5 8 8 6.4 13 6.5 L391 2.2 C396 2.1 397.5 3.6 393 4.5 L14 15.2 C8 15.8 5 14.8 5 11.5 Z" fill="#dc6b3d"/></svg></span></span></span><span class="p01-w" data-cue="3.78">.</span></div>
+    </div>
+
+    <!-- grain du film, 5 % -->
+    <div id="p01-grain" class="clip p01-grain" data-start="0" data-duration="4.4" data-track-index="4"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "01-samedi", DUR = 4.4;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      function $(id) { return root.querySelector("#p01-" + id); }
+
+/* ===================== SALLE : début du kit JS à copier ===================== */
+var SALLE = (function () {
+  var T = [
+    { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+    { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+    { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+    { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+    { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+  ];
+  var GEO = {
+    r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+    r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+    s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+    rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+      plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+  };
+  function el(parent, cls, css, html) {
+    var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  }
+  // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+  // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+  // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+  function build(container, opts) {
+    opts = opts || {};
+    var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+    var world = el(cam, "sl-world");
+    el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+    var pass = el(world, "sl-pass");
+    for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+    var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+    el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+    var tables = {};
+    T.forEach(function (t) {
+      var g = GEO[t.k];
+      var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+      var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+      o.halo = el(d, "sl-halo");
+      g.chairs.forEach(function (c) {
+        var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+        el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+        o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+      });
+      o.top = el(d, "sl-top");
+      g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+      o.topoff = el(d, "sl-topoff");
+      o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+      o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+      o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+      o.free = el(d, "sl-tag sl-free", "", "Libérée");
+      el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+      tables[t.id] = o;
+    });
+    return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+  }
+  // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+  function cam(world, c) {
+    world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+    world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+  }
+  // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+  function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+  // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+  function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+  return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+})();
+/* ===================== SALLE : fin du kit JS à copier ===================== */
+
+      /* ---- the room: built once, every candle unlit, the tent of T12 lying on the table edge ---- */
+      var W = SALLE.build($("salle"), { light: false });
+      W.world.setAttribute("data-layout-allow-overflow", "");
+      var TB = W.tables, T12 = TB[12];
+      T12.tent.innerHTML = 'RÉSERVÉ · SAM. <span class="p01-hh">20:00<span id="p01-hha" class="p01-hha">20:00</span></span>';
+      Object.keys(TB).forEach(function (id) {
+        gsap.set(TB[id].candle, { opacity: 0 });
+        gsap.set(TB[id].halo, { opacity: 0 });
+        gsap.set(TB[id].topoff, { opacity: 0.45 });
+      });
+      gsap.set(T12.tent, { opacity: 1, scaleY: 0.2, transformOrigin: "50% 100%" });
+
+      /* ---- the ONE camera proxy, applied in a single writer ---- */
+      var C = { cx: 940, cy: 1150, s: 2.7, blur: 0, dx: 0 };
+      var glassp = $("glassp");
+      function render() {
+        SALLE.cam(W.world, C);
+        // foreground glass : 2:1 parallax on the forward drift of scene 1
+        var k = 1 + 2 * (Math.max(C.s, 2.7) / 2.7 - 1);
+        glassp.style.transform = "scale(" + k + ")";
+      }
+
+      /* ===================== the one paused timeline ===================== */
+      var tl = gsap.timeline({ paused: true, onUpdate: render });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+
+      /* ---- camera track ---- */
+      // scene 1 : forward drift, scale 2.7 -> 2.85, linear
+      ft(C, { s: 2.7 }, { s: 2.85, duration: 1.9, ease: "none" }, 0);
+      // 1.90 : clean pull-back (0.7 s expo.out) to the wide plan, framing shifted 380 px left ; T12 stays centered early on
+      ft(C, { s: 2.85 }, { s: 0.5, duration: 0.7, ease: "expo.out" }, 1.9);
+      ft(C, { cx: 940, cy: 1150, dx: 0 }, { cx: 1640, cy: 1000, dx: -380, duration: 0.7, ease: "power2.inOut" }, 1.9);
+      // 2.60 -> 3.90 : lateral drift +15 u/s
+      ft(C, { cx: 1640 }, { cx: 1659.5, duration: 1.3, ease: "none" }, 2.6);
+      // 3.90 -> 4.40 : cran forward toward T12 (power2.in, blur 0 -> 8), handed over mid-move to frame 2
+      ft(C, { cx: 1659.5, cy: 1000, s: 0.5, dx: -380, blur: 0 }, { cx: 940, cy: 1180, s: 1.8, dx: 0, blur: 8, duration: 0.5, ease: "power2.in" }, 3.9);
+
+      /* ---- scene 1 : the candle of T12 ---- */
+      var match = $("match");
+      // 0.00 the match enters from the bottom edge (x1.4, blur 8 -> sharp in 0.1 s)
+      ft(match, { opacity: 1, x: 0, y: 720, scale: 1.4, rotation: -28, filter: "blur(8px)", transformOrigin: "50% 0%" },
+        { y: 0, scale: 1, rotation: -28, filter: "blur(0px)", duration: 0.1, ease: "power3.out" }, 0);
+      // after lighting it eases back a hair, then leaves fast at 0.55
+      ft(match, { x: 0, y: 0, rotation: -28 }, { x: 14, y: 18, rotation: -26, duration: 0.33, ease: "sine.inOut" }, 0.2);
+      ft(match, { x: 14, y: 18, rotation: -26 }, { x: 60, y: 760, rotation: -20, duration: 0.18, ease: "power2.in" }, 0.55);
+
+      // 0.08 on "Samedi" the candle of T12 lights : white core pop, halo 0 -> 1 in 0.15 s
+      ft(T12.candle, { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.15, ease: "expo.out" }, 0.08);
+      ft(T12.halo, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.15, ease: "expo.out" }, 0.08);
+      // 0.30 the cloth warms up (tone 0.6 -> 1, 0.3 s)
+      ft(T12.topoff, { opacity: 0.45 }, { opacity: 0, duration: 0.3, ease: "power2.out" }, 0.3);
+      // 0.80 the tent card stands up (scaleY 0.2 -> 1, 0.12 s)
+      ft(T12.tent, { scaleY: 0.2 }, { scaleY: 1, duration: 0.12, ease: "power3.out" }, 0.8);
+      // 1.06 "20:00" prints in braise for 0.3 s then back to ink
+      var hha = root.querySelector("#p01-hha");
+      ft(hha, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "power2.out" }, 1.06);
+      ft(hha, { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.out" }, 1.36);
+      // 1.40 the flame flickers : 0.6 s loop, 2 px, a finite count that lands at rest on 4.40
+      var FL = [[0.15, 0.8, 1.06], [0.2, -0.6, 0.96], [0.15, 0.35, 1.03], [0.1, 0, 1]];
+      var nLoops = Math.floor((DUR - 1.4) / 0.6 + 1e-6);
+      for (var L = 0; L < nLoops; L++) {
+        var t0 = 1.4 + L * 0.6, px = 0, ps = 1;
+        FL.forEach(function (f) {
+          ft(T12.candle, { x: px, scale: ps }, { x: f[1], scale: f[2], duration: f[0], ease: "sine.inOut" }, t0);
+          t0 += f[0]; px = f[1]; ps = f[2];
+        });
+      }
+
+      // foreground glass : leaves as the camera pulls back (no foreground in scene 2)
+      ft($("glass"), { x: 0, y: 0, scale: 1, opacity: 1 }, { x: -560, y: 140, scale: 0.8, opacity: 0, duration: 0.28, ease: "power2.out" }, 1.9);
+
+      /* ---- scene 2 : the room is full, on paper ---- */
+      // 2.10 -> 2.60 the 13 other candles light in cascade, nearest first (0.04 s apart, each halo x1.3 -> 1)
+      var order = SALLE.T.filter(function (t) { return t.id !== 12; }).map(function (t) {
+        return { id: t.id, d: Math.sqrt((t.x - 940) * (t.x - 940) + (t.y - 1180) * (t.y - 1180)) };
+      }).sort(function (a, b) { return (a.d - b.d) || (a.id - b.id); });
+      order.forEach(function (o, i) {
+        var tb = TB[o.id], t = 2.1 + i * 0.04;
+        ft(tb.candle, { opacity: 0, scale: 1.7 }, { opacity: 1, scale: 1, duration: 0.16, ease: "expo.out" }, t);
+        ft(tb.halo, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, t);
+        ft(tb.topoff, { opacity: 0.45 }, { opacity: 0, duration: 0.25, ease: "power2.out" }, t);
+        // 2.64 on "pleine" every table gets its RÉSERVÉ tent card (0.02 s apart)
+        ft(tb.tent, { opacity: 0, scaleY: 0.2, transformOrigin: "50% 100%" }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "power3.out" }, 2.64 + i * 0.02);
+      });
+
+      // 2.86 the reservation book arrives from the right (x1.15, blur 8 -> sharp) and settles tilted 3 deg
+      var cahier = $("cahier");
+      ft(cahier, { opacity: 1, x: 820 }, { x: 0, duration: 0.26, ease: "expo.out" }, 2.86);
+      ft(cahier, { scale: 1.15, rotation: 7, filter: "blur(8px)" }, { scale: 1, rotation: 3, filter: "blur(0px)", duration: 0.14, ease: "power3.out" }, 2.86);
+      // 3.10 the COMPLET stamp hits (x1.6 -> 1 in 0.08 s), the book gives 2 %
+      ft($("stamp"), { opacity: 0, scale: 1.6, rotation: -9, filter: "blur(4px)" }, { opacity: 0.92, scale: 1, rotation: -9, filter: "blur(0px)", duration: 0.08, ease: "power3.out" }, 3.1);
+      ft($("cahin"), { scale: 1 }, { scale: 0.98, duration: 0.05, ease: "power2.out" }, 3.15);
+      ft($("cahin"), { scale: 0.98 }, { scale: 1, duration: 0.2, ease: "power2.out" }, 3.2);
+      // 3.78 on "papier" the book slides 30 px, 3.95 it leaves to the right (0.35 s power2.in)
+      ft(cahier, { x: 0 }, { x: 30, duration: 0.17, ease: "power1.in" }, 3.78);
+      ft(cahier, { x: 30 }, { x: 1000, duration: 0.35, ease: "power2.in" }, 3.95);
+
+      /* ---- the voice line : word by word, grey (35 %) then ink ; one box per sentence, the peak stroke ---- */
+      Array.prototype.forEach.call(root.querySelectorAll(".p01-w"), function (w) {
+        var cue = parseFloat(w.getAttribute("data-cue")), boxed = w.classList.contains("p01-wk"), at = Math.max(0, cue - 0.02);
+        ft(w, { opacity: 0, y: 8, filter: "blur(6px)" }, { opacity: boxed ? 1 : 0.35, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, at);
+        if (!boxed) ft(w, { opacity: 0.35 }, { opacity: 1, duration: 0.2, ease: "power1.out" }, at + 0.14);
+      });
+      ft($("bx1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power3.out" }, 0.8);
+      ft($("bx2"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power3.out" }, 2.62);
+      // the peak stroke under "sur le papier" draws from the left, 3.50 -> 3.95
+      ft($("trw"), { opacity: 1, xPercent: -100 }, { xPercent: 0, duration: 0.45, ease: "power2.out" }, 3.5);
+      ft($("trs"), { xPercent: 100 }, { xPercent: 0, duration: 0.45, ease: "power2.out" }, 3.5);
+      // the sentences leave before each seam
+      ft($("s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 1.76);
+      ft($("s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 4.24);
+
+      // exact frame length
+      tl.set({}, {}, DUR);
+
+      // first image = handoff_in, before any seek
+      render();
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

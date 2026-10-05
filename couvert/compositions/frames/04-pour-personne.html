@@ -1,0 +1,402 @@
+<template>
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/SpaceMono-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/BigShoulders-800.woff2") format("woff2"); font-weight: 800; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; -webkit-font-smoothing: antialiased;
+      font-family: "Instrument Sans", sans-serif; color: #f6efe6; }
+
+  /* ===================== SALLE : début du bloc CSS à copier ===================== */
+  .sl-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #15100d; }
+  .sl-cam.sl-light { background: #f5efe4; }
+  .sl-world { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; transform-origin: 0 0; }
+  .sl-abs { position: absolute; }
+  .sl-floor { position: absolute; left: 0; top: 0; width: 3200px; height: 2000px; background:
+    repeating-linear-gradient(90deg, rgba(255,235,210,.025) 0 2px, transparent 2px 120px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 24px), #15100d; }
+  .sl-light .sl-floor { background:
+    repeating-linear-gradient(90deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(60,40,20,.06) 0 1px, transparent 1px 80px), #f5efe4; }
+  .sl-kitchen { position: absolute; left: 300px; top: 1480px; width: 2680px; height: 480px; background: repeating-linear-gradient(45deg, #1d1a18 0 30px, #191614 30px 60px); }
+  .sl-light .sl-kitchen { background: repeating-linear-gradient(45deg, #e6dccb 0 30px, #e0d5c3 30px 60px); }
+  .sl-wall { position: absolute; left: 290px; top: 230px; width: 2700px; height: 1230px; border: 14px solid #2a211b; border-radius: 6px; box-sizing: border-box; }
+  .sl-light .sl-wall { border: 6px solid #1c1612; }
+  .sl-pass { position: absolute; left: 1050px; top: 1560px; width: 1100px; height: 120px; border-radius: 8px; background: #3a3f42; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .sl-light .sl-pass { background: #cfd2d4; box-shadow: 0 8px 20px rgba(60,40,20,.15); }
+  .sl-lamp { position: absolute; top: 1540px; width: 220px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,150,80,.35), transparent 70%); }
+  .sl-light .sl-lamp { display: none; }
+  .sl-bin { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; background: #2b2725; box-shadow: inset 0 0 0 14px #3a3532, 0 10px 26px rgba(0,0,0,.45); }
+  .sl-light .sl-bin { background: #bdb5aa; box-shadow: inset 0 0 0 14px #a9a196, 0 8px 20px rgba(60,40,20,.15); }
+  .sl-board { position: absolute; left: 330px; top: 1530px; width: 360px; height: 400px; border-radius: 8px; background: #3b2f24; }
+  .sl-light .sl-board { background: #d6c3a3; }
+  .sl-label { position: absolute; width: 200px; margin: -12px 0 0 -100px; text-align: center; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; white-space: nowrap; }
+  .sl-light .sl-label { color: #5c5348; }
+  .sl-dish { position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, #8a5a3a 0 30%, #5d6b3a 31% 42%, #fbf7f0 43%); box-shadow: 0 6px 14px rgba(0,0,0,.35); margin: -55px 0 0 -55px; }
+
+  .sl-table { position: absolute; }
+  .sl-halo { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,160,98,.42), rgba(196,83,42,.16) 38%, transparent 68%); }
+  .sl-light .sl-halo { display: none; }
+  .sl-chair { position: absolute; width: 58px; height: 46px; margin: -23px 0 0 -29px; border-radius: 14px; background: #2e2520; }
+  .sl-light .sl-chair { background: #d9cfbf; }
+  .sl-guest { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #6d5a4b; box-shadow: 0 6px 12px rgba(0,0,0,.25); opacity: 0; }
+  .sl-light .sl-guest { background: #8a7564; }
+  .sl-top, .sl-topoff { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 50%; }
+  .sl-top { background: #e9dfcf; box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 0 0 6px rgba(255,255,255,.35); }
+  .sl-topoff { background: rgba(52,45,40,.88); opacity: 0; }
+  .sl-sq .sl-top, .sl-sq .sl-topoff { border-radius: 10px; }
+  .sl-light .sl-top { background: #fffdf8; box-shadow: 0 8px 24px rgba(60,40,20,.12), inset 0 0 0 2px #ddd2c2; }
+  .sl-plate { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #fbf7f0; box-shadow: inset 0 0 0 6px #efe6d8; }
+  .sl-candle, .sl-wick { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; }
+  .sl-wick { background: #6b625b; }
+  .sl-candle { background: radial-gradient(circle, #fff 0 25%, #ffd9a0 45%, #f0a062 70%, transparent 72%); box-shadow: 0 0 30px 12px rgba(255,200,130,.55); }
+  .sl-light .sl-candle { box-shadow: 0 0 16px 6px rgba(255,190,120,.45); }
+  .sl-tent { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; white-space: nowrap; font: 700 15px "Space Mono", monospace; letter-spacing: .12em; color: #2b221c;
+    background: #f3eadb; padding: 6px 10px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,.4); opacity: 0; }
+  .sl-tag { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: -74px; white-space: nowrap; font: 600 22px "Instrument Sans", sans-serif; color: #fff; background: #c4532a;
+    padding: 7px 14px 7px 12px; border-radius: 999px; box-shadow: 0 8px 18px rgba(196,83,42,.35); opacity: 0; }
+  .sl-tag.sl-free { background: #fffdf8; color: #9f3f1c; box-shadow: inset 0 0 0 2px #c4532a; }
+  .sl-tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #c4532a; font-weight: 700; text-align: center; line-height: 22px; font-size: 15px; margin-right: 6px; }
+  .sl-tnum { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; font: 400 18px "Space Mono", monospace; letter-spacing: .15em; color: #958a7f; }
+  .sl-light .sl-tnum { color: #5c5348; }
+  /* ===================== SALLE : fin du bloc CSS à copier ===================== */
+
+    /* ---------- séquence 04 : couches plein cadre ---------- */
+    .p04-full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .p04-ground { background: #100c0a; }
+    .p04-grain { pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+      background-image: repeating-radial-gradient(circle at 17% 31%, #fff 0 1px, transparent 1px 3px), repeating-radial-gradient(circle at 71% 63%, #000 0 1px, transparent 1px 4px); }
+    /* la nuit qui tombe : un voile percé autour de T12 (placé par render), puis le noir, puis la lueur résiduelle */
+    .p04-hole { position: absolute; left: 0; top: 0; width: 4400px; height: 4400px; transform-origin: 50% 50%; opacity: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(16,12,10,0) 0px, rgba(16,12,10,0) 80px, rgba(16,12,10,.85) 190px, #100c0a 300px); }
+    .p04-black { background: #100c0a; opacity: 0; }
+    .p04-ember { position: absolute; left: 0; top: 0; width: 60px; height: 60px; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle, #fff 0 18%, #ffd9a0 35%, rgba(240,160,98,.6) 55%, transparent 72%); box-shadow: 0 0 60px 30px rgba(240,160,98,.35); }
+
+    /* ---------- objets du monde propres à la séquence (unités du monde) ---------- */
+    .p04-slip { position: absolute; width: 300px; padding: 26px 24px; background: #f4ecdd; color: #2b221c; border-radius: 4px; box-sizing: border-box;
+      box-shadow: 0 18px 40px rgba(0,0,0,.5); font-family: "Space Mono", monospace; font-size: 14px; }
+    .p04-micro { font: 400 13px "Space Mono", monospace; letter-spacing: .2em; text-transform: uppercase; }
+    .p04-pin { position: absolute; left: 50%; top: 9px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #cfc1b3, #6b625b 70%); box-shadow: 0 3px 5px rgba(0,0,0,.5); }
+    .p04-empty { position: absolute; left: 50%; top: 50%; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle, rgba(138,90,58,.16) 0 38%, #fbf7f0 72%); }
+    .p04-food { position: absolute; width: 66px; height: 66px; margin: -33px 0 0 -33px; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle closest-side, #8a5a3a 0 70.6%, #5d6b3a 71.5% 99%, rgba(93,107,58,0) 100%); }
+    .p04-lid { position: absolute; left: 2700px; top: 1670px; width: 180px; height: 180px; border-radius: 50%; opacity: 0; transform-origin: 50% 0%;
+      background: radial-gradient(circle, #3d3835 0 52%, #35302d 53%); box-shadow: inset 0 0 0 14px #46403c, 0 8px 20px rgba(0,0,0,.45); }
+    .p04-wisp { position: absolute; width: 60px; height: 140px; border-radius: 50%; border-left: 5px solid rgba(200,190,180,.45);
+      box-sizing: border-box; filter: blur(4px); opacity: 0; }
+    .p04-clock { position: absolute; left: 1310px; top: 1380px; width: 600px; text-align: center; white-space: nowrap;
+      font: 700 140px/140px "Space Mono", monospace; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; color: #f6efe6;
+      text-shadow: 0 0 40px rgba(240,160,98,.4), 0 6px 30px rgba(0,0,0,.6); opacity: 0; transform-origin: 50% 50%; }
+
+    /* ---------- sous-titre : la phrase de la voix, bas centre (bande y 890 à 980), mot par mot ---------- */
+    .p04-sub { position: absolute; left: 0; top: 896px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 62px/74px "Instrument Sans", sans-serif; letter-spacing: -0.015em; color: #f6efe6; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+    .p04-w { display: inline-block; opacity: 0; }
+    .p04-kw { position: relative; display: inline-block; }
+    .p04-box { position: absolute; left: -0.14em; right: -0.14em; top: 0.06em; bottom: 0.02em; background: #c4532a; border-radius: 3px;
+      transform-origin: 0 50%; opacity: 0; }
+    .p04-kw .p04-w { position: relative; color: #f5efe4; text-shadow: none; }
+    .p04-tr { position: relative; display: inline-block; }
+    .p04-trs { position: absolute; left: 2%; right: 4%; bottom: -10px; height: 14px; opacity: 0; clip-path: inset(0% 100% 0% 0%); }
+    .p04-trs svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  </style>
+
+  <div id="root" data-composition-id="04-pour-personne" data-width="1920" data-height="1080" data-duration="5.02">
+
+    <div id="p04-ground" class="clip p04-full p04-ground" data-start="0" data-duration="5.02" data-track-index="0"></div>
+
+    <!-- la salle (kit SALLE), sous la caméra -->
+    <div id="p04-stage" class="clip p04-full" data-start="0" data-duration="5.02" data-track-index="1" data-layout-allow-overflow></div>
+
+    <!-- la nuit : voile percé autour de T12, noir, lueur résiduelle de la bougie de T12 -->
+    <div id="p04-night" class="clip p04-full" data-start="0" data-duration="5.02" data-track-index="2" data-layout-allow-overflow>
+      <div id="p04-hole" class="p04-hole"></div>
+      <div id="p04-black" class="p04-full p04-black"></div>
+      <div id="p04-ember" class="p04-ember"></div>
+    </div>
+
+    <!-- sous-titres -->
+    <div id="p04-subs" class="clip p04-full" data-start="0" data-duration="5.02" data-track-index="3">
+      <div id="p04-subA" class="p04-sub"><span class="p04-w" data-cue="0.30">Et</span> <span class="p04-w" data-cue="0.48">à</span> <span class="p04-w" data-cue="0.67">vingt-deux</span> <span class="p04-w" data-cue="1.04">heures,</span></div>
+      <div id="p04-subB" class="p04-sub"><span class="p04-w" data-cue="1.52">tu</span> <span class="p04-kw"><i id="p04-box" class="p04-box"></i><span class="p04-w" data-cue="1.67">jettes</span></span> <span class="p04-w" data-cue="1.83">ce</span> <span class="p04-w" data-cue="1.98">que</span> <span class="p04-w" data-cue="2.14">tu</span> <span class="p04-w" data-cue="2.29">as</span> <span class="p04-w" data-cue="2.45">cuisiné...</span></div>
+      <div id="p04-subC" class="p04-sub"><span class="p04-w" data-cue="3.52">pour</span> <span class="p04-tr"><span class="p04-w" data-cue="3.70">personne</span><span id="p04-stroke" class="p04-trs"><svg viewBox="0 0 300 16" preserveAspectRatio="none"><path d="M7 13 C2.5 13 1 8.6 5.5 7.4 C60 6.8 150 6 296 2.8 C299.2 2.8 299.4 4.8 296.4 5.4 C150 9.6 60 12.4 7 13 Z" fill="#dc6b3d"/></svg></span></span><span class="p04-w" data-cue="3.70">.</span></div>
+    </div>
+
+    <!-- grain 5 % -->
+    <div id="p04-grain" class="clip p04-full p04-grain" data-start="0" data-duration="5.02" data-track-index="4"></div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "04-pour-personne";
+      var DUR = 5.02;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      function $(n) { return root.querySelector("#p04-" + n); }
+      function qa(sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+
+/* ===================== SALLE : début du kit JS à copier ===================== */
+var SALLE = (function () {
+  var T = [
+    { id: 1, x: 520, y: 440, k: "r2" }, { id: 2, x: 940, y: 440, k: "s4" }, { id: 3, x: 1360, y: 440, k: "r2" },
+    { id: 4, x: 2320, y: 480, k: "s4" }, { id: 5, x: 2740, y: 440, k: "r2" }, { id: 6, x: 520, y: 820, k: "s4" },
+    { id: 7, x: 1560, y: 780, k: "rect6" }, { id: 8, x: 2320, y: 900, k: "r2" }, { id: 9, x: 2740, y: 860, k: "s4" },
+    { id: 10, x: 520, y: 1200, k: "r2" }, { id: 11, x: 1360, y: 1200, k: "s4" }, { id: 12, x: 940, y: 1180, k: "r4" },
+    { id: 13, x: 1960, y: 1220, k: "s4" }, { id: 14, x: 2600, y: 1250, k: "rect6" }
+  ];
+  var GEO = {
+    r2: { w: 150, h: 150, sq: false, chairs: [[0, -108], [0, 108]], plates: [[0, -42], [0, 42]] },
+    r4: { w: 200, h: 200, sq: false, chairs: [[0, -132], [0, 132], [-132, 0], [132, 0]], plates: [[0, -60], [0, 60], [-60, 0], [60, 0]] },
+    s4: { w: 180, h: 180, sq: true, chairs: [[0, -122], [0, 122], [-122, 0], [122, 0]], plates: [[0, -52], [0, 52], [-52, 0], [52, 0]] },
+    rect6: { w: 380, h: 170, sq: true, chairs: [[-125, -117], [0, -117], [125, -117], [-125, 117], [0, 117], [125, 117]],
+      plates: [[-125, -46], [0, -46], [125, -46], [-125, 46], [0, 46], [125, 46]] }
+  };
+  function el(parent, cls, css, html) {
+    var d = document.createElement("div"); d.className = cls; if (css) d.style.cssText = css; if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  }
+  // build(container, {light}) : construit la caméra et le monde dans container ; renvoie {cam, world, tables, kitchen}
+  // tables[id] = {el, halo, top, topoff, candle, wick, tent, tag, free, guests[], plates[], x, y}
+  // État initial : toutes les tables allumées (soir) ou propres (jour), chevalets, étiquettes et convives à opacité 0.
+  function build(container, opts) {
+    opts = opts || {};
+    var cam = el(container, "sl-cam" + (opts.light ? " sl-light" : ""));
+    var world = el(cam, "sl-world");
+    el(world, "sl-floor"); el(world, "sl-kitchen"); el(world, "sl-wall");
+    var pass = el(world, "sl-pass");
+    for (var i = 0; i < 4; i++) el(world, "sl-lamp", "left:" + (1150 + i * 270) + "px");
+    var bin = el(world, "sl-bin"), board = el(world, "sl-board");
+    el(world, "sl-label", "left:1600px;top:1520px", "CUISINE");
+    var tables = {};
+    T.forEach(function (t) {
+      var g = GEO[t.k];
+      var d = el(world, "sl-table" + (g.sq ? " sl-sq" : ""), "left:" + (t.x - g.w / 2) + "px;top:" + (t.y - g.h / 2) + "px;width:" + g.w + "px;height:" + g.h + "px");
+      var o = { el: d, x: t.x, y: t.y, guests: [], plates: [] };
+      o.halo = el(d, "sl-halo");
+      g.chairs.forEach(function (c) {
+        var rot = Math.abs(c[0]) > Math.abs(c[1]) ? 90 : 0;
+        el(d, "sl-chair", "left:" + (g.w / 2 + c[0]) + "px;top:" + (g.h / 2 + c[1]) + "px;transform:rotate(" + rot + "deg)");
+        o.guests.push(el(d, "sl-guest", "left:" + (g.w / 2 + c[0] * 1.02) + "px;top:" + (g.h / 2 + c[1] * 1.02) + "px"));
+      });
+      o.top = el(d, "sl-top");
+      g.plates.forEach(function (p) { o.plates.push(el(d, "sl-plate", "left:" + (g.w / 2 + p[0]) + "px;top:" + (g.h / 2 + p[1]) + "px")); });
+      o.topoff = el(d, "sl-topoff");
+      o.wick = el(d, "sl-wick"); o.candle = el(d, "sl-candle");
+      o.tent = el(d, "sl-tent", "top:" + (-20) + "px", "RÉSERVÉ");
+      o.tag = el(d, "sl-tag", "", '<span class="sl-tick">✓</span>Confirmé');
+      o.free = el(d, "sl-tag sl-free", "", "Libérée");
+      el(d, "sl-tnum", "top:" + (g.h + 150) + "px", "T" + t.id);
+      tables[t.id] = o;
+    });
+    return { cam: cam, world: world, tables: tables, kitchen: { pass: pass, bin: bin, board: board } };
+  }
+  // cam(world, c) : place le point (c.cx, c.cy) du monde au centre du cadre, à l'échelle c.s ; c.dx décale le cadrage (px écran)
+  function cam(world, c) {
+    world.style.transform = "translate(" + (960 + (c.dx || 0)) + "px,540px) scale(" + c.s + ") translate(" + (-c.cx) + "px," + (-c.cy) + "px)";
+    world.style.filter = c.blur ? "blur(" + c.blur + "px)" : "none";
+  }
+  // toScreen(c, x, y) : position écran d'un point du monde pour la caméra c (utile pour les points du flash et de l'iris)
+  function toScreen(c, x, y) { return [960 + (c.dx || 0) + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s]; }
+  // off(tb) : état « éteint » posé sans animation (pour les tables déjà éteintes au début d'une séquence)
+  function off(tb) { tb.candle.style.opacity = 0; tb.halo.style.opacity = 0; tb.topoff.style.opacity = 1; }
+  return { T: T, build: build, cam: cam, toScreen: toScreen, off: off };
+})();
+/* ===================== SALLE : fin du kit JS à copier ===================== */
+
+      /* ===================== le monde ===================== */
+      var stage = $("stage");
+      var W = SALLE.build(stage, { light: false });
+      var world = W.world, TB = W.tables;
+      // état de départ (handoff_in) : toutes les tables allumées avec leur chevalet, sauf T7 et T4 déjà éteintes
+      for (var id in TB) {
+        if (id == 7 || id == 4) { SALLE.off(TB[id]); TB[id].tent.style.opacity = 0.45; }
+        else TB[id].tent.style.opacity = 1;
+      }
+      function mk(parent, cls, idn, css, html) {
+        var d = document.createElement("div"); d.className = cls; if (idn) d.id = "p04-" + idn;
+        if (css) d.style.cssText = css; if (html) d.innerHTML = html; parent.appendChild(d); return d;
+      }
+      // le bon de commande « 40 », épinglé sur le liège (repris de la séquence 3)
+      mk(world, "p04-slip", "slip", "left:370px;top:1570px;width:280px;transform:rotate(-3deg)",
+        '<div class="p04-pin"></div><div class="p04-micro" style="color:#5c5348">Bon de commande</div>' +
+        '<div style="font-size:14px;margin-top:6px">SAM. 14 · 08:10</div>' +
+        '<div style="font:700 92px \'Space Mono\', monospace;letter-spacing:-.04em;margin-top:8px">40</div>' +
+        '<div class="p04-micro">couverts</div>' +
+        '<div style="font-size:13px;margin-top:10px;line-height:1.5">Viande · 8 kg<br>Poisson · 6 kg<br>Légumes · 12 kg</div>');
+      // six assiettes pleines sur le passe (centres x 1130 + i·180, y 1620)
+      var DISH_X = [1130, 1310, 1490, 1670, 1850, 2030], dishes = [], empties = {};
+      for (var i = 0; i < 6; i++) dishes.push(mk(world, "sl-dish", "dish" + i, "left:" + DISH_X[i] + "px;top:1620px"));
+      [3, 4, 5].forEach(function (k) { empties[k] = mk(dishes[k], "p04-empty", "empty" + k); });
+      // la nourriture qui tombe (une par assiette jetée), posée sur le point de bascule (2730, 1690)
+      var foods = [0, 1, 2].map(function (k) { return mk(world, "p04-food", "food" + k, "left:2730px;top:1690px"); });
+      var lid = mk(world, "p04-lid", "lid");
+      // filets de fumée des bougies qui s'éteignent
+      var wisps = {};
+      for (var tid in TB) { if (tid == 7 || tid == 4 || tid == 12) continue;
+        wisps[tid] = mk(world, "p04-wisp", "wisp" + tid, "left:" + (TB[tid].x - 22) + "px;top:" + (TB[tid].y - 150) + "px"); }
+      // l'horloge au-dessus du passe (devant)
+      var clock = mk(world, "p04-clock", "clock", "", "20:58");
+      var lamps = qa("#p04-stage .sl-lamp");
+
+      var hole = $("hole"), black = $("black"), ember = $("ember");
+
+      /* ===================== caméra : UN proxy, UN écrivain ===================== */
+      var C = { cx: 1000, cy: 1680, s: 1.7, blur: 10, dx: 0 };
+      var K = { m: 0 };
+      var lastClock = "";
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      function render() {
+        SALLE.cam(world, C);
+        var tot = 20 * 60 + 58 + Math.round(K.m), txt = pad(Math.floor(tot / 60) % 24) + ":" + pad(tot % 60);
+        if (txt !== lastClock) { clock.textContent = txt; lastClock = txt; }
+        var p = SALLE.toScreen(C, 940, 1180), k = Math.max(0.6, Math.min(1.4, C.s / 0.5));
+        hole.style.transform = "translate(" + (p[0] - 2200).toFixed(2) + "px," + (p[1] - 2200).toFixed(2) + "px) scale(" + k.toFixed(4) + ")";
+        ember.style.transform = "translate(" + (p[0] - 30).toFixed(2) + "px," + (p[1] - 30).toFixed(2) + "px)";
+      }
+
+      /* ===================== la timeline (une seule, en pause) ===================== */
+      var tl = gsap.timeline({ paused: true, onUpdate: render });
+      function ft(target, from, to, pos) {
+        if (pos > 0) to.immediateRender = false;
+        tl.fromTo(target, from, to, pos);
+      }
+      function sw(target, from, to, pos) { to.duration = 0.001; to.ease = "none"; ft(target, from, to, pos); }
+      function lerp(a, b, k) { return { cx: a.cx + (b.cx - a.cx) * k, cy: a.cy + (b.cy - a.cy) * k, s: a.s + (b.s - a.s) * k }; }
+      function cp(o, extra) { var r = {}, n; for (n in o) r[n] = o[n]; for (n in extra) r[n] = extra[n]; return r; }
+
+      // ---------- PISTE CAMÉRA ----------
+      // 0.00 à 0.30 fin du whip (expo.out) sur le passe
+      ft(C, { cx: 1000, cy: 1680, s: 1.7, blur: 10 }, { cx: 1600, cy: 1610, s: 1.35, blur: 0, duration: 0.30, ease: "expo.out" }, 0);
+      // 0.30 à 1.35 dérive latérale +20 u/s
+      ft(C, { cx: 1600 }, { cx: 1621, duration: 1.05, ease: "none" }, 0.30);
+      // 1.35 à 1.55 filé vers la droite (power2.in, flou 0 → 8), 1.55 à 1.70 fin du filé sur la poubelle (expo.out) ;
+      // point de raccord choisi pour que la vitesse soit la même des deux côtés (10·a = 46,2·b)
+      var P0 = { cx: 1621, cy: 1610, s: 1.35 }, P1 = { cx: 2760, cy: 1720, s: 1.9 }, M1 = lerp(P0, P1, 0.822);
+      ft(C, cp(P0, { blur: 0 }), cp(M1, { blur: 8, duration: 0.20, ease: "power2.in" }), 1.35);
+      ft(C, cp(M1, { blur: 8 }), cp(P1, { blur: 0, duration: 0.15, ease: "expo.out" }), 1.55);
+      // 1.75 secousse de 4 px (contact de la nourriture)
+      ft(C, { dx: 0 }, { dx: 4, duration: 0.03, ease: "power1.out" }, 1.75);
+      ft(C, { dx: 4 }, { dx: -3, duration: 0.04, ease: "sine.inOut" }, 1.78);
+      ft(C, { dx: -3 }, { dx: 1.5, duration: 0.04, ease: "sine.inOut" }, 1.82);
+      ft(C, { dx: 1.5 }, { dx: 0, duration: 0.05, ease: "sine.out" }, 1.86);
+      // 1.70 à 3.10 dérive avant 1,9 → 2,0
+      ft(C, { s: 1.9 }, { s: 2.0, duration: 1.40, ease: "none" }, 1.70);
+      // 3.10 à 3.30 recul (power2.in, flou 0 → 8), 3.30 à 3.90 recul jusqu'au plan large (expo.out) ; raccord 10·a = 11,55·b
+      var P2 = { cx: 2760, cy: 1720, s: 2.0 }, P3 = { cx: 1640, cy: 1000, s: 0.5 }, M2 = lerp(P2, P3, 0.536);
+      ft(C, cp(P2, { blur: 0 }), cp(M2, { blur: 8, duration: 0.20, ease: "power2.in" }), 3.10);
+      ft(C, cp(M2, { blur: 8 }), cp(P3, { blur: 0, duration: 0.60, ease: "expo.out" }), 3.30);
+      // 3.90 à 5.02 glissement vers T12, cam(940, 920, 0.5) ; en y : départ arrêté, fin en dérive lente (10 u/s, l'image descend)
+      ft(C, { cx: 1640 }, { cx: 940, duration: 1.12, ease: "power2.inOut" }, 3.90);
+      var SLOPE = 10 * 0.62 / 80;
+      function easeDrift(u) { return (SLOPE - 2) * u * u * u + (3 - SLOPE) * u * u; }
+      ft(C, { cy: 1000 }, { cy: 920, duration: 0.62, ease: easeDrift }, 4.40);
+
+      // ---------- SCÈNE 1 : vingt-deux heures au passe ----------
+      // la lueur chaude des lampes du passe pulse (2 %), boucle finie
+      for (var lp = 0, tp = 0.20; tp + 0.30 <= 4.80; lp++, tp += 0.30) {
+        var up = lp % 2 === 0;
+        ft(lamps, { scale: up ? 1 : 1.02 }, { scale: up ? 1.02 : 1, duration: 0.30, ease: "sine.inOut" }, tp);
+      }
+      // 0.40 « 20:58 » arrive ×1,3 flou → net (0,12 s)
+      ft(clock, { opacity: 0, scale: 1.196, filter: "blur(8px)" }, { opacity: 1, scale: 0.92, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.40);
+      // 0.67 à 1.04 les chiffres roulent jusqu'à « 22:00 », l'échelle grandit avec le compte
+      ft(K, { m: 0 }, { m: 62, duration: 0.37, ease: "power2.out" }, 0.67);
+      ft(clock, { scale: 0.92 }, { scale: 1, duration: 0.37, ease: "power2.out" }, 0.67);
+      // 1.10 une lampe du passe s'éteint (celle de l'assiette de droite)
+      ft(lamps[3], { opacity: 1 }, { opacity: 0, duration: 0.15, ease: "power2.out" }, 1.10);
+      // l'horloge quitte le monde hors champ (caméra sur la poubelle)
+      sw(clock, { opacity: 1 }, { opacity: 0 }, 2.00);
+
+      // ---------- SCÈNE 2 : tu jettes ----------
+      var POSE = { y: 70, rotation: -28, scaleX: 1.18, scaleY: 0.826, filter: "blur(2px)" };
+      var REST = { x: 0, y: 0, rotation: 0, scaleX: 1, scaleY: 1, filter: "blur(0px)" };
+      var BIN = [[2790, 1762], [2770, 1747], [2807, 1771]];
+      function dump(n, k, tCue, tLeave) {
+        var D = dishes[k], dx = 2730 - DISH_X[k], F = foods[n];
+        // bascule (0,1 s power2.in) : l'assiette se couche au-dessus de la poubelle
+        ft(D, { x: dx, y: 70, rotation: -28, scaleY: 0.826 }, { x: dx + 22, y: 82, rotation: -36, scaleY: 0.42, duration: 0.10, ease: "power2.in" }, tCue);
+        // la nourriture se détache (même image) et tombe dans la poubelle : contact 0,08 s plus tard
+        sw(empties[k], { opacity: 0 }, { opacity: 1 }, tCue);
+        sw(F, { opacity: 0 }, { opacity: 1 }, tCue);
+        ft(F, { x: 0, y: 0, rotation: -28, scaleX: 1.18, scaleY: 0.826, filter: "blur(2px)" },
+          { x: BIN[n][0] - 2730, y: BIN[n][1] - 1690, rotation: 8, scaleX: 0.78, scaleY: 0.66, filter: "blur(6px)", duration: 0.08, ease: "power2.in" }, tCue);
+        ft(F, { opacity: 1, filter: "blur(6px)" }, { opacity: 0.82, filter: "blur(3px)", duration: 0.20, ease: "power2.out" }, tCue + 0.08);
+        // l'assiette repart vide, vers le passe (sortie plus rapide que l'entrée), puis quitte le monde hors champ
+        ft(D, { x: dx + 22, y: 82, rotation: -36, scaleX: 1.18, scaleY: 0.42, filter: "blur(2px)" },
+          { x: 2170 - DISH_X[k], y: -150, rotation: -14, scaleX: 1.1, scaleY: 0.8, filter: "blur(4px)", duration: 0.12, ease: "power2.in" }, tLeave);
+        sw(D, { opacity: 1 }, { opacity: 0 }, tLeave + 0.14);
+      }
+      // 1.35 l'assiette de droite glisse de 20 px vers la droite, puis part avec la caméra : au-dessus de la poubelle à 1.60, −28°
+      ft(dishes[5], { x: 0 }, { x: 15, duration: 0.10, ease: "power2.out" }, 1.35);
+      ft(dishes[5], cp(REST, { x: 15 }), cp(POSE, { x: 700, duration: 0.15, ease: "power2.inOut" }), 1.45);
+      dump(0, 5, 1.67, 1.90);
+      // 2.14 une deuxième assiette, 2.45 une troisième (elles arrivent du passe, hors champ à gauche)
+      ft(dishes[4], REST, cp(POSE, { x: 2730 - DISH_X[4], duration: 0.16, ease: "expo.out" }), 1.96);
+      dump(1, 4, 2.14, 2.26);
+      ft(dishes[3], REST, cp(POSE, { x: 2730 - DISH_X[3], duration: 0.14, ease: "expo.out" }), 2.29);
+      dump(2, 3, 2.45, 2.70);
+      // 3.00 le couvercle se rabat (0,1 s)
+      sw(lid, { opacity: 0 }, { opacity: 1 }, 2.90);
+      ft(lid, { scaleY: 0.08 }, { scaleY: 1, duration: 0.10, ease: "power2.in" }, 2.90);
+
+      // ---------- SCÈNE 3 : pour personne, la salle s'éteint ----------
+      function candleOut(tid, t0) {
+        var tb = TB[tid];
+        ft(tb.candle, { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.in" }, t0);
+        ft(tb.halo, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.6, duration: 0.20, ease: "power2.out" }, t0);
+        ft(tb.topoff, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, t0);
+        ft(tb.tent, { opacity: 1 }, { opacity: 0.45, duration: 0.25, ease: "power2.out" }, t0);
+        var w = wisps[tid];
+        ft(w, { opacity: 0, y: 20, rotation: 6 }, { opacity: 0.6, y: 0, rotation: 0, duration: 0.15, ease: "power2.out" }, t0 + 0.04);
+        ft(w, { opacity: 0.6, y: 0, rotation: 0 }, { opacity: 0, y: -60, rotation: -8, duration: 0.45, ease: "power1.in" }, t0 + 0.19);
+      }
+      // 3.70 sur « personne » : des bords vers T12, une à une
+      var ORDER = [5, 9, 14, 8, 13, 1, 3, 2, 6, 10, 11];
+      ORDER.forEach(function (tid, n) { candleOut(tid, 3.70 + n * 0.066); });
+      // le parquet disparaît avec les halos ; seule T12 reste dans sa lumière
+      ft(hole, { opacity: 0 }, { opacity: 0.92, duration: 0.80, ease: "power1.in" }, 3.70);
+      // 4.86 la bougie de T12 s'éteint : sa lueur reste à 20 %, tout le reste est noir (fini à 4.95)
+      ft(TB[12].candle, { opacity: 1 }, { opacity: 0, duration: 0.09, ease: "power2.in" }, 4.86);
+      ft(TB[12].halo, { opacity: 1 }, { opacity: 0, duration: 0.09, ease: "power2.in" }, 4.86);
+      ft(TB[12].topoff, { opacity: 0 }, { opacity: 1, duration: 0.09, ease: "power2.out" }, 4.86);
+      ft(black, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.in" }, 4.80);
+      ft(ember, { opacity: 0 }, { opacity: 0.2, duration: 0.11, ease: "power2.out" }, 4.84);
+
+      // ---------- SOUS-TITRES ----------
+      qa("#p04-subs .p04-w").forEach(function (w) {
+        var t0 = parseFloat(w.getAttribute("data-cue")) - 0.02;
+        ft(w, { opacity: 0, y: 8, filter: "blur(6px)" }, { opacity: 0.35, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, t0);
+        ft(w, { opacity: 0.35 }, { opacity: 1, duration: 0.20, ease: "power1.out" }, t0 + 0.14);
+      });
+      // [boîte : jettes] se trace depuis la gauche
+      ft($("box"), { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.16, ease: "power3.out" }, 1.63);
+      // [trait : personne] 3.70 à 4.10
+      ft($("stroke"), { opacity: 1, clipPath: "inset(0% 100% 0% 0%)" }, { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 0.40, ease: "power2.out" }, 3.70);
+      function subOut(id, t0, dur, x) {
+        ft($(id), { opacity: 1, x: 0, filter: "blur(0px)" }, { opacity: 0, x: x, filter: "blur(6px)", duration: dur, ease: "power2.in" }, t0);
+      }
+      subOut("subA", 1.38, 0.12, -30);
+      subOut("subB", 3.16, 0.14, 0);
+      subOut("subC", 4.40, 0.14, 0);
+
+      // longueur exacte de la séquence
+      tl.set({}, {}, DUR);
+
+      // première image = handoff_in, avant tout seek
+      render();
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>
