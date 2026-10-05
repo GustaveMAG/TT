@@ -151,15 +151,15 @@
         var tl = gsap.timeline({ paused: true, defaults: { lazy: false }, onUpdate: render });
 
         /* ---- grain : un pas toutes les 2 images sur toute la durée ---- */
-        tl.fromTo(st, { gp: 0 }, { gp: Math.floor(T * 15), duration: T, ease: "none" }, 0);
+        tl.fromTo(st, { gp: 0 }, { gp: Math.floor(T * 15), duration: T, ease: "none", immediateRender: false }, 0);
 
         /* ---- couche vivante : la phrase dérive de 6 px vers le haut sur toute la durée ---- */
-        tl.fromTo(q, { y: 0 }, { y: -6, duration: T, ease: "none" }, 0);
+        tl.fromTo(q, { y: 0 }, { y: -6, duration: T, ease: "none", immediateRender: false }, 0);
 
         /* ===== 0.00 à 0.95 : silence ; la lueur de T12 baisse de 20 à 8 % ; la dérive caméra héritée s'arrête ===== */
-        tl.fromTo(st, { o: 0.2 }, { o: 0.08, duration: 0.95, ease: "power1.out" }, 0);
+        tl.fromTo(st, { o: 0.2 }, { o: 0.08, duration: 0.95, ease: "power1.out", immediateRender: false }, 0);
         /* +10 u/s à l'échelle 0,5 = -5 px/s à l'écran au départ (handoff_in), amorti en 0,6 s : la caméra ne bouge plus */
-        tl.fromTo(st, { y: 0 }, { y: -1.5, duration: 0.6, ease: "power2.out" }, 0);
+        tl.fromTo(st, { y: 0 }, { y: -1.5, duration: 0.6, ease: "power2.out", immediateRender: false }, 0);
         /* la braise respire à peine pendant que la phrase s'écrit */
         tl.fromTo(st, { b: 0 }, { b: 1, duration: 2.18, ease: "none", immediateRender: false }, 0.95);
 

@@ -289,6 +289,7 @@ var SALLE = (function () {
 
       /* ===== PISTE CAMÉRA ===== */
       /* 0.00 à 0.30 : fin du travelling (bas-gauche) sur le liège cam(510, 1720, 1.6), flou 10 → 0 */
+      tl.set(cam, { cx: 1100, cy: 1500, s: 1.0, blur: 10, dx: 0 }, 0);
       tl.fromTo(cam, { cx: 1100, cy: 1500, s: 1.0 }, { cx: 510, cy: 1720, s: 1.6, duration: 0.30, ease: "power3.out" }, 0);
       tl.fromTo(cam, { blur: 10 }, { blur: 0, duration: 0.30, ease: "power3.out" }, 0);
       /* 0.30 à 1.06 : dérive avant 1,6 → 1,65 */
